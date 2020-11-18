@@ -4,10 +4,12 @@ public class Effet {
 
     private String nom;
     private int degat;
+    private int duree;
 
     public Effet(String nom, int degat){
         this.nom=nom;
         this.degat=degat;
+        this.duree=duree;
     }
 
     public String getNom(){
@@ -24,6 +26,14 @@ public class Effet {
 
     public void setNom(String nom){
         this.nom=nom;
+    }
+
+    public int getDuree(){
+        return this.duree;
+    }
+
+    public void setDuree(int duree){
+        this.duree=duree;
     }
 
 }
