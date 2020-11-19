@@ -9,7 +9,6 @@ public class Chasseur extends Personnage {
      */
     public final static Arc typeArme;
 
-
     /**
      * Constructeur d'un Chasseur
      * @param pointsDeVie   : Nombre de points de vie d'un Chasseur
@@ -24,14 +23,14 @@ public class Chasseur extends Personnage {
     /**
      * Le chasseur inflige des dégât à son adversaire avec son arc
      */
-    public tireArc(Personnage adversaire, Arme arc) {
-        adversaire.setPointsDeVie(adversaire.getPointsDeVie() - arc.get);
+    public void tireArc(Personnage adversaire, Arme arc) {
+        //TODO
     };
 
     /**
-     *
+     * Le chasseur inflige des dégâts à l'aide de son sort
      */
-    public rituelDeLaForet() {
-
+    public void rituelDeLaForet() {
+        //TODO
     };
 }
