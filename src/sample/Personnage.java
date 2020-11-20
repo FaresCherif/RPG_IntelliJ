@@ -7,15 +7,24 @@ import java.util.ArrayList;
  */
 public abstract class Personnage {
 
+    public Arme typeArme1;
+    public Arme typeArme2;
+
     /**
      * Nombre de points de vie du Personnage
      */
     private int pointsDeVie;
 
+    private int pointsDeVieMax;
+
+
     /**
      * Nombre de points de mana du Personnage
      */
     private int pointsDeMana;
+
+    private int pointsDeManaMax;
+
 
     /**
      * Niveau du Personnage
@@ -26,6 +35,7 @@ public abstract class Personnage {
      * Liste des armes du Personnages
      */
     private ArrayList<Arme> listeDesArmes;
+    private ArrayList<Sort> listeDesSorts;
 
     /**
      * Constructeur d'un Personnage
@@ -33,12 +43,18 @@ public abstract class Personnage {
      * @param pointsDeMana : Jauge de points de mana d'un Personnage
      * @param niveau : Niveau d'un Personnage
      * @param listeDesArmes : Liste des armes d'un Personnage
+     * @param listeDesSorts : Liste des sorts d'un Personnage
      */
-    public Personnage(int pointsDeVie, int pointsDeMana, int niveau, ArrayList<Arme> listeDesArmes) {
+    public Personnage(int pointsDeVie, int pointsDeVieMax,int pointsDeMana,int pointsDeManaMax, int niveau, ArrayList<Arme> listeDesArmes, ArrayList<Sort> listeDesSorts) {
         this.pointsDeVie = pointsDeVie;
+        this.pointsDeVieMax=pointsDeVieMax;
         this.pointsDeMana = pointsDeMana;
+        this.pointsDeManaMax=pointsDeManaMax;
         this.niveau = niveau;
         this.listeDesArmes = listeDesArmes;
+        this.listeDesSorts=listeDesSorts;
+        this.typeArme1=null;
+        this.typeArme2=null;
     }
 
     /**
@@ -89,6 +105,31 @@ public abstract class Personnage {
         this.niveau = niveau;
     }
 
+
+    public int getPointsDeVieMax() {
+        return pointsDeVieMax;
+    }
+
+    public void setPointsDeVieMax(int pointsDeVieMax) {
+         this.pointsDeVieMax=pointsDeVieMax;
+    }
+
+    public int getPointsDeManaMax() {
+        return pointsDeManaMax;
+    }
+
+    public void setPointsDeManaMax(int pointsDeManaMax) {
+        this.pointsDeManaMax=pointsDeManaMax;
+    }
+
+    /**
+     * Récupère la liste des sorts du Personnage
+     * @return listeDesSorts
+     */
+    public ArrayList<Sort> getListeDesSorts() {
+        return listeDesSorts;
+    }
+
     /**
      * Récupère la liste des armes du Personnage
      * @return listeDesArmes
@@ -105,13 +146,61 @@ public abstract class Personnage {
         this.listeDesArmes = listeDesArmes;
     }
 
+    /**
+     * Modifie la liste des sorts du Personnages
+     * @param listeDesSorts
+     */
+    public void setListeDesSorts(ArrayList<Sort> listeDesSorts) {
+        this.listeDesSorts = listeDesSorts;
+    }
+
     @Override
     public String toString() {
         return "Personnage{" +
                 "pointsDeVie=" + pointsDeVie +
+                ", pointsDeVieMax=" + pointsDeVieMax +
                 ", pointsDeMana=" + pointsDeMana +
+                ", pointsDeManaMax=" + pointsDeManaMax +
                 ", niveau=" + niveau +
-                ", listeDesArmes=" + listeDesArmes +
                 '}';
+    }
+
+    public void perdreVie(int nbPointAttaque){
+        this.pointsDeVie-=nbPointAttaque;
+    }
+
+    public void reprendreVie(int nbPvSoin){
+        this.pointsDeVie+=nbPvSoin;
+        if(pointsDeVie>pointsDeVieMax){
+            pointsDeVie=pointsDeVieMax;
+        }
+    }
+
+
+    public void perdreMana(int coutMana){
+        this.pointsDeMana-=coutMana;
+    }
+
+    public void reprendreMana(int quantiteMana){
+        this.pointsDeMana+=quantiteMana;
+        if(pointsDeMana>pointsDeManaMax){
+            pointsDeMana=pointsDeManaMax;
+        }
+    }
+
+    public void gagnereArme(Arme arme){
+        this.getListeDesArmes().add(arme);
+    }
+
+    public void perdreArme(Arme arme){
+        this.listeDesArmes.remove(arme);
+    }
+
+    public void apprendreSort(Sort sort){
+        this.listeDesSorts.add(sort);
+    }
+
+    public void oublierSort(Sort sort){
+        this.listeDesSorts.remove(sort);
     }
 }
