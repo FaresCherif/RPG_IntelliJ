@@ -4,15 +4,18 @@ public class Sort {
 
     private int degat;
     private Effet effet;
+    private int coutMana;
 
     public Sort(){
         this.degat=5;
         this.effet=null;
+        this.coutMana=5;
     }
 
-    public Sort(int degat, Effet effet){
-        this.degat=degat;
+    public Sort(int degat, Effet effet,int coutMana){
+        this.degat=degat+effet.getDegat();
         this.effet=effet;
+        this.coutMana=coutMana;
     }
 
     public void setEffet(Effet effet){
@@ -24,7 +27,7 @@ public class Sort {
     }
 
     public void setDegat(int degat){
-        this.degat=degat;
+        this.degat=degat+effet.getDegat();
     }
 
     public int getDegat(){
@@ -35,4 +38,11 @@ public class Sort {
         this.effet=null;
     }
 
+    public int getCoutMana(){
+        return(this.coutMana);
+    }
+
+    public void setCoutMana(int coutMana){
+        this.coutMana=coutMana;
+    }
 }

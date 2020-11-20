@@ -11,7 +11,7 @@ public class Fleche {
     }
 
     public Fleche(int degat, Effet effet){
-        this.degat=degat;
+        this.degat=degat+effet.getDegat();
         this.effet=effet;
     }
 
@@ -24,7 +24,7 @@ public class Fleche {
     }
 
     public void setDegat(int degat){
-        this.degat=degat;
+        this.degat=degat+effet.getDegat();
     }
 
     public int getDegat(){
