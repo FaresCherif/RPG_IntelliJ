@@ -52,7 +52,8 @@ public class Chasseur extends Personnage {
     public String toString() {
         String chasseur;
         chasseur= "Chasseur{" +
-                "pointsDeVie=" + this.getPointsDeVie() +
+                "nom =" + this.getNom()+
+                " pointsDeVie=" + this.getPointsDeVie() +
                 ", pointsDeVieMax=" + this.getPointsDeVieMax() +
                 ", pointsDeMana=" + this.getPointsDeMana() +
                 ", pointsDeManaMax=" + this.getPointsDeManaMax() +

@@ -9,6 +9,7 @@ public abstract class Personnage {
 
     public Arme typeArme1;
     public Arme typeArme2;
+    private String nom;
 
     /**
      * Nombre de points de vie du Personnage
@@ -55,6 +56,15 @@ public abstract class Personnage {
         this.listeDesSorts=listeDesSorts;
         this.typeArme1=null;
         this.typeArme2=null;
+        this.nom="";
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom){
+        this.nom=nom;
     }
 
     /**
@@ -157,7 +167,7 @@ public abstract class Personnage {
     @Override
     public String toString() {
         return "Personnage{" +
-                "pointsDeVie=" + pointsDeVie +
+                " pointsDeVie=" + pointsDeVie +
                 ", pointsDeVieMax=" + pointsDeVieMax +
                 ", pointsDeMana=" + pointsDeMana +
                 ", pointsDeManaMax=" + pointsDeManaMax +

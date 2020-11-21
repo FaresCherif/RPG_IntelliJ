@@ -28,7 +28,6 @@ public class Mage extends Personnage {
         if (sort.getCoutMana() > this.getPointsDeMana()) {
             System.out.println("Vous n'avez pas assez de mana");
         } else {
-
             personnageVise.perdreVie(sort.getDegat());
             this.perdreMana(sort.getCoutMana());
             //TODO prendre en compte l'effet
@@ -40,7 +39,8 @@ public class Mage extends Personnage {
     public String toString() {
         String mage;
         mage = "Mage{" +
-                "pointsDeVie=" + this.getPointsDeVie() +
+                "nom =" + this.getNom()+
+                " pointsDeVie=" + this.getPointsDeVie() +
                 ", pointsDeVieMax=" + this.getPointsDeVieMax() +
                 ", pointsDeMana=" + this.getPointsDeMana() +
                 ", pointsDeManaMax=" + this.getPointsDeManaMax() +

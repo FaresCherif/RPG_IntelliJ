@@ -62,7 +62,8 @@ public class Guerrier extends Personnage {
     public String toString() {
         String guerrier;
         guerrier= "Guerrier{" +
-                "pointsDeVie=" + this.getPointsDeVie() +
+                "nom =" + this.getNom()+
+                " pointsDeVie=" + this.getPointsDeVie() +
                 ", pointsDeVieMax=" + this.getPointsDeVieMax() +
                 ", pointsDeMana=" + this.getPointsDeMana() +
                 ", pointsDeManaMax=" + this.getPointsDeManaMax() +
