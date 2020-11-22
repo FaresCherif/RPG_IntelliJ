@@ -15,12 +15,12 @@ public class Chasseur extends Personnage {
      * @param niveau        : Niveau d'un Chasseur
      * @param listeDesArmes : Liste des armes d'un Chasseur
      */
-    public Chasseur(int pointsDeVie,int pointDeVieMax, int pointsDeMana,int pointDeManaMax, int niveau, ArrayList<Arme> listeDesArmes, ArrayList<Sort> listeDesSort) {
-        super(pointsDeVie,pointDeVieMax, pointsDeMana,pointDeManaMax, niveau, listeDesArmes,listeDesSort);
+    public Chasseur(int pointsDeVie,int pointDeVieMax, int pointsDeMana,int pointDeManaMax, int niveau, ArrayList<Arme> listeDesArmes, ArrayList<Sort> listeDesSort,String nom, int nbPiece) {
+        super(pointsDeVie,pointDeVieMax, pointsDeMana,pointDeManaMax, niveau, listeDesArmes,listeDesSort,nom,nbPiece);
     }
 
     public Chasseur(){
-        super(12,12,12,12,1,new ArrayList<Arme>(),new ArrayList<Sort>());
+        super(12,12,12,12,1,new ArrayList<Arme>(),new ArrayList<Sort>(),"",0);
         Arc arc=new Arc();
         arc.setDegat(2);
         arc.setNbFleche(20);

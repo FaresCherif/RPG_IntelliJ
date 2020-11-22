@@ -17,7 +17,7 @@ public abstract class Personnage {
     private int pointsDeVie;
 
     private int pointsDeVieMax;
-
+    private int nbPiece;
 
     /**
      * Nombre de points de mana du Personnage
@@ -46,7 +46,7 @@ public abstract class Personnage {
      * @param listeDesArmes : Liste des armes d'un Personnage
      * @param listeDesSorts : Liste des sorts d'un Personnage
      */
-    public Personnage(int pointsDeVie, int pointsDeVieMax,int pointsDeMana,int pointsDeManaMax, int niveau, ArrayList<Arme> listeDesArmes, ArrayList<Sort> listeDesSorts) {
+    public Personnage(int pointsDeVie, int pointsDeVieMax,int pointsDeMana,int pointsDeManaMax, int niveau, ArrayList<Arme> listeDesArmes, ArrayList<Sort> listeDesSorts,String nom,int nbPiece) {
         this.pointsDeVie = pointsDeVie;
         this.pointsDeVieMax=pointsDeVieMax;
         this.pointsDeMana = pointsDeMana;
@@ -56,7 +56,8 @@ public abstract class Personnage {
         this.listeDesSorts=listeDesSorts;
         this.typeArme1=null;
         this.typeArme2=null;
-        this.nom="";
+        this.nom=nom;
+        this.nbPiece=nbPiece;
     }
 
     public String getNom() {
@@ -229,6 +230,9 @@ public abstract class Personnage {
         else{
             int nbPointAttaque;
             nbPointAttaque=this.typeArme1.getDegat();
+            if(Math.random()*100<5){
+                nbPointAttaque+=nbPointAttaque;
+            }
             adversaire.perdreVie(nbPointAttaque);
 
             //TODO prendre en compte blocage adverse
@@ -242,6 +246,9 @@ public abstract class Personnage {
         else{
             int nbPointAttaque;
             nbPointAttaque=this.typeArme1.getDegat();
+            if(Math.random()*100<5){
+                nbPointAttaque+=nbPointAttaque;
+            }
             adversaire.perdreVie(nbPointAttaque);
             this.typeArme1.tirerFleche();
             //TODO prendre en compte blocage adverse
@@ -262,6 +269,9 @@ public abstract class Personnage {
             System.out.println("Vous n'avez pas assez de mana");
         } else {
             personnageVise.perdreVie(sort.getDegat());
+            if(Math.random()*100<5){
+                personnageVise.perdreVie(sort.getDegat());
+            }
             this.perdreMana(sort.getCoutMana());
             //TODO prendre en compte l'effet
         }
