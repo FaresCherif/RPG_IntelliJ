@@ -28,4 +28,7 @@ public abstract class Arme {
 
     public void recupererToutFleche(){}
 
+    public void recupererFleche(int nbFleche){}
+
+
 }

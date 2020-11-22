@@ -159,7 +159,7 @@ public class Controller implements Initializable{
     private Button retourDescriptionMort;
 
     @FXML
-    private Group affichageVisctoire;
+    private Group affichageVictoire;
 
     @FXML
     private Label descriptionVictoire;
@@ -167,6 +167,35 @@ public class Controller implements Initializable{
     @FXML
     private Button retourDescriptionVictoire;
 
+    @FXML
+    private Group bouttonAttaqueSansArme;
+
+    @FXML
+    private Button retourSansArmeAttaqueBoutton;
+
+    @FXML
+    private Group allerMagasin;
+
+    @FXML
+    private Group magasinListeObjet;
+
+    @FXML
+    private Button acherterGrosseBoulleEnergie;
+
+    @FXML
+    private Button retourBoutique;
+
+    @FXML
+    private Button acherterBoulleEnergie;
+
+    @FXML
+    private Button grosseBoulleEnergie;
+
+    @FXML
+    private Button acheterSoin;
+
+    @FXML
+    private Button fabriquerFleche;
 
     GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     int width = gd.getDisplayMode().getWidth();
@@ -178,6 +207,7 @@ public class Controller implements Initializable{
 
     private Sort boulleEnnergie=new Sort();
     private Sort soin = new Sort(-8,new Effet(),4);
+    private Sort grosseBoulleEnnergie=new Sort(8,new Effet(),8);
 
 
 
@@ -281,9 +311,10 @@ public class Controller implements Initializable{
     }
 
     public void pageDescriptionPerso(){
+        magasinListeObjet.setVisible(false);
         descriptionAffichageEnnemi.setVisible(false);
         affichageMort.setVisible(false);
-        affichageVisctoire.setVisible(false);
+        affichageVictoire.setVisible(false);
         affichageEnnemi.setVisible(false);
         personnage.recuperer();
 
@@ -291,6 +322,9 @@ public class Controller implements Initializable{
         personnage.setNom(entrerNomPerso.getText());
         affichagePerso.setVisible(true);
         descriptionAffichagePerso.setVisible(true);
+        allerMagasin.setVisible(true);
+        allerMagasin.setTranslateX(600);
+
         imagePersonnage=imageViewPersonnage.getImage();
         pointVieDescriptionPersonage.setText(" PV : "+personnage.getPointsDeVie()+"/"+personnage.getPointsDeVieMax());
         descriptionAffichagePerso.setTranslateY(-150);
@@ -330,17 +364,25 @@ public class Controller implements Initializable{
             Epee epeeMechant=new Epee();
         }
         else{
-            ennemi.setPointsDeVieMax(ennemi.getPointsDeVieMax()+5*ennemi.getNiveau());
-            ennemi.setPointsDeManaMax(ennemi.getPointsDeManaMax()+5*ennemi.getNiveau());
             ennemi.recuperer();
-            ennemi.setNiveau(ennemi.getNiveau()+1);
+            if(ennemi.getNiveau()<personnage.getNiveau()){
+                ennemi.setPointsDeVieMax(ennemi.getPointsDeVieMax()+5*ennemi.getNiveau());
+                ennemi.setPointsDeManaMax(ennemi.getPointsDeManaMax()+5*ennemi.getNiveau());
+                ennemi.setNiveau(personnage.getNiveau());
+            }
         }
         pageCombat();
     }
 
     public void pageCombat(){
+        allerMagasin.setVisible(false);
         psserTourCombat.setVisible(true);
-        armePersonage.setText("Arme équipée "+ personnage.getArme());
+        if(personnage.getArme()!=null){
+            armePersonage.setText("Arme équipée "+ personnage.getArme());
+        }
+        else{
+            armePersonage.setText("Pas d'arme équipée");
+        }
         piecePersonnage.setText(personnage.getNbPiece()+" pieces");
         pointVieDescriptionPersonage.setText(" PV : "+personnage.getPointsDeVie()+"/"+personnage.getPointsDeVieMax());
         pointManaDescriptionPersonage.setText(" PM : "+personnage.getPointsDeMana()+"/"+personnage.getPointsDeManaMax());
@@ -352,15 +394,10 @@ public class Controller implements Initializable{
         niveauDescriptionEnnemi.setText(" Niveau : "+Integer.toString(ennemi.getNiveau()));
         bouttonAttaqueArc.setVisible(false);
         listeSortPersonnageCombat.setVisible(false);
+        bouttonAttaqueSansArme.setVisible(false);
 
         if(ennemi.getPointsDeVie()>0){
-            ennemi.reprendreMana(1);
-            if(personnage.getClass()==Mage.class){
-                personnage.reprendreMana(3);
-            }
-            else{
-                personnage.reprendreMana(1);
-            }
+
 
             bouttonAffichagePerso.setVisible(false);
             affichageEnnemi.setVisible(true);
@@ -408,8 +445,8 @@ public class Controller implements Initializable{
             psserTourCombat.setVisible(false);
             bouttonAttaqueEpee.setVisible(false);
 
-            affichageVisctoire.setVisible(true);
-            affichageVisctoire.setTranslateY(300);
+            affichageVictoire.setVisible(true);
+            affichageVictoire.setTranslateY(300);
             retourDescriptionVictoire.setTranslateX(400);
             retourDescriptionVictoire.setTranslateY(-200);
             descriptionVictoire.setTranslateY(-150);
@@ -419,53 +456,63 @@ public class Controller implements Initializable{
     }
 
     public void optionAttaque(){
+        int decalageBouttonAttaque=-200;
         psserTourCombat.setVisible(false);
         bouttonCombat.setVisible(false);
         if(personnage.getArme()!=null) {
             if (personnage.getArme().getClass() == Epee.class) {
                 bouttonAttaqueEpee.setVisible(true);
-                bouttonAttaqueEpee.setTranslateX(-200);
+                bouttonAttaqueEpee.setTranslateX(decalageBouttonAttaque);
+                decalageBouttonAttaque+=400;
                 bouttonAttaqueEpee.setTranslateY(300);
-                retourEpeeAttaqueBoutton.setTranslateX(200);
             } else if (personnage.getArme().getClass() == Arc.class) {
                 bouttonAttaqueArc.setVisible(true);
-                bouttonAttaqueArc.setVisible(true);
-                bouttonAttaqueArc.setTranslateX(-200);
+                bouttonAttaqueArc.setTranslateX(decalageBouttonAttaque);
                 bouttonAttaqueArc.setTranslateY(300);
-                retourArcAttaqueBoutton.setTranslateX(200);
+                decalageBouttonAttaque+=400;
+                fabriquerFleche.setTranslateX(decalageBouttonAttaque);
+                decalageBouttonAttaque+=200;
             }
         }
         else{
-            pageCombat();
+            bouttonAttaqueSansArme.setTranslateY(300);
+            bouttonAttaqueSansArme.setTranslateX(decalageBouttonAttaque);
+            bouttonAttaqueSansArme.setVisible(true);
         }
+        retourEpeeAttaqueBoutton.setTranslateX(decalageBouttonAttaque);
+        retourArcAttaqueBoutton.setTranslateX(decalageBouttonAttaque);
+        retourSansArmeAttaqueBoutton.setTranslateX(decalageBouttonAttaque);
 
     }
 
     public void optionSort(){
         psserTourCombat.setVisible(false);
-        if(personnage.getClass()==Mage.class){
-            bouttonCombat.setVisible(false);
-            listeSortPersonnageCombat.setTranslateX(-200);
-            listeSortPersonnageCombat.setTranslateY(300);
-            listeSortPersonnageCombat.setVisible(true);
-            int i=0;
+        bouttonCombat.setVisible(false);
+        listeSortPersonnageCombat.setTranslateX(-200);
+        listeSortPersonnageCombat.setTranslateY(300);
+        listeSortPersonnageCombat.setVisible(true);
+        int decalageSort=0;
 
-            if(personnage.getListeDesSorts().contains(boulleEnnergie)){
-                i+=200;
-                boulleEnergie.setVisible(true);
-            }
-
-            if(personnage.getListeDesSorts().contains(soin)){
-                sortSoint.setTranslateX(i);
-                i+=200;
-                sortSoint.setVisible(true);
-            }
-
-            retourSortBoutton.setTranslateX(i);
+        if(personnage.getListeDesSorts().contains(boulleEnnergie)){
+            decalageSort+=200;
+            boulleEnergie.setVisible(true);
         }
-        else{
-            pageCombat();
+
+        if(personnage.getListeDesSorts().contains(soin)){
+            sortSoint.setTranslateX(decalageSort);
+            decalageSort+=200;
+            sortSoint.setVisible(true);
         }
+
+        if(personnage.getListeDesSorts().contains(grosseBoulleEnnergie)){
+            grosseBoulleEnergie.setTranslateX(decalageSort);
+            decalageSort+=200;
+            grosseBoulleEnergie.setVisible(true);
+        }
+
+
+        retourSortBoutton.setTranslateX(decalageSort);
+
     }
 
     public void coupEpee(){
@@ -481,15 +528,20 @@ public class Controller implements Initializable{
 
     }
 
+    public void faireFleche(){
+        personnage.typeArme1.recupererFleche(5);
+        tourEnnemi();
+    }
+
     public void boulleEnergie(){
-        if(personnage.getPointsDeMana()>boulleEnnergie.getCoutMana()) {
+        if(personnage.getPointsDeMana()>=boulleEnnergie.getCoutMana()) {
             personnage.utiliseSort(ennemi, boulleEnnergie);
             tourEnnemi();
         }
     }
 
     public void sortSoin(){
-        if(personnage.getPointsDeMana()>soin.getCoutMana()) {
+        if(personnage.getPointsDeMana()>=soin.getCoutMana()) {
             personnage.utiliseSort(personnage, soin);
             tourEnnemi();
         }
@@ -498,6 +550,13 @@ public class Controller implements Initializable{
     public void tourEnnemi(){
         if(ennemi.getPointsDeVie()>0){
             ennemi.morsure(personnage);
+        }
+        ennemi.reprendreMana(1);
+        if(personnage.getClass()==Mage.class){
+            personnage.reprendreMana(3);
+        }
+        else{
+            personnage.reprendreMana(1);
         }
         pageCombat();
     }
@@ -513,5 +572,70 @@ public class Controller implements Initializable{
                 BackgroundSize.DEFAULT);
         gridPane.setBackground(new Background(myBI));
         pageDescriptionPerso();
+    }
+
+    public void pageMagasin(){
+        piecePersonnage.setText(personnage.getNbPiece()+" pieces");
+        bouttonAffichagePerso.setVisible(false);
+        int decalageMagasin=0;
+        allerMagasin.setVisible(false);
+        magasinListeObjet.setVisible(true);
+        acherterBoulleEnergie.setVisible(false);
+        acherterGrosseBoulleEnergie.setVisible(false);
+        acherterGrosseBoulleEnergie.setVisible(false);
+        acheterSoin.setVisible(false);
+
+
+
+        if(!personnage.getListeDesSorts().contains(grosseBoulleEnnergie)){
+            acherterGrosseBoulleEnergie.setVisible(true);
+            acherterGrosseBoulleEnergie.setTranslateX(decalageMagasin);
+            decalageMagasin+=200;
+        }
+
+        if(!personnage.getListeDesSorts().contains(boulleEnnergie)){
+            acherterBoulleEnergie.setVisible(true);
+            acherterBoulleEnergie.setTranslateX(decalageMagasin);
+            decalageMagasin+=200;
+        }
+
+        if(!personnage.getListeDesSorts().contains(soin)){
+            acheterSoin.setVisible(true);
+            acheterSoin.setTranslateX(decalageMagasin);
+            decalageMagasin+=200;
+        }
+        retourBoutique.setTranslateX(decalageMagasin);
+    }
+
+    public void acheterBoulleEnergie(){
+        if(personnage.getNbPiece()>=50){
+            personnage.perdrePiece(50);
+            personnage.apprendreSort(boulleEnnergie);
+        }
+        pageMagasin();
+    }
+
+    public void acheterGrosseBoulleEnergie(){
+        if(personnage.getNbPiece()>=100){
+            personnage.perdrePiece(100);
+            personnage.apprendreSort(grosseBoulleEnnergie);
+        }
+        pageMagasin();
+    }
+
+    public void grosseBoulleEnergie(){
+        if(personnage.getPointsDeMana()>=grosseBoulleEnnergie.getCoutMana()) {
+            personnage.utiliseSort(ennemi, grosseBoulleEnnergie);
+            tourEnnemi();
+        }
+    }
+
+
+    public void acheterSoin(){
+        if(personnage.getNbPiece()>=50){
+            personnage.perdrePiece(50);
+            personnage.apprendreSort(soin);
+        }
+        pageMagasin();
     }
 }

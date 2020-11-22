@@ -33,8 +33,12 @@ public class Arc extends Arme {
         perdreFleche(1);
     }
 
+    @Override
     public void recupererFleche(int nbFleche){
         setNbFleche(this.nbFleche+nbFleche);
+        if(this.nbFlecheMax<this.nbFleche){
+            this.nbFleche=this.nbFlecheMax;
+        }
     }
 
     @Override
