@@ -300,5 +300,7 @@ public abstract class Personnage {
 
     public void gagnerNiveau(){
         this.niveau+=1;
+        this.pointsDeVieMax+=niveau;
+        this.pointsDeManaMax+=niveau;
     }
 }
