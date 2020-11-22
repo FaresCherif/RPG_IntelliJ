@@ -27,3 +27,4 @@ public class Main extends Application {
 }
 
 //TODO  mettre des images dans les boutons de choix des personnages
+// remplacer if par exception quand une personne meurt

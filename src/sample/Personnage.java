@@ -177,6 +177,9 @@ public abstract class Personnage {
 
     public void perdreVie(int nbPointAttaque){
         this.pointsDeVie-=nbPointAttaque;
+        if(this.pointsDeVie>this.pointsDeVieMax){
+            this.pointsDeVie=this.pointsDeVieMax;
+        }
     }
 
     public void reprendreVie(int nbPvSoin){
@@ -265,4 +268,27 @@ public abstract class Personnage {
     }
 
 
+    public void recupererEpee(Epee epee){
+        if(this.getListeDesArmes().isEmpty()){
+            typeArme1=epee;
+        }
+        gagnereArme(epee);
+    }
+
+    public Arme getTypeArme1(){
+        return this.typeArme1;
+    }
+
+    public void setTypeArme1(Arme arme){
+        this.typeArme1=arme;
+    }
+
+    public void recuperer(){
+        this.pointsDeVie=pointsDeVieMax;
+        this.pointsDeMana=pointsDeManaMax;
+    }
+
+    public void gagnerNiveau(){
+        this.niveau+=1;
+    }
 }

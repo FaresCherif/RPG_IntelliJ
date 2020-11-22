@@ -57,12 +57,6 @@ public class Guerrier extends Personnage {
         return guerrier;
     }
 
-    public void recupererEpee(Epee epee){
-        if(this.getListeDesArmes().isEmpty()){
-            typeArme1=epee;
-        }
-        gagnereArme(epee);
-    }
 
     public Arme getArme(){
         return this.typeArme1;

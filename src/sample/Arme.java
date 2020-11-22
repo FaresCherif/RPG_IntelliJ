@@ -24,4 +24,6 @@ public abstract class Arme {
 
     public void tirerFleche(){};
 
+    public int getNbFleche(){return 0;}
+
 }

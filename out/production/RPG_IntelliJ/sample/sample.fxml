@@ -93,9 +93,24 @@
     </Group>
 
     <Group fx:id="listeSortPersonnageCombat" visible="false">
-        <Button  fx:id="boulleEnergie" minHeight="100" minWidth="100" onMouseClicked="#boulleEnergie" style="-fx-background-size: 100 100; " >Boulle d'énergie</Button>
+        <Button  visible="false" fx:id="boulleEnergie" minHeight="100" minWidth="100" onMouseClicked="#boulleEnergie" style="-fx-background-size: 100 100; " >Boulle d'énergie</Button>
+        <Button  visible="false" fx:id="sortSoint" minHeight="100" minWidth="100" onMouseClicked="#sortSoin" style="-fx-background-size: 100 100; " >Soin</Button>
         <Button  fx:id="retourSortBoutton" minHeight="100" minWidth="100" onMouseClicked="#pageCombat" style="-fx-background-size: 100 100; " >Retour</Button>
 
+    </Group>
+
+    <Group fx:id="psserTourCombat" visible="false">
+        <Button fx:id="passerTourCombat" minHeight="100" minWidth="100" onMouseClicked="#passerTour" style="-fx-background-size: 100 100; " >Passer tour</Button>
+    </Group>
+
+    <Group fx:id="affichageMort" visible="false">
+        <Label style="-fx-background-color:white" fx:id="descriptionMort">Vous êtes mort</Label>
+        <Button fx:id="retourDescriptionMort" minHeight="100" minWidth="100" onMouseClicked="#retourPageDescriptionPerso" style="-fx-background-size: 100 100; " >Continuer</Button>
+    </Group>
+
+    <Group fx:id="affichageVisctoire" visible="false">
+        <Label style="-fx-background-color:white" fx:id="descriptionVictoire">Vous avez gagner</Label>
+        <Button fx:id="retourDescriptionVictoire" minHeight="100" minWidth="100" onMouseClicked="#retourPageDescriptionPerso" style="-fx-background-size: 100 100; " >Continuer</Button>
     </Group>
 
 </GridPane>

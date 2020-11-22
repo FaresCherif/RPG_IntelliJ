@@ -15,12 +15,13 @@ public class Ennemi extends Personnage {
         recupererEpee(epee);
     }
 
-    public void recupererEpee(Epee epee){
-        if(this.getListeDesArmes().isEmpty()){
-            typeArme1=epee;
-        }
-        gagnereArme(epee);
+    public void morsure(Personnage personnage){
+        int nbPointAttaque;
+        nbPointAttaque=2;
+        personnage.perdreVie(nbPointAttaque);
     }
+
+
 
 
 }

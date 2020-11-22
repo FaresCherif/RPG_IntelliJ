@@ -41,6 +41,7 @@ public class Arc extends Arme {
         return arc;
     }
 
+    @Override
     public int getNbFleche(){
         return this.nbFleche;
     }

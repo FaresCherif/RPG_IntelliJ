@@ -140,14 +140,41 @@ public class Controller implements Initializable{
     @FXML
     private  Button retourSortBoutton;
 
+    @FXML
+    private Button sortSoint;
+
+    @FXML
+    private Group psserTourCombat;
+
+    @FXML
+    private Group affichageMort;
+
+    @FXML
+    private Label descriptionMort;
+
+    @FXML
+    private Button retourDescriptionMort;
+
+    @FXML
+    private Group affichageVisctoire;
+
+    @FXML
+    private Label descriptionVictoire;
+
+    @FXML
+    private Button retourDescriptionVictoire;
+
 
     GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     int width = gd.getDisplayMode().getWidth();
     int height = gd.getDisplayMode().getHeight();
 
     private Personnage personnage;
-    private Personnage ennemi;
+    private Ennemi ennemi;
     private Image imagePersonnage;
+
+    private Sort boulleEnnergie=new Sort();
+    private Sort soin = new Sort(-8,new Effet(),4);
 
 
 
@@ -219,6 +246,8 @@ public class Controller implements Initializable{
 
         imageViewPersonnage.setImage(nouvelleImage);
         affichagePerso.setTranslateX(-400);
+        personnage.apprendreSort(boulleEnnergie);
+        personnage.apprendreSort(soin);
 
     }
 
@@ -249,6 +278,11 @@ public class Controller implements Initializable{
     }
 
     public void pageDescriptionPerso(){
+        descriptionAffichageEnnemi.setVisible(false);
+        affichageMort.setVisible(false);
+        affichageVisctoire.setVisible(false);
+        affichageEnnemi.setVisible(false);
+        personnage.recuperer();
 
         nomCreationPerso.setVisible(false);
         personnage.setNom(entrerNomPerso.getText());
@@ -290,6 +324,7 @@ public class Controller implements Initializable{
     }
 
     public void pageCombat(){
+        psserTourCombat.setVisible(true);
         armePersonage.setText("Arme équipée "+ personnage.getArme());
         pointVieDescriptionPersonage.setText(" PV : "+personnage.getPointsDeVie()+"/"+personnage.getPointsDeVieMax());
         pointManaDescriptionPersonage.setText(" PM : "+personnage.getPointsDeMana()+"/"+personnage.getPointsDeManaMax());
@@ -301,6 +336,7 @@ public class Controller implements Initializable{
         niveauDescriptionEnnemi.setText(" Niveau : "+Integer.toString(ennemi.getNiveau()));
         bouttonAttaqueArc.setVisible(false);
         listeSortPersonnageCombat.setVisible(false);
+
         if(ennemi.getPointsDeVie()>0){
             bouttonAffichagePerso.setVisible(false);
             affichageEnnemi.setVisible(true);
@@ -320,17 +356,44 @@ public class Controller implements Initializable{
             bouttonCombat.setTranslateX(-200);
             bouttonCombat.setTranslateY(300);
 
+            psserTourCombat.setVisible(true);
             bouttonSort.setTranslateX(200);
+            psserTourCombat.setTranslateX(200);
+            psserTourCombat.setTranslateX(200);
+            psserTourCombat.setTranslateY(300);
+
+            if(personnage.getPointsDeVie()<=0){
+                psserTourCombat.setVisible(false);
+                bouttonAttaqueEpee.setVisible(false);
+                bouttonCombat.setVisible(false);
+
+                affichageMort.setVisible(true);
+                affichageMort.setTranslateY(300);
+                retourDescriptionMort.setTranslateX(400);
+                retourDescriptionMort.setTranslateY(-200);
+                descriptionMort.setTranslateY(-150);
+            }
         }
         else{
-
+            personnage.gagnerNiveau();
+            pointVieDescriptionPersonage.setText(" PV : "+personnage.getPointsDeVie()+"/"+personnage.getPointsDeVieMax());
+            pointManaDescriptionPersonage.setText(" PM : "+personnage.getPointsDeMana()+"/"+personnage.getPointsDeManaMax());
+            niveauDescriptionPersonage.setText(" Niveau : "+Integer.toString(personnage.getNiveau()));
+            psserTourCombat.setVisible(false);
             bouttonAttaqueEpee.setVisible(false);
+
+            affichageVisctoire.setVisible(true);
+            affichageVisctoire.setTranslateY(300);
+            retourDescriptionVictoire.setTranslateX(400);
+            retourDescriptionVictoire.setTranslateY(-200);
+            descriptionVictoire.setTranslateY(-150);
         }
 
 
     }
 
     public void optionAttaque(){
+        psserTourCombat.setVisible(false);
         bouttonCombat.setVisible(false);
         if(personnage.getArme()!=null) {
             if (personnage.getArme().getClass() == Epee.class) {
@@ -353,25 +416,76 @@ public class Controller implements Initializable{
     }
 
     public void optionSort(){
-        bouttonCombat.setVisible(false);
-        listeSortPersonnageCombat.setTranslateX(-200);
-        listeSortPersonnageCombat.setTranslateY(300);
-        listeSortPersonnageCombat.setVisible(true);
-        retourSortBoutton.setTranslateX(200);
+        psserTourCombat.setVisible(false);
+        if(personnage.getClass()==Mage.class){
+            bouttonCombat.setVisible(false);
+            listeSortPersonnageCombat.setTranslateX(-200);
+            listeSortPersonnageCombat.setTranslateY(300);
+            listeSortPersonnageCombat.setVisible(true);
+            int i=0;
+
+            if(personnage.getListeDesSorts().contains(boulleEnnergie)){
+                i+=200;
+                boulleEnergie.setVisible(true);
+            }
+
+            if(personnage.getListeDesSorts().contains(soin)){
+                sortSoint.setTranslateX(i);
+                i+=200;
+                sortSoint.setVisible(true);
+            }
+
+            retourSortBoutton.setTranslateX(i);
+        }
+        else{
+            pageCombat();
+        }
     }
 
     public void coupEpee(){
         personnage.coupEpee(ennemi);
-        pageCombat();
+        tourEnnemi();
     }
 
     public void tirerFleche(){
-        personnage.tirerFleche(ennemi);
-        pageCombat();
+        if(personnage.getTypeArme1().getNbFleche()>0){
+            personnage.tirerFleche(ennemi);
+            tourEnnemi();
+        }
+
     }
 
     public void boulleEnergie(){
-        personnage.utiliseSort(ennemi,new Sort());
+        if(personnage.getPointsDeMana()>boulleEnnergie.getCoutMana()) {
+            personnage.utiliseSort(ennemi, boulleEnnergie);
+            tourEnnemi();
+        }
+    }
+
+    public void sortSoin(){
+        if(personnage.getPointsDeMana()>soin.getCoutMana()) {
+            personnage.utiliseSort(personnage, soin);
+            tourEnnemi();
+        }
+    }
+
+    public void tourEnnemi(){
+        if(ennemi.getPointsDeVie()>0){
+            ennemi.morsure(personnage);
+        }
         pageCombat();
+    }
+
+
+    public void passerTour(){
+        tourEnnemi();
+    }
+
+    public void retourPageDescriptionPerso(){
+        BackgroundImage myBI= new BackgroundImage(new Image("https://cameronscookware.com/wp-content/uploads/2019/12/fantasy-world-background-best-of-fantasy-world-backgrounds-4k-download-2019-of-fantasy-world-background.jpg",width,height,false,true),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        gridPane.setBackground(new Background(myBI));
+        pageDescriptionPerso();
     }
 }
