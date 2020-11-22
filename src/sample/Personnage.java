@@ -296,11 +296,30 @@ public abstract class Personnage {
     public void recuperer(){
         this.pointsDeVie=pointsDeVieMax;
         this.pointsDeMana=pointsDeManaMax;
+        if(this.typeArme1!=null){
+            this.typeArme1.recupererToutFleche();
+        }
     }
 
     public void gagnerNiveau(){
         this.niveau+=1;
         this.pointsDeVieMax+=niveau;
         this.pointsDeManaMax+=niveau;
+    }
+
+    public void setNbPiece(int nbPiece){
+        this.nbPiece=nbPiece;
+    }
+
+    public int getNbPiece(){
+        return this.nbPiece;
+    }
+
+    public void gagnerPiece(int nbPiece){
+        this.nbPiece+=nbPiece;
+    }
+
+    public void perdrePiece(int nbPiece){
+        this.nbPiece-=nbPiece;
     }
 }

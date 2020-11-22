@@ -11,8 +11,6 @@ public class Ennemi extends Personnage {
 
     public Ennemi( ) {
         super(7, 7,5,5,1, new ArrayList<Arme>(), new ArrayList<Sort>(),"",0);
-        Epee epee=new Epee();
-        recupererEpee(epee);
     }
 
     public void morsure(Personnage personnage){

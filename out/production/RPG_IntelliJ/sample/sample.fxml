@@ -53,6 +53,7 @@
 
     <Group fx:id="descriptionArmeEquipee" visible="false">
         <Label style="-fx-background-color:white" fx:id="armePersonage"></Label>
+        <Label style="-fx-background-color:white" fx:id="piecePersonnage"></Label>
     </Group>
 
 

@@ -114,6 +114,9 @@ public class Controller implements Initializable{
     private Label armePersonage;
 
     @FXML
+    private Label piecePersonnage;
+
+    @FXML
     private Group bouttonCombat;
 
     @FXML
@@ -310,6 +313,8 @@ public class Controller implements Initializable{
         else{
             armePersonage.setText("Pas d'arme équipée");
         }
+        piecePersonnage.setTranslateY(20);
+        piecePersonnage.setText(personnage.getNbPiece()+" pieces");
 
     }
 
@@ -319,13 +324,24 @@ public class Controller implements Initializable{
                 BackgroundSize.DEFAULT);
 
         gridPane.setBackground(new Background(myBI));
-        ennemi=new Ennemi();
+
+        if(ennemi==null){
+            ennemi=new Ennemi();
+            Epee epeeMechant=new Epee();
+        }
+        else{
+            ennemi.setPointsDeVieMax(ennemi.getPointsDeVieMax()+5*ennemi.getNiveau());
+            ennemi.setPointsDeManaMax(ennemi.getPointsDeManaMax()+5*ennemi.getNiveau());
+            ennemi.recuperer();
+            ennemi.setNiveau(ennemi.getNiveau()+1);
+        }
         pageCombat();
     }
 
     public void pageCombat(){
         psserTourCombat.setVisible(true);
         armePersonage.setText("Arme équipée "+ personnage.getArme());
+        piecePersonnage.setText(personnage.getNbPiece()+" pieces");
         pointVieDescriptionPersonage.setText(" PV : "+personnage.getPointsDeVie()+"/"+personnage.getPointsDeVieMax());
         pointManaDescriptionPersonage.setText(" PM : "+personnage.getPointsDeMana()+"/"+personnage.getPointsDeManaMax());
         niveauDescriptionPersonage.setText(" Niveau : "+Integer.toString(personnage.getNiveau()));
@@ -338,6 +354,14 @@ public class Controller implements Initializable{
         listeSortPersonnageCombat.setVisible(false);
 
         if(ennemi.getPointsDeVie()>0){
+            ennemi.reprendreMana(1);
+            if(personnage.getClass()==Mage.class){
+                personnage.reprendreMana(3);
+            }
+            else{
+                personnage.reprendreMana(1);
+            }
+
             bouttonAffichagePerso.setVisible(false);
             affichageEnnemi.setVisible(true);
             affichageEnnemi.setTranslateX(600);
@@ -375,6 +399,8 @@ public class Controller implements Initializable{
             }
         }
         else{
+            personnage.gagnerPiece(ennemi.getNiveau()*10);
+            piecePersonnage.setText(personnage.getNbPiece()+" pieces");
             personnage.gagnerNiveau();
             pointVieDescriptionPersonage.setText(" PV : "+personnage.getPointsDeVie()+"/"+personnage.getPointsDeVieMax());
             pointManaDescriptionPersonage.setText(" PM : "+personnage.getPointsDeMana()+"/"+personnage.getPointsDeManaMax());

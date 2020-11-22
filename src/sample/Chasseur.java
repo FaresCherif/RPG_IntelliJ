@@ -24,6 +24,7 @@ public class Chasseur extends Personnage {
         Arc arc=new Arc();
         arc.setDegat(2);
         arc.setNbFleche(20);
+        arc.setNbFlecheMax(20);
         this.recupererArc(arc);
     }
 
@@ -66,6 +67,5 @@ public class Chasseur extends Personnage {
     public Arme getArme(){
         return this.typeArme1;
     }
-
 
 }
