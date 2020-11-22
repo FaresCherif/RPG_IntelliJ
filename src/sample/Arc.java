@@ -4,6 +4,7 @@ public class Arc extends Arme {
 
     private int nbFleche;
 
+
     public void Arc(int degat, int blocage,int nbFleche){
         this.setDegat(degat);
         this.setBlocage(blocage);
@@ -11,7 +12,7 @@ public class Arc extends Arme {
     }
 
     public void Arc(){
-        this.setDegat(0);
+        this.setDegat(2);
         this.setBlocage(0);
         this.nbFleche=20;
     }
@@ -24,16 +25,27 @@ public class Arc extends Arme {
         this.nbFleche-=nbFleche;
     }
 
+    @Override
     public void tirerFleche(){
         perdreFleche(1);
+    }
+
+    public void recupererFleche(int nbFleche){
+        setNbFleche(this.nbFleche+nbFleche);
+    }
+
+    @Override
+    public String toString() {
+        String arc="";
+        arc+="Arc : "+getDegat()+" degat / "+getBlocage()+" blocage / "+this.getNbFleche()+" fleches";
+        return arc;
     }
 
     public int getNbFleche(){
         return this.nbFleche;
     }
 
-    public void ajouterFleche(int nbFleche){
-        setNbFleche(nbFleche+1);
-    }
+
+
 
 }

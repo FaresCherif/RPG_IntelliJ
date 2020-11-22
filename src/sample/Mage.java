@@ -19,20 +19,14 @@ public class Mage extends Personnage {
 
     public Mage() {
         super(10, 10, 15, 15, 1, new ArrayList<Arme>(), new ArrayList<Sort>());
+        Sort sort=new Sort();
+        this.apprendreSort(sort);
     }
 
     /**
      * Petit sort
      */
-    public void utiliseSort(Personnage personnageVise, Sort sort) {
-        if (sort.getCoutMana() > this.getPointsDeMana()) {
-            System.out.println("Vous n'avez pas assez de mana");
-        } else {
-            personnageVise.perdreVie(sort.getDegat());
-            this.perdreMana(sort.getCoutMana());
-            //TODO prendre en compte l'effet
-        }
-    }
+
 
 
     @Override

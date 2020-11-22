@@ -3,7 +3,7 @@ package sample;
 public abstract class Arme {
 
     private int degat;
-    private int  blocage;
+    private int blocage;
 
     public int getDegat(){
         return this.degat;
@@ -21,5 +21,7 @@ public abstract class Arme {
     public void setBlocage(int blocage){
         this.blocage=blocage;
     }
+
+    public void tirerFleche(){};
 
 }

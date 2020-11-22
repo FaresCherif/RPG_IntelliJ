@@ -9,6 +9,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -61,59 +62,110 @@ public class Controller implements Initializable{
     @FXML
     private TextArea entrerNomPerso;
 
+    @FXML
+    private Group affichagePerso;
+
+    @FXML
+    private ImageView imageViewPersonnage;
+
+    @FXML
+    private Image imagePerso;
+
+    @FXML
+    private Group descriptionAffichagePerso;
+
+    @FXML
+    private Label pointVieDescriptionPersonage;
+
+    @FXML
+    private Label pointManaDescriptionPersonage;
+
+    @FXML
+    private Label niveauDescriptionPersonage;
+
+    @FXML
+    private Group bouttonAffichagePerso;
+
+    @FXML
+    private Group affichageEnnemi;
+
+    @FXML
+    private ImageView imageViewEnnemi;
+
+    @FXML
+    private Image imageEnnemi;
+
+    @FXML
+    private Label pointVieDescriptionEnnemi;
+
+    @FXML
+    private Label pointManaDescriptionEnnemi;
+
+    @FXML
+    private Label niveauDescriptionEnnemi;
+
+    @FXML
+    private Group descriptionAffichageEnnemi;
+
+    @FXML
+    private Group descriptionArmeEquipee;
+
+    @FXML
+    private Label armePersonage;
+
+    @FXML
+    private Group bouttonCombat;
+
+    @FXML
+    private Button bouttonSort;
+
+    @FXML
+    private Group bouttonAttaqueEpee;
+
+    @FXML
+    private Group bouttonAttaqueArc;
+
+    @FXML
+    private Button retourEpeeAttaqueBoutton;
+
+    @FXML
+    private Button retourArcAttaqueBoutton;
+
+    @FXML
+    private Group listeSortPersonnageCombat;
+
+    @FXML
+    private Button boulleEnergie;
+
+    @FXML
+    private  Button retourSortBoutton;
+
+
+    GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+    int width = gd.getDisplayMode().getWidth();
+    int height = gd.getDisplayMode().getHeight();
+
     private Personnage personnage;
+    private Personnage ennemi;
+    private Image imagePersonnage;
+
+
 
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        int width = gd.getDisplayMode().getWidth();
-        int height = gd.getDisplayMode().getHeight();
 
         pagePrincipale.setVisible(true);
         bouttonCreationPerso.setVisible(false);
 
         pagePrincipale.setTranslateX(-width/2+250);
         pagePrincipale.setTranslateY(-height/2+150);
+
         BackgroundImage myBI= new BackgroundImage(new Image("https://cameronscookware.com/wp-content/uploads/2019/12/fantasy-world-background-best-of-fantasy-world-backgrounds-4k-download-2019-of-fantasy-world-background.jpg",width,height,false,true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         gridPane.setBackground(new Background(myBI));
 
-
-
-        Guerrier guerrier = new Guerrier();
-        Chasseur chasseur = new Chasseur();
-        Mage mage= new Mage();
-        Epee epee = new Epee();
-        Arc arc = new Arc();
-        Sort sort=new Sort();
-
-        chasseur.recupererArc(arc);
-
-        System.out.println(chasseur);
-        guerrier.coupEpee(chasseur);
-        System.out.println(chasseur);
-        chasseur.tireArc(guerrier,arc);
-        System.out.println(chasseur);
-        chasseur.recupererFleche(5);
-        System.out.println(chasseur);
-        chasseur.tireArc(guerrier,arc);
-        System.out.println(chasseur);
-        System.out.println(guerrier);
-        System.out.println("\n");
-
-        guerrier.recupererEpee(epee);
-        guerrier.coupEpee(chasseur);
-        System.out.println(chasseur);
-
-        System.out.println("\n");
-        System.out.println(mage);
-        mage.apprendreSort(sort);
-        mage.utiliseSort(guerrier,sort);
-
-        System.out.println(mage);
-        System.out.println(guerrier);
     }
 
     public void allerPageCreerPersonnage(ActionEvent actionEvent) {
@@ -163,6 +215,10 @@ public class Controller implements Initializable{
 
         personnage=new Mage();
         validerNom.setTranslateX(300);
+        Image nouvelleImage = new Image("https://listimg.pinclipart.com/picdir/s/559-5599557_rpg-character-png-2d-clipart.png",100,200,false,false);
+
+        imageViewPersonnage.setImage(nouvelleImage);
+        affichagePerso.setTranslateX(-400);
 
     }
 
@@ -172,6 +228,9 @@ public class Controller implements Initializable{
         nomCreationPerso.setVisible(true);
         personnage=new Guerrier();
         validerNom.setTranslateX(300);
+        Image nouvelleImage= new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWNdOOAfEZGi0pM4wh3W9C93M9z1gkadS_vg&usqp=CAU",200,100,false,false);
+        imageViewPersonnage.setImage(nouvelleImage);
+        affichagePerso.setTranslateX(-500);
 
     }
 
@@ -183,12 +242,136 @@ public class Controller implements Initializable{
         personnage=new Chasseur();
 
         validerNom.setTranslateX(300);
+        Image nouvelleImage= new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfhvRyJp2XzvYeVTaMTgCENERCy1wVFTSdCg&usqp=CAU",100,100,false,false);
+        imageViewPersonnage.setImage(nouvelleImage);
+        affichagePerso.setTranslateX(-400);
+
     }
 
     public void pageDescriptionPerso(){
+
         nomCreationPerso.setVisible(false);
         personnage.setNom(entrerNomPerso.getText());
+        affichagePerso.setVisible(true);
+        descriptionAffichagePerso.setVisible(true);
+        imagePersonnage=imageViewPersonnage.getImage();
+        pointVieDescriptionPersonage.setText(" PV : "+personnage.getPointsDeVie()+"/"+personnage.getPointsDeVieMax());
+        descriptionAffichagePerso.setTranslateY(-150);
+        descriptionAffichagePerso.setTranslateX(-350);
+        pointManaDescriptionPersonage.setTranslateY(20);
+        pointManaDescriptionPersonage.setText(" PM : "+personnage.getPointsDeMana()+"/"+personnage.getPointsDeManaMax());
+        niveauDescriptionPersonage.setText(" Niveau : "+Integer.toString(personnage.getNiveau()));
+        niveauDescriptionPersonage.setTranslateY(40);
+
+        bouttonAffichagePerso.setVisible(true);
+        bouttonAffichagePerso.setTranslateX(-300);
+        bouttonAffichagePerso.setTranslateY(300);
+
+        descriptionArmeEquipee.setVisible(true);
+        descriptionArmeEquipee.setTranslateX(-350);
+        descriptionArmeEquipee.setTranslateY(150);
+        if(personnage.getArme()!=null){
+            armePersonage.setText("Arme équipée "+ personnage.getArme());
+        }
+        else{
+            armePersonage.setText("Pas d'arme équipée");
+        }
+
+    }
+
+    public void fondCombat(){
+        BackgroundImage myBI= new BackgroundImage(new Image("https://static.wikia.nocookie.net/finalfantasy/images/c/c8/Battleback_coliseum.png/revision/latest?cb=20141030003602",width,height,false,true),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+
+        gridPane.setBackground(new Background(myBI));
+        ennemi=new Ennemi();
+        pageCombat();
+    }
+
+    public void pageCombat(){
+        armePersonage.setText("Arme équipée "+ personnage.getArme());
+        pointVieDescriptionPersonage.setText(" PV : "+personnage.getPointsDeVie()+"/"+personnage.getPointsDeVieMax());
+        pointManaDescriptionPersonage.setText(" PM : "+personnage.getPointsDeMana()+"/"+personnage.getPointsDeManaMax());
+        niveauDescriptionPersonage.setText(" Niveau : "+Integer.toString(personnage.getNiveau()));
 
 
+        pointVieDescriptionEnnemi.setText(" PV : "+ennemi.getPointsDeVie()+"/"+ennemi.getPointsDeVieMax());
+        pointManaDescriptionEnnemi.setText(" PM : "+ennemi.getPointsDeMana()+"/"+ennemi.getPointsDeManaMax());
+        niveauDescriptionEnnemi.setText(" Niveau : "+Integer.toString(ennemi.getNiveau()));
+        bouttonAttaqueArc.setVisible(false);
+        listeSortPersonnageCombat.setVisible(false);
+        if(ennemi.getPointsDeVie()>0){
+            bouttonAffichagePerso.setVisible(false);
+            affichageEnnemi.setVisible(true);
+            affichageEnnemi.setTranslateX(600);
+
+            bouttonAttaqueEpee.setVisible(false);
+
+
+            descriptionAffichageEnnemi.setVisible(true);
+            descriptionAffichageEnnemi.setTranslateY(-150);
+            descriptionAffichageEnnemi.setTranslateX(600);
+
+            pointManaDescriptionEnnemi.setTranslateY(20);
+            niveauDescriptionEnnemi.setTranslateY(40);
+
+            bouttonCombat.setVisible(true);
+            bouttonCombat.setTranslateX(-200);
+            bouttonCombat.setTranslateY(300);
+
+            bouttonSort.setTranslateX(200);
+        }
+        else{
+
+            bouttonAttaqueEpee.setVisible(false);
+        }
+
+
+    }
+
+    public void optionAttaque(){
+        bouttonCombat.setVisible(false);
+        if(personnage.getArme()!=null) {
+            if (personnage.getArme().getClass() == Epee.class) {
+                bouttonAttaqueEpee.setVisible(true);
+                bouttonAttaqueEpee.setTranslateX(-200);
+                bouttonAttaqueEpee.setTranslateY(300);
+                retourEpeeAttaqueBoutton.setTranslateX(200);
+            } else if (personnage.getArme().getClass() == Arc.class) {
+                bouttonAttaqueArc.setVisible(true);
+                bouttonAttaqueArc.setVisible(true);
+                bouttonAttaqueArc.setTranslateX(-200);
+                bouttonAttaqueArc.setTranslateY(300);
+                retourArcAttaqueBoutton.setTranslateX(200);
+            }
+        }
+        else{
+            pageCombat();
+        }
+
+    }
+
+    public void optionSort(){
+        bouttonCombat.setVisible(false);
+        listeSortPersonnageCombat.setTranslateX(-200);
+        listeSortPersonnageCombat.setTranslateY(300);
+        listeSortPersonnageCombat.setVisible(true);
+        retourSortBoutton.setTranslateX(200);
+    }
+
+    public void coupEpee(){
+        personnage.coupEpee(ennemi);
+        pageCombat();
+    }
+
+    public void tirerFleche(){
+        personnage.tirerFleche(ennemi);
+        pageCombat();
+    }
+
+    public void boulleEnergie(){
+        personnage.utiliseSort(ennemi,new Sort());
+        pageCombat();
     }
 }

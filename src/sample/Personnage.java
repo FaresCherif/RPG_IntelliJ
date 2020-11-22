@@ -213,4 +213,56 @@ public abstract class Personnage {
     public void oublierSort(Sort sort){
         this.listeDesSorts.remove(sort);
     }
+
+
+    /**
+     * Le Guerrier inflige des dégât à son adversaire avec son épée
+     */
+
+    public void coupEpee(Personnage adversaire) {
+        if(typeArme1==null && typeArme1.getClass()!=Epee.class){
+            System.out.println("Vous n'avez pas d'épée équipée");
+        }
+        else{
+            int nbPointAttaque;
+            nbPointAttaque=this.typeArme1.getDegat();
+            adversaire.perdreVie(nbPointAttaque);
+
+            //TODO prendre en compte blocage adverse
+        }
+    };
+
+    public void tirerFleche(Personnage adversaire) {
+        if(typeArme1==null && typeArme1.getClass()!=Arc.class){
+            System.out.println("Vous n'avez pas d'arc équipée");
+        }
+        else{
+            int nbPointAttaque;
+            nbPointAttaque=this.typeArme1.getDegat();
+            adversaire.perdreVie(nbPointAttaque);
+            this.typeArme1.tirerFleche();
+            //TODO prendre en compte blocage adverse
+        }
+    };
+
+    public Arme getArme(){
+        if(this.typeArme1!=null){
+            return this.typeArme1;
+        }
+        else{
+            return null;
+        }
+    }
+
+    public void utiliseSort(Personnage personnageVise, Sort sort) {
+        if (sort.getCoutMana() > this.getPointsDeMana()) {
+            System.out.println("Vous n'avez pas assez de mana");
+        } else {
+            personnageVise.perdreVie(sort.getDegat());
+            this.perdreMana(sort.getCoutMana());
+            //TODO prendre en compte l'effet
+        }
+    }
+
+
 }

@@ -3,8 +3,10 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.control.TextArea?>
+
 <GridPane fx:id="gridPane" fx:controller="sample.Controller"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10"
 >
@@ -33,10 +35,67 @@
         <Button  fx:id="validerNom"  minHeight="36" minWidth="100" onMouseClicked="#pageDescriptionPerso" >Valider</Button>
     </Group>
 
-    <Group fx:id="AffichagePerso" visible="false" >
+    <Group fx:id="affichagePerso" visible="false" >
+        <children>
+            <ImageView fx:id="imageViewPersonnage" layoutX="29.0" layoutY="44.0" fitHeight="224.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" >
+                <image>
+                    <Image fx:id="imagePerso" url="https://listimg.pinclipart.com/picdir/s/559-5599557_rpg-character-png-2d-clipart.png" />
+                </image>
+            </ImageView>
+        </children>
+    </Group>
 
+    <Group fx:id="descriptionAffichagePerso" visible="false" >
+        <Label style="-fx-background-color:white" fx:id="pointVieDescriptionPersonage"></Label>
+        <Label style="-fx-background-color:white" fx:id="pointManaDescriptionPersonage"></Label>
+        <Label style="-fx-background-color:white" fx:id="niveauDescriptionPersonage"></Label>
+    </Group>
+
+    <Group fx:id="descriptionArmeEquipee" visible="false">
+        <Label style="-fx-background-color:white" fx:id="armePersonage"></Label>
     </Group>
 
 
+
+    <Group fx:id="bouttonAffichagePerso" visible="false">
+        <Button  fx:id="allerCombat"  minHeight="50" minWidth="100" onMouseClicked="#fondCombat" >Aller au prochain combat</Button>
+    </Group>
+
+    <Group fx:id="affichageEnnemi" visible="false" >
+        <children>
+            <ImageView fx:id="imageViewEnnemi" layoutX="29.0" layoutY="44.0" fitHeight="224.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" >
+                <image>
+                    <Image fx:id="imageEnnemi" url="https://img.pngio.com/2d-computer-graphics-video-game-character-concept-art-2d-game-art-game-png-600_500.jpg" />
+                </image>
+            </ImageView>
+        </children>
+    </Group>
+
+    <Group fx:id="descriptionAffichageEnnemi" visible="false" >
+        <Label style="-fx-background-color:white" fx:id="pointVieDescriptionEnnemi"></Label>
+        <Label style="-fx-background-color:white" fx:id="pointManaDescriptionEnnemi"></Label>
+        <Label style="-fx-background-color:white" fx:id="niveauDescriptionEnnemi"></Label>
+    </Group>
+
+    <Group fx:id="bouttonCombat" visible="false">
+        <Button  fx:id="bouttonAttaquer" minHeight="100" minWidth="100" onMouseClicked="#optionAttaque" style="-fx-background-size: 100 100; " >Attaquer</Button>
+        <Button  fx:id="bouttonSort" minHeight="100" minWidth="100" onMouseClicked="#optionSort" style="-fx-background-size: 100 100; " >Sort</Button>
+    </Group>
+
+    <Group fx:id="bouttonAttaqueEpee" visible="false">
+        <Button  fx:id="coupEpee" minHeight="100" minWidth="100" onMouseClicked="#coupEpee" style="-fx-background-size: 100 100; " >Coup d'épée</Button>
+        <Button  fx:id="retourEpeeAttaqueBoutton" minHeight="100" minWidth="100" onMouseClicked="#pageCombat" style="-fx-background-size: 100 100; " >Retour</Button>
+    </Group>
+
+    <Group fx:id="bouttonAttaqueArc" visible="false">
+        <Button  fx:id="tirerFleche" minHeight="100" minWidth="100" onMouseClicked="#tirerFleche" style="-fx-background-size: 100 100; " >Tirer fleche</Button>
+        <Button  fx:id="retourArcAttaqueBoutton" minHeight="100" minWidth="100" onMouseClicked="#pageCombat" style="-fx-background-size: 100 100; " >Retour</Button>
+    </Group>
+
+    <Group fx:id="listeSortPersonnageCombat" visible="false">
+        <Button  fx:id="boulleEnergie" minHeight="100" minWidth="100" onMouseClicked="#boulleEnergie" style="-fx-background-size: 100 100; " >Boulle d'énergie</Button>
+        <Button  fx:id="retourSortBoutton" minHeight="100" minWidth="100" onMouseClicked="#pageCombat" style="-fx-background-size: 100 100; " >Retour</Button>
+
+    </Group>
 
 </GridPane>
