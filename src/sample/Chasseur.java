@@ -7,8 +7,6 @@ public class Chasseur extends Personnage {
     /**
      * Le chasseur possède ne peut s'équiper que d'arcs
      */
-    public Arc typeArme;
-    public Fleche fleche;
 
     /**
      * Constructeur d'un Chasseur
@@ -17,28 +15,23 @@ public class Chasseur extends Personnage {
      * @param niveau        : Niveau d'un Chasseur
      * @param listeDesArmes : Liste des armes d'un Chasseur
      */
-    public Chasseur(int pointsDeVie,int pointDeVieMax, int pointsDeMana,int pointDeManaMax, int niveau, ArrayList<Arme> listeDesArmes, ArrayList<Sort> listeDesSort) {
-        super(pointsDeVie,pointDeVieMax, pointsDeMana,pointDeManaMax, niveau, listeDesArmes,listeDesSort);
+    public Chasseur(int pointsDeVie,int pointDeVieMax, int pointsDeMana,int pointDeManaMax, int niveau, ArrayList<Arme> listeDesArmes, ArrayList<Sort> listeDesSort,String nom, int nbPiece) {
+        super(pointsDeVie,pointDeVieMax, pointsDeMana,pointDeManaMax, niveau, listeDesArmes,listeDesSort,nom,nbPiece);
     }
 
     public Chasseur(){
-        super(12,12,12,12,1,new ArrayList<Arme>(),new ArrayList<Sort>());
+        super(12,12,12,12,1,new ArrayList<Arme>(),new ArrayList<Sort>(),"",0);
+        Arc arc=new Arc();
+        arc.setDegat(2);
+        arc.setNbFleche(20);
+        arc.setNbFlecheMax(20);
+        this.recupererArc(arc);
     }
 
     /**
      * Le chasseur inflige des dégât à son adversaire avec son arc
      */
-    public void tireArc(Personnage adversaire, Arc arc) {
-        if(arc.getNbFleche()==0){
-            System.out.println("Vous n'avez pas de fleche");
-        }
-        else{
-            adversaire.perdreVie(arc.getDegat()+fleche.getDegat());
-            this.typeArme.tirerFleche();
-            //TODO ajouter Effet fleche
-        }
 
-    };
 
 
     /**
@@ -52,41 +45,27 @@ public class Chasseur extends Personnage {
     public String toString() {
         String chasseur;
         chasseur= "Chasseur{" +
-                "pointsDeVie=" + this.getPointsDeVie() +
+                "nom =" + this.getNom()+
+                " pointsDeVie=" + this.getPointsDeVie() +
                 ", pointsDeVieMax=" + this.getPointsDeVieMax() +
                 ", pointsDeMana=" + this.getPointsDeMana() +
                 ", pointsDeManaMax=" + this.getPointsDeManaMax() +
                 ", niveau=" + this.getNiveau();
-        if(typeArme!=null){
-            chasseur += ", nbFleche=" + this.typeArme.getNbFleche();
-        }
-        else{
-            chasseur +=  " pas d'arc equipé";
-        }
-
         chasseur += '}';
 
         return chasseur;
     }
 
-    public void recupererFleche(Fleche fleche,int nbFleche){
-        typeArme.ajouterFleche(nbFleche);
-        this.fleche=fleche;
-    }
-
-    public void recupererFleche(int nbFleche){
-        typeArme.ajouterFleche(nbFleche);
-        this.fleche=new Fleche();
-    }
 
     public void recupererArc(Arc arc){
         if(this.getListeDesArmes().isEmpty()){
-            typeArme=arc;
+            typeArme1=arc;
         }
         gagnereArme(arc);
     }
 
-    public void equiperArme(Arme arme){
-
+    public Arme getArme(){
+        return this.typeArme1;
     }
+
 }

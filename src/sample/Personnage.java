@@ -9,6 +9,7 @@ public abstract class Personnage {
 
     public Arme typeArme1;
     public Arme typeArme2;
+    private String nom;
 
     /**
      * Nombre de points de vie du Personnage
@@ -16,7 +17,7 @@ public abstract class Personnage {
     private int pointsDeVie;
 
     private int pointsDeVieMax;
-
+    private int nbPiece;
 
     /**
      * Nombre de points de mana du Personnage
@@ -45,7 +46,7 @@ public abstract class Personnage {
      * @param listeDesArmes : Liste des armes d'un Personnage
      * @param listeDesSorts : Liste des sorts d'un Personnage
      */
-    public Personnage(int pointsDeVie, int pointsDeVieMax,int pointsDeMana,int pointsDeManaMax, int niveau, ArrayList<Arme> listeDesArmes, ArrayList<Sort> listeDesSorts) {
+    public Personnage(int pointsDeVie, int pointsDeVieMax,int pointsDeMana,int pointsDeManaMax, int niveau, ArrayList<Arme> listeDesArmes, ArrayList<Sort> listeDesSorts,String nom,int nbPiece) {
         this.pointsDeVie = pointsDeVie;
         this.pointsDeVieMax=pointsDeVieMax;
         this.pointsDeMana = pointsDeMana;
@@ -55,6 +56,16 @@ public abstract class Personnage {
         this.listeDesSorts=listeDesSorts;
         this.typeArme1=null;
         this.typeArme2=null;
+        this.nom=nom;
+        this.nbPiece=nbPiece;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom){
+        this.nom=nom;
     }
 
     /**
@@ -157,7 +168,7 @@ public abstract class Personnage {
     @Override
     public String toString() {
         return "Personnage{" +
-                "pointsDeVie=" + pointsDeVie +
+                " pointsDeVie=" + pointsDeVie +
                 ", pointsDeVieMax=" + pointsDeVieMax +
                 ", pointsDeMana=" + pointsDeMana +
                 ", pointsDeManaMax=" + pointsDeManaMax +
@@ -167,6 +178,9 @@ public abstract class Personnage {
 
     public void perdreVie(int nbPointAttaque){
         this.pointsDeVie-=nbPointAttaque;
+        if(this.pointsDeVie>this.pointsDeVieMax){
+            this.pointsDeVie=this.pointsDeVieMax;
+        }
     }
 
     public void reprendreVie(int nbPvSoin){
@@ -202,5 +216,110 @@ public abstract class Personnage {
 
     public void oublierSort(Sort sort){
         this.listeDesSorts.remove(sort);
+    }
+
+
+    /**
+     * Le Guerrier inflige des dégât à son adversaire avec son épée
+     */
+
+    public void coupEpee(Personnage adversaire) {
+        if(typeArme1==null && typeArme1.getClass()!=Epee.class){
+            System.out.println("Vous n'avez pas d'épée équipée");
+        }
+        else{
+            int nbPointAttaque;
+            nbPointAttaque=this.typeArme1.getDegat();
+            if(Math.random()*100<5){
+                nbPointAttaque+=nbPointAttaque;
+            }
+            adversaire.perdreVie(nbPointAttaque);
+
+            //TODO prendre en compte blocage adverse
+        }
+    };
+
+    public void tirerFleche(Personnage adversaire) {
+        if(typeArme1==null && typeArme1.getClass()!=Arc.class){
+            System.out.println("Vous n'avez pas d'arc équipée");
+        }
+        else{
+            int nbPointAttaque;
+            nbPointAttaque=this.typeArme1.getDegat();
+            if(Math.random()*100<5){
+                nbPointAttaque+=nbPointAttaque;
+            }
+            adversaire.perdreVie(nbPointAttaque);
+            this.typeArme1.tirerFleche();
+            //TODO prendre en compte blocage adverse
+        }
+    };
+
+    public Arme getArme(){
+        if(this.typeArme1!=null){
+            return this.typeArme1;
+        }
+        else{
+            return null;
+        }
+    }
+
+    public void utiliseSort(Personnage personnageVise, Sort sort) {
+        if (sort.getCoutMana() > this.getPointsDeMana()) {
+            System.out.println("Vous n'avez pas assez de mana");
+        } else {
+            personnageVise.perdreVie(sort.getDegat());
+            if(Math.random()*100<5){
+                personnageVise.perdreVie(sort.getDegat());
+            }
+            this.perdreMana(sort.getCoutMana());
+            //TODO prendre en compte l'effet
+        }
+    }
+
+
+    public void recupererEpee(Epee epee){
+        if(this.getListeDesArmes().isEmpty()){
+            typeArme1=epee;
+        }
+        gagnereArme(epee);
+    }
+
+    public Arme getTypeArme1(){
+        return this.typeArme1;
+    }
+
+    public void setTypeArme1(Arme arme){
+        this.typeArme1=arme;
+    }
+
+    public void recuperer(){
+        this.pointsDeVie=pointsDeVieMax;
+        this.pointsDeMana=pointsDeManaMax;
+        if(this.typeArme1!=null){
+            this.typeArme1.recupererToutFleche();
+        }
+    }
+
+    public void gagnerNiveau(){
+        this.niveau+=1;
+        this.pointsDeVieMax+=niveau;
+        this.pointsDeManaMax+=niveau;
+    }
+
+    public void setNbPiece(int nbPiece){
+        this.nbPiece=nbPiece;
+    }
+
+    public int getNbPiece(){
+        return this.nbPiece;
+    }
+
+    public void gagnerPiece(int nbPiece){
+        this.nbPiece+=nbPiece;
+    }
+
+    public void perdrePiece(int nbPiece){
+        this.nbPiece-=nbPiece;
     }
 }

@@ -12,4 +12,11 @@ public class Epee extends Arme{
         this.setBlocage(0);
     }
 
+    @Override
+    public String toString() {
+        String arc="";
+        arc+="Epêe : "+getDegat()+" degat / "+getBlocage()+" blocage / ";
+        return arc;
+    }
+
 }

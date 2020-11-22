@@ -13,34 +13,28 @@ public class Mage extends Personnage {
      * @param niveau        : Niveau d'un Mage
      * @param listeDesArmes : Liste des armes d'un Mage
      */
-    public Mage(int pointsDeVie, int pointsDeVieMax, int pointsDeMana, int pointsDeManaMax, int niveau, ArrayList<Arme> listeDesArmes, ArrayList<Sort> listeDesSorts) {
-        super(pointsDeVie, pointsDeVieMax, pointsDeMana, pointsDeManaMax, niveau, listeDesArmes, listeDesSorts);
+    public Mage(int pointsDeVie, int pointsDeVieMax, int pointsDeMana, int pointsDeManaMax, int niveau, ArrayList<Arme> listeDesArmes, ArrayList<Sort> listeDesSorts,String nom,int nbPiece) {
+        super(pointsDeVie, pointsDeVieMax, pointsDeMana, pointsDeManaMax, niveau, listeDesArmes, listeDesSorts,nom,nbPiece);
     }
 
     public Mage() {
-        super(10, 10, 15, 15, 1, new ArrayList<Arme>(), new ArrayList<Sort>());
+        super(10, 10, 15, 15, 1, new ArrayList<Arme>(), new ArrayList<Sort>(),"",0);
+        Sort sort=new Sort();
+        this.apprendreSort(sort);
     }
 
     /**
      * Petit sort
      */
-    public void utiliseSort(Personnage personnageVise, Sort sort) {
-        if (sort.getCoutMana() > this.getPointsDeMana()) {
-            System.out.println("Vous n'avez pas assez de mana");
-        } else {
 
-            personnageVise.perdreVie(sort.getDegat());
-            this.perdreMana(sort.getCoutMana());
-            //TODO prendre en compte l'effet
-        }
-    }
 
 
     @Override
     public String toString() {
         String mage;
         mage = "Mage{" +
-                "pointsDeVie=" + this.getPointsDeVie() +
+                "nom =" + this.getNom()+
+                " pointsDeVie=" + this.getPointsDeVie() +
                 ", pointsDeVieMax=" + this.getPointsDeVieMax() +
                 ", pointsDeMana=" + this.getPointsDeMana() +
                 ", pointsDeManaMax=" + this.getPointsDeManaMax() +

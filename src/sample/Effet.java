@@ -12,6 +12,12 @@ public class Effet {
         this.duree=duree;
     }
 
+    public Effet(){
+        this.nom="";
+        this.degat=0;
+        this.duree=0;
+    }
+
     public String getNom(){
         return this.nom;
     }
