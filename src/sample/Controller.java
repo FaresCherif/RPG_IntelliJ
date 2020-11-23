@@ -329,6 +329,11 @@ public class Controller implements Initializable{
     }
 
     public void pageDescriptionPerso(){
+        personnage.setNom(entrerNomPerso.getText());
+
+
+
+
         allerSauvegarder.setTranslateX(-300);
         allerSauvegarder.setTranslateY(-300);
         allerSauvegarder.setVisible(true);
@@ -340,7 +345,6 @@ public class Controller implements Initializable{
         personnage.recuperer();
 
         nomCreationPerso.setVisible(false);
-        personnage.setNom(entrerNomPerso.getText());
         affichagePerso.setVisible(true);
         descriptionAffichagePerso.setVisible(true);
         allerMagasin.setVisible(true);
@@ -683,5 +687,54 @@ public class Controller implements Initializable{
 
     public void sauvegarder(){
 
+        try{
+            File ff=new File("sauvegarde/"+personnage.getNom()+".txt"); // définir l'arborescence
+            ff.createNewFile();
+            FileWriter ffw=new FileWriter(ff);
+            ffw.write(personnage.getNom());
+            ffw.write(",");
+            ffw.write(Integer.toString(personnage.getPointsDeVie()));
+            ffw.write(",");
+            ffw.write(Integer.toString(personnage.getPointsDeVieMax()));
+            ffw.write(",");
+            ffw.write(Integer.toString(personnage.getPointsDeMana()));
+            ffw.write(",");
+            ffw.write(Integer.toString(personnage.getPointsDeManaMax()));
+            ffw.write(",");
+            ffw.write(Integer.toString(personnage.getNiveau()));
+            ffw.write(",");
+            ffw.write(Integer.toString(personnage.getNbPiece()));
+            ffw.write("\n"); // forcer le passage à la ligne
+
+            for(int cptArmeSauvegarde=0;cptArmeSauvegarde<personnage.getListeDesArmes().size();cptArmeSauvegarde+=1){
+                ffw.write("arme,");
+                ffw.write(personnage.getListeDesArmes().get(cptArmeSauvegarde).getClass().getName());
+                ffw.write(",");
+                ffw.write(Integer.toString(personnage.getListeDesArmes().get(cptArmeSauvegarde).getDegat()));
+                ffw.write(",");
+                ffw.write(Integer.toString(personnage.getListeDesArmes().get(cptArmeSauvegarde).getBlocage()));
+                ffw.write(",");
+                ffw.write(Integer.toString(personnage.getListeDesArmes().get(cptArmeSauvegarde).getNbFleche()));
+                ffw.write(",");
+                ffw.write("\n");
+            }
+
+            for(int cptSortSauvegarde=0;cptSortSauvegarde<personnage.getListeDesSorts().size();cptSortSauvegarde+=1){
+                ffw.write("sort,");
+                ffw.write(Integer.toString(personnage.getListeDesSorts().get(cptSortSauvegarde).getDegat()));
+                ffw.write(",");
+                ffw.write(Integer.toString(personnage.getListeDesSorts().get(cptSortSauvegarde).getCoutMana()));
+                ffw.write("\n");
+            }
+
+
+
+
+            ffw.close();
+
+        } catch (Exception e) {
+            System.out.println("Erreur");
+        }
     }
+
 }
