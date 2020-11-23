@@ -400,9 +400,15 @@ public class Controller implements Initializable{
                 ennemi=new Ennemi();
             }
             if(ennemi.getNiveau()<personnage.getNiveau()){
-                ennemi.setPointsDeVieMax(personnage.getNiveau()*5+personnage.getPointsDeVieMax());
-                ennemi.setPointsDeManaMax(personnage.getNiveau()*5+personnage.getPointsDeVieMax());
+                ennemi.setPointsDeVieMax(personnage.getNiveau()*5);
+                ennemi.setPointsDeManaMax(personnage.getNiveau()*5);
                 ennemi.setNiveau(personnage.getNiveau());
+            }
+            if(!ennemi.getListeDesSorts().contains(boulleEnnergie)&& ennemi.getNiveau()>=3){
+                ennemi.apprendreSort(boulleEnnergie);
+            }
+            if(!ennemi.getListeDesSorts().contains(grosseBoulleEnnergie)&& ennemi.getNiveau()>=4){
+                ennemi.apprendreSort(grosseBoulleEnnergie);
             }
         }
         ennemi.recuperer();
@@ -584,11 +590,43 @@ public class Controller implements Initializable{
         }
     }
 
-    public void tourEnnemi(){
-        if(ennemi.getPointsDeVie()>0){
+    public void attaqueEnnemi(){
+        if(ennemi.getListeDesSorts().isEmpty()){
             ennemi.morsure(personnage);
         }
+        else{
+            attaqueProMana();
+        }
+    }
+
+
+    public void attaqueProMana(){
+        Sort sort=ennemi.getListeDesSorts().get(0);
+
+        for (int cptSortEnnemi = 1; cptSortEnnemi < ennemi.getListeDesSorts().size(); cptSortEnnemi += 1) {
+
+            if (ennemi.getListeDesSorts().get(cptSortEnnemi).getCoutMana() <= ennemi.getPointsDeMana() && ennemi.getListeDesSorts().get(cptSortEnnemi).getDegat()>sort.getDegat()) {
+                sort=ennemi.getListeDesSorts().get(cptSortEnnemi);
+            }
+
+        }
+
+        if(sort.getCoutMana()<=ennemi.getPointsDeMana()) {
+            System.out.println(sort.getDegat());
+            ennemi.utiliseSort(personnage, sort);
+        }
+        else{
+            ennemi.morsure(personnage);
+        }
+    }
+
+
+    public void tourEnnemi(){
         ennemi.reprendreMana(1);
+        if(ennemi.getPointsDeVie()>0){
+            attaqueEnnemi();
+        }
+
         if(personnage.getClass()==Mage.class){
             personnage.reprendreMana(3);
         }

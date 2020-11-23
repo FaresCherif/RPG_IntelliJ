@@ -303,8 +303,8 @@ public abstract class Personnage {
 
     public void gagnerNiveau(){
         this.niveau+=1;
-        this.pointsDeVieMax+=niveau;
-        this.pointsDeManaMax+=niveau;
+        this.pointsDeVieMax+=niveau*10;
+        this.pointsDeManaMax+=niveau*10;
     }
 
     public void setNbPiece(int nbPiece){

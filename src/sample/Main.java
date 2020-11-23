@@ -35,5 +35,4 @@ public class Main extends Application {
 // gérer le blocage et mettre des effets
 // mettre des objets dans la boutique
 // créer de nouveaux sort
-// sauvegarder et charger
 // randomiser attaque ennemi
