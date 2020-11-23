@@ -13,9 +13,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-
+import java.io.PrintWriter;
+import java.io.File;
 import javafx.scene.layout.*;
+import java.nio.charset.StandardCharsets;
 import javafx.scene.text.Text;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
 public class Controller implements Initializable{
@@ -197,6 +203,12 @@ public class Controller implements Initializable{
     @FXML
     private Button fabriquerFleche;
 
+    @FXML
+    private Group allerSauvegarder;
+
+    @FXML
+    private Button sauvegarde;
+
     GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     int width = gd.getDisplayMode().getWidth();
     int height = gd.getDisplayMode().getHeight();
@@ -226,6 +238,11 @@ public class Controller implements Initializable{
                 BackgroundSize.DEFAULT);
         gridPane.setBackground(new Background(myBI));
 
+        descriptionArmeEquipee.setTranslateX(-350);
+        descriptionAffichagePerso.setTranslateX(-350);
+
+
+
     }
 
     public void allerPageCreerPersonnage(ActionEvent actionEvent) {
@@ -240,6 +257,7 @@ public class Controller implements Initializable{
         descriptionMage.setText("Le mage est un être puissant capable de déchainer les éléments contre ses ennemies\n et de se protéger grace à ses sorts malgrés sa faible résistance physique");
         descriptionChasseur.setText("Le guerrier est un combatant féroce ne reculant jamais face à un combat.\n Avec ses capacités exceptionnelles presque rien ne peut l'arreter, à part un livre");
         descriptionGuerrier.setText("BLA BLA Nature, BLA BLA Archer. Une classe équilibré pour les casu \n PS : Ceci n'est pas la classe préféré d'un des développeurs");
+
 
     }
 
@@ -311,6 +329,9 @@ public class Controller implements Initializable{
     }
 
     public void pageDescriptionPerso(){
+        allerSauvegarder.setTranslateX(-300);
+        allerSauvegarder.setTranslateY(-300);
+        allerSauvegarder.setVisible(true);
         magasinListeObjet.setVisible(false);
         descriptionAffichageEnnemi.setVisible(false);
         affichageMort.setVisible(false);
@@ -328,7 +349,6 @@ public class Controller implements Initializable{
         imagePersonnage=imageViewPersonnage.getImage();
         pointVieDescriptionPersonage.setText(" PV : "+personnage.getPointsDeVie()+"/"+personnage.getPointsDeVieMax());
         descriptionAffichagePerso.setTranslateY(-150);
-        descriptionAffichagePerso.setTranslateX(-350);
         pointManaDescriptionPersonage.setTranslateY(20);
         pointManaDescriptionPersonage.setText(" PM : "+personnage.getPointsDeMana()+"/"+personnage.getPointsDeManaMax());
         niveauDescriptionPersonage.setText(" Niveau : "+Integer.toString(personnage.getNiveau()));
@@ -339,7 +359,6 @@ public class Controller implements Initializable{
         bouttonAffichagePerso.setTranslateY(300);
 
         descriptionArmeEquipee.setVisible(true);
-        descriptionArmeEquipee.setTranslateX(-350);
         descriptionArmeEquipee.setTranslateY(150);
         if(personnage.getArme()!=null){
             armePersonage.setText("Arme équipée "+ personnage.getArme());
@@ -349,6 +368,7 @@ public class Controller implements Initializable{
         }
         piecePersonnage.setTranslateY(20);
         piecePersonnage.setText(personnage.getNbPiece()+" pieces");
+
 
     }
 
@@ -375,8 +395,10 @@ public class Controller implements Initializable{
     }
 
     public void pageCombat(){
+        allerSauvegarder.setVisible(false);
         allerMagasin.setVisible(false);
         psserTourCombat.setVisible(true);
+
         if(personnage.getArme()!=null){
             armePersonage.setText("Arme équipée "+ personnage.getArme());
         }
@@ -575,6 +597,8 @@ public class Controller implements Initializable{
     }
 
     public void pageMagasin(){
+
+        allerSauvegarder.setVisible(false);
         piecePersonnage.setText(personnage.getNbPiece()+" pieces");
         bouttonAffichagePerso.setVisible(false);
         int decalageMagasin=0;
@@ -584,6 +608,8 @@ public class Controller implements Initializable{
         acherterGrosseBoulleEnergie.setVisible(false);
         acherterGrosseBoulleEnergie.setVisible(false);
         acheterSoin.setVisible(false);
+
+
 
 
 
@@ -605,6 +631,21 @@ public class Controller implements Initializable{
             decalageMagasin+=200;
         }
         retourBoutique.setTranslateX(decalageMagasin);
+
+        if(personnage.getClass()==Guerrier.class){
+            affichagePerso.setTranslateX(-400);
+        }
+        if(personnage.getClass()==Chasseur.class){
+            affichagePerso.setTranslateX(-300);
+        }
+
+        descriptionAffichagePerso.setTranslateX(-250);
+        descriptionArmeEquipee.setTranslateX(-250);
+
+        if(personnage.getClass()==Mage.class){
+            descriptionArmeEquipee.setTranslateX(-350);
+            descriptionAffichagePerso.setTranslateX(-350);
+        }
     }
 
     public void acheterBoulleEnergie(){
@@ -637,5 +678,10 @@ public class Controller implements Initializable{
             personnage.apprendreSort(soin);
         }
         pageMagasin();
+    }
+
+
+    public void sauvegarder(){
+
     }
 }

@@ -124,6 +124,10 @@
         <Button fx:id="magasin" minHeight="100" minWidth="100" onMouseClicked="#pageMagasin" style="-fx-background-size: 100 100; " >Magasin</Button>
     </Group>
 
+    <Group fx:id="allerSauvegarder" visible="false">
+        <Button fx:id="sauvegarde" minHeight="100" minWidth="100" onMouseClicked="#sauvegarder" style="-fx-background-size: 100 100; " >Sauvegarder</Button>
+    </Group>
+
     <Group fx:id="magasinListeObjet" visible="false">
         <Button fx:id="acherterBoulleEnergie" visible="false" minHeight="100" minWidth="100" onMouseClicked="#acheterBoulleEnergie" style="-fx-background-size: 100 100; " >boulle energie</Button>
         <Button fx:id="acherterGrosseBoulleEnergie" visible="false" minHeight="100" minWidth="100" onMouseClicked="#acheterGrosseBoulleEnergie" style="-fx-background-size: 100 100; " >Grosse boulle energie</Button>
