@@ -515,12 +515,12 @@ public class Controller implements Initializable{
 
     }
 
-    public void coupEpee(){
+    public void coupEpee() throws EnnemiMortException {
         personnage.coupEpee(ennemi);
         tourEnnemi();
     }
 
-    public void tirerFleche(){
+    public void tirerFleche() throws EnnemiMortException {
         if(personnage.getTypeArme1().getNbFleche()>0){
             personnage.tirerFleche(ennemi);
             tourEnnemi();
@@ -533,14 +533,14 @@ public class Controller implements Initializable{
         tourEnnemi();
     }
 
-    public void boulleEnergie(){
+    public void boulleEnergie() throws EnnemiMortException {
         if(personnage.getPointsDeMana()>=boulleEnnergie.getCoutMana()) {
             personnage.utiliseSort(ennemi, boulleEnnergie);
             tourEnnemi();
         }
     }
 
-    public void sortSoin(){
+    public void sortSoin() throws EnnemiMortException {
         if(personnage.getPointsDeMana()>=soin.getCoutMana()) {
             personnage.utiliseSort(personnage, soin);
             tourEnnemi();
@@ -623,7 +623,7 @@ public class Controller implements Initializable{
         pageMagasin();
     }
 
-    public void grosseBoulleEnergie(){
+    public void grosseBoulleEnergie() throws EnnemiMortException {
         if(personnage.getPointsDeMana()>=grosseBoulleEnnergie.getCoutMana()) {
             personnage.utiliseSort(ennemi, grosseBoulleEnnergie);
             tourEnnemi();

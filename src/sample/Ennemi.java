@@ -13,10 +13,14 @@ public class Ennemi extends Personnage {
         super(7, 7,5,5,1, new ArrayList<Arme>(), new ArrayList<Sort>(),"",0);
     }
 
-    public void morsure(Personnage personnage){
+    public void morsure(Personnage personnage) throws PersonnageMortException {
         int nbPointAttaque;
         nbPointAttaque=2;
         personnage.perdreVie(nbPointAttaque);
+
+        if(personnage.getPointsDeVie() <= 0) {
+            throw new PersonnageMortException(PersonnageMortException.message);
+        }
     }
 
 
