@@ -278,11 +278,11 @@ public abstract class Personnage {
     }
 
 
-    public void recupererEpee(Epee epee){
+    public void recupererArme(Arme arme){
         if(this.getListeDesArmes().isEmpty()){
-            typeArme1=epee;
+            typeArme1=arme;
         }
-        gagnereArme(epee);
+        gagnereArme(arme);
     }
 
     public Arme getTypeArme1(){

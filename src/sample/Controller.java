@@ -1,5 +1,6 @@
 package sample;
 import java.awt.*;
+import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -13,15 +14,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import java.io.PrintWriter;
-import java.io.File;
 import javafx.scene.layout.*;
 import java.nio.charset.StandardCharsets;
 import javafx.scene.text.Text;
-import java.io.BufferedWriter;
+
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 
 public class Controller implements Initializable{
@@ -209,6 +206,11 @@ public class Controller implements Initializable{
     @FXML
     private Button sauvegarde;
 
+    @FXML
+    private Button bouttonCharger;
+
+    @FXML Group chargerPagePrincipale;
+
     GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     int width = gd.getDisplayMode().getWidth();
     int height = gd.getDisplayMode().getHeight();
@@ -229,7 +231,6 @@ public class Controller implements Initializable{
 
         pagePrincipale.setVisible(true);
         bouttonCreationPerso.setVisible(false);
-
         pagePrincipale.setTranslateX(-width/2+250);
         pagePrincipale.setTranslateY(-height/2+150);
 
@@ -241,11 +242,13 @@ public class Controller implements Initializable{
         descriptionArmeEquipee.setTranslateX(-350);
         descriptionAffichagePerso.setTranslateX(-350);
 
+        bouttonCharger.setTranslateY(500);
 
-
+        chargerPagePrincipale.setTranslateX(-width/2+250);
     }
 
     public void allerPageCreerPersonnage(ActionEvent actionEvent) {
+        chargerPagePrincipale.setVisible(false);
         pagePrincipale.setVisible(false);
         bouttonCreationPerso.setVisible(true);
 
@@ -329,8 +332,12 @@ public class Controller implements Initializable{
     }
 
     public void pageDescriptionPerso(){
-        personnage.setNom(entrerNomPerso.getText());
 
+        if(entrerNomPerso.isVisible()){
+            personnage.setNom(entrerNomPerso.getText());
+        }
+        pagePrincipale.setVisible(false);
+        chargerPagePrincipale.setVisible(false);
 
 
 
@@ -383,18 +390,22 @@ public class Controller implements Initializable{
 
         gridPane.setBackground(new Background(myBI));
 
-        if(ennemi==null){
+        if(personnage.getNiveau()==1){
             ennemi=new Ennemi();
             Epee epeeMechant=new Epee();
+            ennemi.recupererArme(epeeMechant);
         }
         else{
-            ennemi.recuperer();
+            if(ennemi==null){
+                ennemi=new Ennemi();
+            }
             if(ennemi.getNiveau()<personnage.getNiveau()){
-                ennemi.setPointsDeVieMax(ennemi.getPointsDeVieMax()+5*ennemi.getNiveau());
-                ennemi.setPointsDeManaMax(ennemi.getPointsDeManaMax()+5*ennemi.getNiveau());
+                ennemi.setPointsDeVieMax(personnage.getNiveau()*5+personnage.getPointsDeVieMax());
+                ennemi.setPointsDeManaMax(personnage.getNiveau()*5+personnage.getPointsDeVieMax());
                 ennemi.setNiveau(personnage.getNiveau());
             }
         }
+        ennemi.recuperer();
         pageCombat();
     }
 
@@ -687,10 +698,26 @@ public class Controller implements Initializable{
 
     public void sauvegarder(){
 
+        File dir  = new File("sauvegarde/");
+        File[] liste = dir.listFiles();
+        for(File item : liste){
+            item.delete();
+        }
+
         try{
             File ff=new File("sauvegarde/"+personnage.getNom()+".txt"); // définir l'arborescence
             ff.createNewFile();
             FileWriter ffw=new FileWriter(ff);
+            if(personnage.getClass().getName()=="sample.Mage"){
+                ffw.write("1");
+            }
+            if(personnage.getClass().getName()=="sample.Chasseur"){
+                ffw.write("2");
+            }
+            if(personnage.getClass().getName()=="sample.Guerrier"){
+                ffw.write("3");
+            }
+            ffw.write(",");
             ffw.write(personnage.getNom());
             ffw.write(",");
             ffw.write(Integer.toString(personnage.getPointsDeVie()));
@@ -707,8 +734,16 @@ public class Controller implements Initializable{
             ffw.write("\n"); // forcer le passage à la ligne
 
             for(int cptArmeSauvegarde=0;cptArmeSauvegarde<personnage.getListeDesArmes().size();cptArmeSauvegarde+=1){
-                ffw.write("arme,");
-                ffw.write(personnage.getListeDesArmes().get(cptArmeSauvegarde).getClass().getName());
+                ffw.write("1,");
+                if(personnage.getListeDesArmes().get(cptArmeSauvegarde).getClass().getName()=="sample.Arc"){
+                    ffw.write("1");
+                }
+                if(personnage.getListeDesArmes().get(cptArmeSauvegarde).getClass().getName()=="sample.Epee"){
+                    ffw.write("2");
+                }
+                if(personnage.getListeDesArmes().get(cptArmeSauvegarde).getClass().getName()=="sample.Bouclier"){
+                    ffw.write("3");
+                }
                 ffw.write(",");
                 ffw.write(Integer.toString(personnage.getListeDesArmes().get(cptArmeSauvegarde).getDegat()));
                 ffw.write(",");
@@ -720,7 +755,7 @@ public class Controller implements Initializable{
             }
 
             for(int cptSortSauvegarde=0;cptSortSauvegarde<personnage.getListeDesSorts().size();cptSortSauvegarde+=1){
-                ffw.write("sort,");
+                ffw.write("2,");
                 ffw.write(Integer.toString(personnage.getListeDesSorts().get(cptSortSauvegarde).getDegat()));
                 ffw.write(",");
                 ffw.write(Integer.toString(personnage.getListeDesSorts().get(cptSortSauvegarde).getCoutMana()));
@@ -733,7 +768,101 @@ public class Controller implements Initializable{
             ffw.close();
 
         } catch (Exception e) {
-            System.out.println("Erreur");
+            System.out.println("Erreur sauvegarder");
+        }
+    }
+
+    public void charger(){
+        affichagePerso.setTranslateX(-400);
+        File dir  = new File("sauvegarde/");
+        File[] liste = dir.listFiles();
+        for(File item : liste){
+            if(item.isFile())
+            {
+                try(BufferedReader br = new BufferedReader(new FileReader(item))) {
+                    String line = br.readLine();
+                    int i=0;
+
+                    while (line != null) {
+                        System.out.println(line);
+                        if(i==0){
+                            String[] ligne = line.split(",");
+
+                            personnage=new Mage();
+                            System.out.println("classe");
+
+
+                            if(Integer.parseInt(ligne[0])==1){
+                                personnage=new Mage();
+                            }
+                            if(Integer.parseInt(ligne[0])==2){
+                                personnage=new Chasseur();
+                                Image nouvelleImage= new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfhvRyJp2XzvYeVTaMTgCENERCy1wVFTSdCg&usqp=CAU",100,100,false,false);
+                                imageViewPersonnage.setImage(nouvelleImage);
+                            }
+                            if(Integer.parseInt(ligne[0])==3){
+                                personnage=new Guerrier();
+                                Image nouvelleImage= new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWNdOOAfEZGi0pM4wh3W9C93M9z1gkadS_vg&usqp=CAU",200,100,false,false);
+                                imageViewPersonnage.setImage(nouvelleImage);
+                            }
+
+
+                            personnage.setNom(ligne[1]);
+                            personnage.setPointsDeVie(Integer.parseInt(ligne[2]));
+                            personnage.setPointsDeVieMax(Integer.parseInt(ligne[3]));
+                            personnage.setPointsDeMana(Integer.parseInt(ligne[4]));
+                            personnage.setPointsDeManaMax(Integer.parseInt(ligne[5]));
+                            personnage.setNiveau(Integer.parseInt(ligne[6]));
+                            personnage.setNbPiece(Integer.parseInt(ligne[7]));
+                        }
+                        else{
+                            String[] ligne = line.split(",");
+                            if(Integer.parseInt(ligne[0])==1){
+                                Arme arme;
+                                if(Integer.parseInt(ligne[1])==1){
+                                    arme=new Arc();
+                                    arme.setDegat(Integer.parseInt((ligne[2])));
+                                    arme.setBlocage(Integer.parseInt(ligne[3]));
+                                    ((Arc) arme).setNbFlecheMax(Integer.parseInt(ligne[4]));
+                                    personnage.recupererArme(arme);
+                                    personnage.recuperer();
+                                }
+                                if(Integer.parseInt(ligne[1])==2){
+                                    arme=new Epee(Integer.parseInt(ligne[2]));
+                                    personnage.recupererArme(arme);
+                                }
+                                if(Integer.parseInt(ligne[1])==3){
+                                    arme=new Bouclier();
+                                    personnage.recupererArme(arme);
+                                }
+
+                            }
+                            if(Integer.parseInt(ligne[0])==2){
+                                Sort sort=new Sort(Integer.parseInt(ligne[1]),new Effet(),Integer.parseInt(ligne[2]));
+
+                                if(sort.getDegat()==boulleEnnergie.getDegat()&&sort.getCoutMana()==boulleEnnergie.getCoutMana()){
+                                    personnage.apprendreSort(boulleEnnergie);
+                                }
+
+                                if(sort.getDegat()==soin.getDegat()&&sort.getCoutMana()==soin.getCoutMana()){
+                                    personnage.apprendreSort(soin);
+                                }
+
+                                if(sort.getDegat()==grosseBoulleEnnergie.getDegat()&&sort.getCoutMana()==grosseBoulleEnnergie.getCoutMana()){
+                                    personnage.apprendreSort(grosseBoulleEnnergie);
+                                }
+                            }
+                        }
+
+                        line = br.readLine();
+                        i++;
+                    }
+                    pageDescriptionPerso();
+                }catch (Exception e){
+                    System.out.println("Erreur chargement");
+                }
+
+            }
         }
     }
 

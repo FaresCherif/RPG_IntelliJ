@@ -14,6 +14,10 @@
         <Button  fx:id="bouttonCreer" minHeight="300" minWidth="500" onAction="#allerPageCreerPersonnage" >Créer un nouveau personnage</Button>
     </Group>
 
+    <Group fx:id="chargerPagePrincipale">
+        <Button  fx:id="bouttonCharger" minHeight="300" minWidth="500" onAction="#charger" >Charger un personnage</Button>
+    </Group>
+
     <Group fx:id="bouttonCreationPerso">
 
         <Button  fx:id="bouttonMage" minHeight="100" minWidth="100" onMouseEntered="#hooverBouttonChoixPersonnageMage" onMouseClicked="#creerMage" style="-fx-background-size: 100 100; " >Creer mage</Button>
