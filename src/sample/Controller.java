@@ -515,41 +515,66 @@ public class Controller implements Initializable{
 
     }
 
-    public void coupEpee() throws EnnemiMortException {
-        personnage.coupEpee(ennemi);
+    public void coupEpee() {
+        try {
+            personnage.coupEpee(ennemi);
+        } catch (EnnemiMortException e) {
+            affichageVictoire.setVisible(true);
+            e.printStackTrace();
+        }
         tourEnnemi();
     }
 
-    public void tirerFleche() throws EnnemiMortException {
+    public void tirerFleche() {
         if(personnage.getTypeArme1().getNbFleche()>0){
-            personnage.tirerFleche(ennemi);
+            try {
+                personnage.tirerFleche(ennemi);
+            } catch (EnnemiMortException e) {
+                affichageVictoire.setVisible(true);
+                e.printStackTrace();
+            }
             tourEnnemi();
         }
 
     }
 
-    public void faireFleche(){
+    public void faireFleche() {
         personnage.typeArme1.recupererFleche(5);
         tourEnnemi();
     }
 
-    public void boulleEnergie() throws EnnemiMortException {
+    public void boulleEnergie() {
         if(personnage.getPointsDeMana()>=boulleEnnergie.getCoutMana()) {
-            personnage.utiliseSort(ennemi, boulleEnnergie);
+            try {
+                personnage.utiliseSort(ennemi, boulleEnnergie);
+            } catch (EnnemiMortException e) {
+                affichageVictoire.setVisible(true);
+                e.printStackTrace();
+            }
             tourEnnemi();
         }
     }
 
-    public void sortSoin() throws EnnemiMortException {
+    public void sortSoin() {
         if(personnage.getPointsDeMana()>=soin.getCoutMana()) {
-            personnage.utiliseSort(personnage, soin);
+            try {
+                personnage.utiliseSort(personnage, soin);
+            } catch (EnnemiMortException e) {
+                affichageVictoire.setVisible(true);
+                e.printStackTrace();
+            }
             tourEnnemi();
         }
     }
 
-    public void tourEnnemi(){
+    public void tourEnnemi() {
         if(ennemi.getPointsDeVie()>0){
-            ennemi.morsure(personnage);
+            try {
+                ennemi.morsure(personnage);
+            } catch (PersonnageMortException e) {
+                affichageMort.setVisible(true);
+                e.printStackTrace();
+            }
         }
         ennemi.reprendreMana(1);
         if(personnage.getClass()==Mage.class){
@@ -562,7 +587,7 @@ public class Controller implements Initializable{
     }
 
 
-    public void passerTour(){
+    public void passerTour() {
         tourEnnemi();
     }
 
@@ -623,9 +648,14 @@ public class Controller implements Initializable{
         pageMagasin();
     }
 
-    public void grosseBoulleEnergie() throws EnnemiMortException {
+    public void grosseBoulleEnergie() {
         if(personnage.getPointsDeMana()>=grosseBoulleEnnergie.getCoutMana()) {
-            personnage.utiliseSort(ennemi, grosseBoulleEnnergie);
+            try {
+                personnage.utiliseSort(ennemi, grosseBoulleEnnergie);
+            } catch (EnnemiMortException e) {
+                affichageVictoire.setVisible(true);
+                e.printStackTrace();
+            }
             tourEnnemi();
         }
     }
