@@ -322,4 +322,5 @@ public abstract class Personnage {
     public void perdrePiece(int nbPiece){
         this.nbPiece-=nbPiece;
     }
+
 }
