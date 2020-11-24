@@ -209,7 +209,17 @@ public class Controller implements Initializable{
     @FXML
     private Button bouttonCharger;
 
-    @FXML Group chargerPagePrincipale;
+    @FXML
+    private Group chargerPagePrincipale;
+
+    @FXML
+    private Button acheterEpee;
+
+    @FXML
+    private Group allerListeArme;
+
+    @FXML
+    private Group menuArme;
 
     GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     int width = gd.getDisplayMode().getWidth();
@@ -223,11 +233,17 @@ public class Controller implements Initializable{
     private Sort soin = new Sort(-8,new Effet(),4);
     private Sort grosseBoulleEnnergie=new Sort(8,new Effet(),8);
 
-
+    private Epee epee= new Epee(5,10);
+    private Arc arc =new Arc();
 
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+
+        arc.setDegat(4);
+        arc.setDurabilite(10);
+        arc.setNbFlecheMax(20);
+
 
         pagePrincipale.setVisible(true);
         bouttonCreationPerso.setVisible(false);
@@ -314,7 +330,7 @@ public class Controller implements Initializable{
         Image nouvelleImage= new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWNdOOAfEZGi0pM4wh3W9C93M9z1gkadS_vg&usqp=CAU",200,100,false,false);
         imageViewPersonnage.setImage(nouvelleImage);
         affichagePerso.setTranslateX(-500);
-
+        personnage.recupererArme(epee);
     }
 
     public void creerChasseur(){
@@ -328,6 +344,7 @@ public class Controller implements Initializable{
         Image nouvelleImage= new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfhvRyJp2XzvYeVTaMTgCENERCy1wVFTSdCg&usqp=CAU",100,100,false,false);
         imageViewPersonnage.setImage(nouvelleImage);
         affichagePerso.setTranslateX(-400);
+        personnage.recupererArme(arc);
 
     }
 
@@ -345,6 +362,9 @@ public class Controller implements Initializable{
         allerSauvegarder.setTranslateY(-300);
         allerSauvegarder.setVisible(true);
         magasinListeObjet.setVisible(false);
+        allerSauvegarder.setVisible(true);
+        sauvegarde.setVisible(true);
+        menuArme.setVisible(false);
         descriptionAffichageEnnemi.setVisible(false);
         affichageMort.setVisible(false);
         affichageVictoire.setVisible(false);
@@ -356,6 +376,10 @@ public class Controller implements Initializable{
         descriptionAffichagePerso.setVisible(true);
         allerMagasin.setVisible(true);
         allerMagasin.setTranslateX(600);
+
+        allerListeArme.setVisible(true);
+        allerListeArme.setTranslateX(-100);
+        allerListeArme.setTranslateY(-300);
 
         imagePersonnage=imageViewPersonnage.getImage();
         pointVieDescriptionPersonage.setText(" PV : "+personnage.getPointsDeVie()+"/"+personnage.getPointsDeVieMax());
@@ -384,6 +408,7 @@ public class Controller implements Initializable{
     }
 
     public void fondCombat(){
+        allerListeArme.setVisible(false);
         BackgroundImage myBI= new BackgroundImage(new Image("https://static.wikia.nocookie.net/finalfantasy/images/c/c8/Battleback_coliseum.png/revision/latest?cb=20141030003602",width,height,false,true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
@@ -493,6 +518,10 @@ public class Controller implements Initializable{
             retourDescriptionVictoire.setTranslateX(400);
             retourDescriptionVictoire.setTranslateY(-200);
             descriptionVictoire.setTranslateY(-150);
+
+            if(personnage.getTypeArme1()!=null){
+                personnage.getTypeArme1().perdreDurabilite();
+            }
         }
 
 
@@ -612,7 +641,6 @@ public class Controller implements Initializable{
         }
 
         if(sort.getCoutMana()<=ennemi.getPointsDeMana()) {
-            System.out.println(sort.getDegat());
             ennemi.utiliseSort(personnage, sort);
         }
         else{
@@ -650,7 +678,7 @@ public class Controller implements Initializable{
     }
 
     public void pageMagasin(){
-
+        allerListeArme.setVisible(false);
         allerSauvegarder.setVisible(false);
         piecePersonnage.setText(personnage.getNbPiece()+" pieces");
         bouttonAffichagePerso.setVisible(false);
@@ -683,6 +711,13 @@ public class Controller implements Initializable{
             acheterSoin.setTranslateX(decalageMagasin);
             decalageMagasin+=200;
         }
+
+        if(!personnage.getListeDesArmes().contains(epee)){
+            acheterEpee.setVisible(true);
+            acheterEpee.setTranslateX(decalageMagasin);
+            decalageMagasin+=200;
+        }
+
         retourBoutique.setTranslateX(decalageMagasin);
 
         if(personnage.getClass()==Guerrier.class){
@@ -699,6 +734,8 @@ public class Controller implements Initializable{
             descriptionArmeEquipee.setTranslateX(-350);
             descriptionAffichagePerso.setTranslateX(-350);
         }
+
+
     }
 
     public void acheterBoulleEnergie(){
@@ -731,6 +768,15 @@ public class Controller implements Initializable{
             personnage.apprendreSort(soin);
         }
         pageMagasin();
+    }
+
+    public void acheterEpee(){
+        if(personnage.getNbPiece()>=30){
+            personnage.perdrePiece(30);
+            personnage.gagnereArme(epee);
+        }
+        pageMagasin();
+
     }
 
 
@@ -788,6 +834,9 @@ public class Controller implements Initializable{
                 ffw.write(Integer.toString(personnage.getListeDesArmes().get(cptArmeSauvegarde).getBlocage()));
                 ffw.write(",");
                 ffw.write(Integer.toString(personnage.getListeDesArmes().get(cptArmeSauvegarde).getNbFleche()));
+                ffw.write(",");
+                System.out.println(personnage.getListeDesArmes().get(cptArmeSauvegarde).getDurabilite());
+                ffw.write(Integer.toString(personnage.getListeDesArmes().get(cptArmeSauvegarde).getDurabilite()));
                 ffw.write(",");
                 ffw.write("\n");
             }
@@ -866,7 +915,7 @@ public class Controller implements Initializable{
                                     personnage.recuperer();
                                 }
                                 if(Integer.parseInt(ligne[1])==2){
-                                    arme=new Epee(Integer.parseInt(ligne[2]));
+                                    arme=new Epee(Integer.parseInt(ligne[2]),Integer.parseInt(ligne[5]));
                                     personnage.recupererArme(arme);
                                 }
                                 if(Integer.parseInt(ligne[1])==3){
@@ -903,5 +952,15 @@ public class Controller implements Initializable{
             }
         }
     }
+
+    public void listerArme(){
+        allerMagasin.setVisible(false);
+        sauvegarde.setVisible(false);
+        bouttonCombat.setVisible(false);
+        allerListeArme.setVisible(false);
+        bouttonAffichagePerso.setVisible(false);
+        menuArme.setVisible(true);
+    }
+
 
 }

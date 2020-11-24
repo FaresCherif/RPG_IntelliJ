@@ -136,7 +136,16 @@
         <Button fx:id="acherterBoulleEnergie" visible="false" minHeight="100" minWidth="100" onMouseClicked="#acheterBoulleEnergie" style="-fx-background-size: 100 100; " >boulle energie</Button>
         <Button fx:id="acherterGrosseBoulleEnergie" visible="false" minHeight="100" minWidth="100" onMouseClicked="#acheterGrosseBoulleEnergie" style="-fx-background-size: 100 100; " >Grosse boulle energie</Button>
         <Button fx:id="acheterSoin" visible="false" minHeight="100" minWidth="100" onMouseClicked="#acheterSoin" style="-fx-background-size: 100 100; " >Soin</Button>
+        <Button fx:id="acheterEpee" visible="false" minHeight="100" minWidth="100" onMouseClicked="#acheterEpee" style="-fx-background-size: 100 100; " >Epee</Button>
         <Button  fx:id="retourBoutique"  minHeight="100" minWidth="100" onMouseClicked="#pageDescriptionPerso" >Retour</Button>
+    </Group>
+
+    <Group fx:id="allerListeArme" visible="false">
+        <Button fx:id="bouttonListerArme" minHeight="100" minWidth="100" onMouseClicked="#listerArme" style="-fx-background-size: 100 100; " >Arme</Button>
+    </Group>
+
+    <Group fx:id="menuArme" visible="false">
+        <Button fx:id="retourListeArme" minHeight="100" minWidth="100" onMouseClicked="#pageDescriptionPerso" style="-fx-background-size: 100 100; " >Retour</Button>
     </Group>
 
 </GridPane>

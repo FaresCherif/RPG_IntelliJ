@@ -26,8 +26,7 @@ public class Guerrier extends Personnage {
 
     public Guerrier( ) {
         super(25, 25,10,10,1, new ArrayList<Arme>(), new ArrayList<Sort>(),"",0);
-        Epee epee=new Epee();
-        recupererArme(epee);
+
     }
 
 

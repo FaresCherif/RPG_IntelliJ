@@ -36,3 +36,4 @@ public class Main extends Application {
 // mettre des objets dans la boutique
 // créer de nouveaux sort
 // randomiser attaque ennemi
+// sauvegarder durabilite

@@ -21,11 +21,6 @@ public class Chasseur extends Personnage {
 
     public Chasseur(){
         super(12,12,12,12,1,new ArrayList<Arme>(),new ArrayList<Sort>(),"",0);
-        Arc arc=new Arc();
-        arc.setDegat(2);
-        arc.setNbFleche(20);
-        arc.setNbFlecheMax(20);
-        this.recupererArc(arc);
     }
 
     /**
@@ -54,14 +49,6 @@ public class Chasseur extends Personnage {
         chasseur += '}';
 
         return chasseur;
-    }
-
-
-    public void recupererArc(Arc arc){
-        if(this.getListeDesArmes().isEmpty()){
-            typeArme1=arc;
-        }
-        gagnereArme(arc);
     }
 
     public Arme getArme(){
