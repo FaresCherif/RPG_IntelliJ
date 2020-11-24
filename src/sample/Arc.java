@@ -5,12 +5,12 @@ public class Arc extends Arme {
     private int nbFleche;
     private int nbFlecheMax;
 
-
-    public void Arc(int degat, int blocage,int nbFleche,int nbFlecheMax){
+    public void Arc(int degat, int blocage,int nbFleche,int nbFlecheMax,int durabilite){
         this.setDegat(degat);
         this.setBlocage(blocage);
         this.nbFleche=nbFleche;
         this.nbFlecheMax=nbFlecheMax;
+        this.setDurabilite(durabilite);
     }
 
     public void Arc(){
@@ -18,7 +18,10 @@ public class Arc extends Arme {
         this.setBlocage(0);
         this.nbFleche=20;
         this.nbFlecheMax=20;
+        this.setDurabilite(10);
     }
+
+
 
     public void setNbFleche(int nbFleche){
         this.nbFleche=nbFleche;
@@ -65,8 +68,5 @@ public class Arc extends Arme {
     public void setNbFlecheMax(int nbFlecheMax){
         this.nbFlecheMax=nbFlecheMax;
     }
-
-
-
 
 }
