@@ -43,7 +43,7 @@
         <children>
             <ImageView fx:id="imageViewPersonnage" layoutX="29.0" layoutY="44.0" fitHeight="224.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" >
                 <image>
-                    <Image fx:id="imagePerso" url="https://listimg.pinclipart.com/picdir/s/559-5599557_rpg-character-png-2d-clipart.png" />
+                    <Image fx:id="imagePerso" url="@images/mage.jpg" />
                 </image>
             </ImageView>
         </children>
@@ -70,7 +70,7 @@
         <children>
             <ImageView fx:id="imageViewEnnemi" layoutX="29.0" layoutY="44.0" fitHeight="224.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" >
                 <image>
-                    <Image fx:id="imageEnnemi" url="https://img.pngio.com/2d-computer-graphics-video-game-character-concept-art-2d-game-art-game-png-600_500.jpg" />
+                    <Image fx:id="imageEnnemi" url="@images/ennemi.jpg" />
                 </image>
             </ImageView>
         </children>
