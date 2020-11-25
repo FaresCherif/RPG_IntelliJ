@@ -154,6 +154,7 @@
     </Group>
 
     <Group fx:id="menuArme" visible="false">
+        <Label style="-fx-background-color:white" fx:id="arme1">Arme principal</Label>
         <Button fx:id="retourListeArme" minHeight="100" minWidth="100" onMouseClicked="#pageDescriptionPerso" style="-fx-background-size: 100 100; " >Retour</Button>
         <ComboBox fx:id="listeArme" layoutX="25.0" layoutY="50.0" prefWidth="90.0" onAction="#equiperArme">
             <items>
@@ -163,5 +164,17 @@
             </items>
         </ComboBox>
     </Group>
+
+    <Group fx:id="menuArme2" visible="false">
+        <Label style="-fx-background-color:white" fx:id="arme2">Arme secondaire</Label>
+        <ComboBox fx:id="listeArme2" layoutX="25.0" layoutY="50.0" prefWidth="90.0" onAction="#equiperArme2">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+
+                </FXCollections>
+            </items>
+        </ComboBox>
+    </Group>
+
 
 </GridPane>
