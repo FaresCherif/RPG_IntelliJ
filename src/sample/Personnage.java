@@ -223,7 +223,7 @@ public abstract class Personnage {
      * Le Guerrier inflige des dégât à son adversaire avec son épée
      */
 
-    public void coupEpee(Personnage adversaire) {
+    public void coupEpee(Personnage adversaire) throws EnnemiMortException {
         if(typeArme1==null && typeArme1.getClass()!=Epee.class){
             System.out.println("Vous n'avez pas d'épée équipée");
         }
@@ -236,10 +236,14 @@ public abstract class Personnage {
             adversaire.perdreVie(nbPointAttaque);
 
             //TODO prendre en compte blocage adverse
+
+            if(adversaire.getPointsDeVie() <= 0) {
+                throw new EnnemiMortException(EnnemiMortException.message);
+            }
         }
     };
 
-    public void tirerFleche(Personnage adversaire) {
+    public void tirerFleche(Personnage adversaire) throws EnnemiMortException {
         if(typeArme1==null && typeArme1.getClass()!=Arc.class){
             System.out.println("Vous n'avez pas d'arc équipée");
         }
@@ -252,6 +256,10 @@ public abstract class Personnage {
             adversaire.perdreVie(nbPointAttaque);
             this.typeArme1.tirerFleche();
             //TODO prendre en compte blocage adverse
+
+            if(adversaire.getPointsDeVie() <= 0) {
+                throw new EnnemiMortException(EnnemiMortException.message);
+            }
         }
     };
 
@@ -264,7 +272,7 @@ public abstract class Personnage {
         }
     }
 
-    public void utiliseSort(Personnage personnageVise, Sort sort) {
+    public void utiliseSort(Personnage personnageVise, Sort sort) throws EnnemiMortException {
         if (sort.getCoutMana() > this.getPointsDeMana()) {
             System.out.println("Vous n'avez pas assez de mana");
         } else {
@@ -274,6 +282,10 @@ public abstract class Personnage {
             }
             this.perdreMana(sort.getCoutMana());
             //TODO prendre en compte l'effet
+
+            if(personnageVise.getPointsDeVie() <= 0) {
+                throw new EnnemiMortException(EnnemiMortException.message);
+            }
         }
     }
 
