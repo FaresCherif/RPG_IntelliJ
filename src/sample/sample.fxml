@@ -49,6 +49,16 @@
         </children>
     </Group>
 
+    <Group fx:id="animationEpee" visible="false" >
+        <children>
+            <ImageView fx:id="imageViewEpee" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" rotate="270">
+                <image>
+                    <Image fx:id="imageEpee" url="@images/epee.png" />
+                </image>
+            </ImageView>
+        </children>
+    </Group>
+
     <Group fx:id="descriptionAffichagePerso" visible="false" >
         <Label style="-fx-background-color:white" fx:id="pointVieDescriptionPersonage"></Label>
         <Label style="-fx-background-color:white" fx:id="pointManaDescriptionPersonage"></Label>

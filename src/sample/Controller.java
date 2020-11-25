@@ -69,6 +69,9 @@ public class Controller implements Initializable{
     private Group affichagePerso;
 
     @FXML
+    private Group animationEpee;
+
+    @FXML
     private ImageView imageViewPersonnage;
 
     @FXML
@@ -622,11 +625,11 @@ public class Controller implements Initializable{
     }
 
     public void coupEpee() {
+        epee.animationArme(animationEpee);
         try {
             personnage.coupEpee(ennemi);
         } catch (EnnemiMortException e) {
             affichageVictoire.setVisible(true);
-            e.printStackTrace();
         }
         tourEnnemi();
     }
@@ -637,7 +640,6 @@ public class Controller implements Initializable{
                 personnage.tirerFleche(ennemi);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);
-                e.printStackTrace();
             }
             tourEnnemi();
         }
@@ -655,7 +657,6 @@ public class Controller implements Initializable{
                 personnage.utiliseSort(ennemi, boulleEnnergie);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);
-                e.printStackTrace();
             }
             tourEnnemi();
         }
@@ -667,7 +668,6 @@ public class Controller implements Initializable{
                 personnage.utiliseSort(personnage, soin);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);
-                e.printStackTrace();
             }
             tourEnnemi();
         }
@@ -721,7 +721,6 @@ public class Controller implements Initializable{
                 ennemi.morsure(personnage);
             } catch (PersonnageMortException e) {
                 affichageMort.setVisible(true);
-                e.printStackTrace();
             }
         }
 
@@ -837,7 +836,6 @@ public class Controller implements Initializable{
                 personnage.utiliseSort(ennemi, grosseBoulleEnnergie);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);
-                e.printStackTrace();
             }
             tourEnnemi();
         }
