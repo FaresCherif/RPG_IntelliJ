@@ -240,6 +240,15 @@ public class Controller implements Initializable{
     @FXML
     private Label arme2;
 
+    @FXML
+    private Button theWorldo;
+
+    @FXML
+    private Button fulCowlo;
+
+    @FXML
+    private Button leMuro;
+
     GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     int width = gd.getDisplayMode().getWidth();
     int height = gd.getDisplayMode().getHeight();
@@ -252,10 +261,17 @@ public class Controller implements Initializable{
     private Sort soin = new Sort(-8,new Effet(),4);
     private Sort grosseBoulleEnnergie=new Sort(8,new Effet(),8);
 
-    private Epee epee= new Epee(5,0,10);
+    private Epee epee= new Epee();
     private Arc arc =new Arc();
 
+    private Effet timeStop=new Effet(1,0,2);
+    private Sort theWorld=new Sort(0,timeStop,5);
 
+    private Effet boostForce=new Effet(4,0,3);
+    private Sort fullCowl = new Sort(0,boostForce,4);
+
+    private Effet invulnerabilite=new Effet(2,0,1);
+    public Sort leMur=new Sort(0,invulnerabilite,2);
 
 
     @Override
@@ -352,6 +368,7 @@ public class Controller implements Initializable{
         imageViewPersonnage.setImage(nouvelleImage);
         affichagePerso.setTranslateX(-500);
         personnage.recupererArme(epee);
+        personnage.apprendreSort(fullCowl);
     }
 
     public void creerChasseur(){
@@ -366,6 +383,8 @@ public class Controller implements Initializable{
         imageViewPersonnage.setImage(nouvelleImage);
         affichagePerso.setTranslateX(-400);
         personnage.recupererArme(arc);
+        personnage.apprendreSort(theWorld);
+        personnage.apprendreSort(leMur);
 
     }
 
@@ -611,6 +630,24 @@ public class Controller implements Initializable{
             grosseBoulleEnergie.setVisible(true);
         }
 
+        if(personnage.getListeDesSorts().contains(theWorld)){
+            theWorldo.setTranslateX(decalageSort);
+            decalageSort+=200;
+            theWorldo.setVisible(true);
+        }
+
+        if(personnage.getListeDesSorts().contains(fullCowl)){
+            fulCowlo.setTranslateX(decalageSort);
+            decalageSort+=200;
+            fulCowlo.setVisible(true);
+        }
+
+        if(personnage.getListeDesSorts().contains(leMur)){
+            leMuro.setTranslateX(decalageSort);
+            decalageSort+=200;
+            leMuro.setVisible(true);
+        }
+
 
         retourSortBoutton.setTranslateX(decalageSort);
 
@@ -621,7 +658,6 @@ public class Controller implements Initializable{
             personnage.coupEpee(ennemi);
         } catch (EnnemiMortException e) {
             affichageVictoire.setVisible(true);
-            e.printStackTrace();
         }
         tourEnnemi();
     }
@@ -632,7 +668,6 @@ public class Controller implements Initializable{
                 personnage.tirerFleche(ennemi);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);
-                e.printStackTrace();
             }
             tourEnnemi();
         }
@@ -650,7 +685,6 @@ public class Controller implements Initializable{
                 personnage.utiliseSort(ennemi, boulleEnnergie);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);
-                e.printStackTrace();
             }
             tourEnnemi();
         }
@@ -662,11 +696,44 @@ public class Controller implements Initializable{
                 personnage.utiliseSort(personnage, soin);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);
-                e.printStackTrace();
             }
             tourEnnemi();
         }
     }
+
+    public void sortTheWorld(){
+        if(personnage.getPointsDeMana()>=theWorld.getCoutMana()) {
+            try {
+                personnage.utiliseSort(ennemi, theWorld);
+            } catch (EnnemiMortException e) {
+                affichageVictoire.setVisible(true);
+            }
+            tourEnnemi();
+        }
+    }
+
+    public void fullCowl(){
+        if(personnage.getPointsDeMana()>=fullCowl.getCoutMana()) {
+            try {
+                personnage.utiliseSort(personnage, fullCowl);
+            } catch (EnnemiMortException e) {
+                affichageVictoire.setVisible(true);
+            }
+            tourEnnemi();
+        }
+    }
+
+    public void leMur(){
+        if(personnage.getPointsDeMana()>=leMur.getCoutMana()) {
+            try {
+                personnage.utiliseSort(personnage, leMur);
+            } catch (EnnemiMortException e) {
+                affichageVictoire.setVisible(true);
+            }
+            tourEnnemi();
+        }
+    }
+
 
     public void attaqueEnnemi(){
         if(ennemi.getListeDesSorts().isEmpty()){
@@ -696,6 +763,7 @@ public class Controller implements Initializable{
         if(sort.getCoutMana()<=ennemi.getPointsDeMana()) {
             try {
                 ennemi.utiliseSort(personnage, sort);
+
             } catch (EnnemiMortException e) {
                 affichageMort.setVisible(true);
             }
@@ -711,12 +779,16 @@ public class Controller implements Initializable{
 
     public void tourEnnemi() {
         if(ennemi.getPointsDeVie()>0){
-            attaqueEnnemi();
-            try {
-                ennemi.morsure(personnage);
-            } catch (PersonnageMortException e) {
-                affichageMort.setVisible(true);
-                e.printStackTrace();
+            if(ennemi.getListeEffet().getFreeze()<=0) {
+                attaqueEnnemi();
+                try {
+                    ennemi.morsure(personnage);
+                } catch (PersonnageMortException e) {
+                    affichageMort.setVisible(true);
+                }
+            }
+            else{
+                ennemi.getListeEffet().setFreeze(ennemi.getListeEffet().getFreeze()-1);
             }
         }
 
@@ -725,6 +797,11 @@ public class Controller implements Initializable{
         }
         else{
             personnage.reprendreMana(1);
+        }
+
+        System.out.println(personnage.getInvulnerable());
+        if(personnage.getInvulnerable()>=1) {
+            personnage.setInvulnerabilite(personnage.getInvulnerable() - 1);
         }
         pageCombat();
     }
@@ -804,7 +881,6 @@ public class Controller implements Initializable{
                 personnage.utiliseSort(ennemi, grosseBoulleEnnergie);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);
-                e.printStackTrace();
             }
             tourEnnemi();
         }
@@ -892,7 +968,6 @@ public class Controller implements Initializable{
                 ffw.write(",");
                 ffw.write(Integer.toString(personnage.getListeDesArmes().get(cptArmeSauvegarde).getNbFleche()));
                 ffw.write(",");
-                System.out.println(personnage.getListeDesArmes().get(cptArmeSauvegarde).getDurabilite());
                 ffw.write(Integer.toString(personnage.getListeDesArmes().get(cptArmeSauvegarde).getDurabilite()));
                 ffw.write(",");
                 ffw.write("\n");
@@ -970,7 +1045,7 @@ public class Controller implements Initializable{
                                     personnage.recuperer();
                                 }
                                 if(Integer.parseInt(ligne[1])==2){
-                                    arme=new Epee(Integer.parseInt(ligne[2]),Integer.parseInt(ligne[3]),Integer.parseInt(ligne[5]));
+                                    arme=new Epee(Integer.parseInt(ligne[2]),Integer.parseInt(ligne[3]),Integer.parseInt(ligne[5]),new Effet());
                                     personnage.recupererArme(arme);
                                 }
                                 if(Integer.parseInt(ligne[1])==3){

@@ -2,24 +2,26 @@ package sample;
 
 public class Effet {
 
-    private String nom;
+    private int type;
     private int degat;
     private int duree;
 
-    public Effet(String nom, int degat){
-        this.nom=nom;
+    //type 1 : freeze , type 2 : invulnerable , type 3 : feu, type 4 : boostAttaque
+
+    public Effet(int type, int degat, int duree){
+        this.type=type;
         this.degat=degat;
         this.duree=duree;
     }
 
     public Effet(){
-        this.nom="";
+        this.type=0;
         this.degat=0;
         this.duree=0;
     }
 
-    public String getNom(){
-        return this.nom;
+    public int getType(){
+        return this.type;
     }
 
     public int getDegat(){
@@ -30,8 +32,8 @@ public class Effet {
         this.degat=degat;
     }
 
-    public void setNom(String nom){
-        this.nom=nom;
+    public void setType(int type){
+        this.type=type;
     }
 
     public int getDuree(){

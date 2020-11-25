@@ -6,12 +6,15 @@ public class Epee extends Arme{
         this.setDegat(5);
         this.setBlocage(0);
         this.setDurabilite(10);
+        this.setEffet(new Effet());
+
     }
 
-    public Epee(int degat,int blocage,int durabilite){
+    public Epee(int degat,int blocage,int durabilite, Effet effet){
         this.setDegat(degat);
         this.setBlocage(blocage);
         this.setDurabilite(durabilite);
+        this.setEffet(effet);
     }
 
     @Override

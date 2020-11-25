@@ -20,12 +20,12 @@ public class Guerrier extends Personnage {
      * @param listeDesArmes : Liste des armes d'un Guerrier
      * @param listeDesArmes : Liste des armes d'un Guerrier
      */
-    public Guerrier(int pointsDeVie,int pointDeVieMax,int pointsDeMana,int pointDeManaMax, int niveau, ArrayList<Arme> listeDesArmes,ArrayList<Sort> listeDesSorts,String nom,int nbPiece ) {
-        super(pointsDeVie,pointDeVieMax, pointsDeMana,pointDeManaMax, niveau, listeDesArmes, listeDesSorts,nom,nbPiece);
+    public Guerrier(int pointsDeVie,int pointDeVieMax,int pointsDeMana,int pointDeManaMax, int niveau, ArrayList<Arme> listeDesArmes,ArrayList<Sort> listeDesSorts,String nom,int nbPiece,ListeEffet listeEffet ) {
+        super(pointsDeVie,pointDeVieMax, pointsDeMana,pointDeManaMax, niveau, listeDesArmes, listeDesSorts,nom,nbPiece,listeEffet);
     }
 
     public Guerrier( ) {
-        super(25, 25,10,10,1, new ArrayList<Arme>(), new ArrayList<Sort>(),"",0);
+        super(25, 25,10,10,1, new ArrayList<Arme>(), new ArrayList<Sort>(),"",0,new ListeEffet());
 
     }
 

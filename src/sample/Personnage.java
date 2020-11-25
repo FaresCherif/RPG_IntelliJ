@@ -10,6 +10,7 @@ public abstract class Personnage {
     public Arme typeArme1;
     public Arme typeArme2;
     private String nom;
+    private ListeEffet listeEffet;
 
     /**
      * Nombre de points de vie du Personnage
@@ -46,7 +47,7 @@ public abstract class Personnage {
      * @param listeDesArmes : Liste des armes d'un Personnage
      * @param listeDesSorts : Liste des sorts d'un Personnage
      */
-    public Personnage(int pointsDeVie, int pointsDeVieMax,int pointsDeMana,int pointsDeManaMax, int niveau, ArrayList<Arme> listeDesArmes, ArrayList<Sort> listeDesSorts,String nom,int nbPiece) {
+    public Personnage(int pointsDeVie, int pointsDeVieMax,int pointsDeMana,int pointsDeManaMax, int niveau, ArrayList<Arme> listeDesArmes, ArrayList<Sort> listeDesSorts,String nom,int nbPiece,ListeEffet listeEffet) {
         this.pointsDeVie = pointsDeVie;
         this.pointsDeVieMax=pointsDeVieMax;
         this.pointsDeMana = pointsDeMana;
@@ -58,6 +59,7 @@ public abstract class Personnage {
         this.typeArme2=null;
         this.nom=nom;
         this.nbPiece=nbPiece;
+        this.listeEffet=listeEffet;
     }
 
     public String getNom() {
@@ -177,8 +179,6 @@ public abstract class Personnage {
     }
 
     public void perdreVie(int nbPointAttaque){
-        System.out.println(typeArme1);
-        System.out.println(nbPointAttaque+"/"+getBlocage());
         if(nbPointAttaque<0){
             this.pointsDeVie-=nbPointAttaque;
             if(this.pointsDeVie>this.pointsDeVieMax){
@@ -187,7 +187,9 @@ public abstract class Personnage {
         }
         else{
             if(getBlocage()<=nbPointAttaque){
-                this.pointsDeVie-=(nbPointAttaque-getBlocage());
+                if(getInvulnerable()<=0) {
+                    this.pointsDeVie -= (nbPointAttaque - getBlocage());
+                }
             }
         }
 
@@ -243,6 +245,13 @@ public abstract class Personnage {
             if(Math.random()*100<5){
                 nbPointAttaque+=nbPointAttaque;
             }
+
+            if(getListeEffet().getBoostDegatEpee()>0) {
+                nbPointAttaque=2*nbPointAttaque;
+                getListeEffet().setBoostDegatEpee(getListeEffet().getBoostDegatEpee()-1);
+            }
+
+
             adversaire.perdreVie(nbPointAttaque);
 
             //TODO prendre en compte blocage adverse
@@ -286,10 +295,33 @@ public abstract class Personnage {
         if (sort.getCoutMana() > this.getPointsDeMana()) {
             System.out.println("Vous n'avez pas assez de mana");
         } else {
-            personnageVise.perdreVie(sort.getDegat());
-            if(Math.random()*100<5){
-                personnageVise.perdreVie(sort.getDegat());
+
+            if(personnageVise.getBlocage()<=sort.getDegat() && personnageVise.getInvulnerable()<=0) {
+
+                if(sort.getEffet()!=null) {
+                    if (sort.getEffet().getType() == 1) {
+                        personnageVise.setFreeze(sort.getEffet().getDuree());
+
+                    }
+                    if (sort.getEffet().getType() == 2) {
+                        personnageVise.setInvulnerabilite(sort.getEffet().getDuree());
+                    }
+                    if (sort.getEffet().getType() == 3) {
+                        personnageVise.setFeu(sort.getEffet().getDuree());
+                    }
+                    if (sort.getEffet().getType() == 4) {
+                        personnageVise.setBoostDegatEpee(sort.getEffet().getDuree());
+                    }
+                }
             }
+
+
+            int degat=sort.getDegat();
+            if(Math.random()*100<5){
+                degat+=degat;
+            }
+            personnageVise.perdreVie(degat);
+
             this.perdreMana(sort.getCoutMana());
             //TODO prendre en compte l'effet
 
@@ -297,6 +329,38 @@ public abstract class Personnage {
                 throw new EnnemiMortException(EnnemiMortException.message);
             }
         }
+    }
+
+    public void setFreeze(int nbTour){
+        this.listeEffet.setFreeze(nbTour);
+    }
+
+    public void setInvulnerabilite(int nbTour){
+        this.listeEffet.setInvulnerable(nbTour);
+    }
+
+    public void setFeu(int nbTour){
+        this.listeEffet.setFeu(nbTour);
+    }
+
+    public int getFreeze(){
+        return this.listeEffet.getFreeze();
+    }
+
+    public int getInvulnerable(){
+        return this.listeEffet.getInvulnerable();
+    }
+
+    public int getFeu(){
+        return this.listeEffet.getFeu();
+    }
+
+    public int getBoostDegatEpee(){
+        return this.listeEffet.getBoostDegatEpee();
+    }
+
+    public void setBoostDegatEpee(int boostDegatEpee){
+        this.getListeEffet().setBoostDegatEpee(boostDegatEpee);
     }
 
 
@@ -321,6 +385,7 @@ public abstract class Personnage {
         if(this.typeArme1!=null){
             this.typeArme1.recupererToutFleche();
         }
+        listeEffet=new ListeEffet();
     }
 
     public void gagnerNiveau(){
@@ -358,5 +423,13 @@ public abstract class Personnage {
             blocagePerso+=getTypeArme2().getBlocage();
         }
         return blocagePerso;
+    }
+
+    public void setListeEffet(ListeEffet listeEffet) {
+        this.listeEffet = listeEffet;
+    }
+
+    public ListeEffet getListeEffet() {
+        return listeEffet;
     }
 }

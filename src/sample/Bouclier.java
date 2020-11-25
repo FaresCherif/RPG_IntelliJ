@@ -6,14 +6,15 @@ public class Bouclier extends Arme {
         this.setDegat(0);
         this.setBlocage(10);
         this.setDurabilite(10);
+        this.setEffet(new Effet());
     }
 
-    public Bouclier(int blocage,int durabilite){
-        this.setDegat(0);
+    public Bouclier(int degat,int blocage,int durabilite,Effet effet){
+        this.setDegat(degat);
         this.setBlocage(blocage);
         this.setDurabilite(durabilite);
+        this.setEffet(new Effet());
     }
-
 
 
 }

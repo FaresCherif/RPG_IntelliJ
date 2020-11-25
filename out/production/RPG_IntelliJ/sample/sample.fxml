@@ -114,6 +114,9 @@
         <Button  visible="false" fx:id="boulleEnergie" minHeight="100" minWidth="100" onMouseClicked="#boulleEnergie" style="-fx-background-size: 100 100; " >Boulle d'énergie</Button>
         <Button  visible="false" fx:id="grosseBoulleEnergie" minHeight="100" minWidth="100" onMouseClicked="#grosseBoulleEnergie" style="-fx-background-size: 100 100; " >Grosse boulle d'énergie</Button>
         <Button  visible="false" fx:id="sortSoint" minHeight="100" minWidth="100" onMouseClicked="#sortSoin" style="-fx-background-size: 100 100; " >Soin</Button>
+        <Button  visible="false" fx:id="theWorldo" minHeight="100" minWidth="100" onMouseClicked="#sortTheWorld" style="-fx-background-size: 100 100; " >The World</Button>
+        <Button  visible="false" fx:id="fulCowlo" minHeight="100" minWidth="100" onMouseClicked="#fullCowl" style="-fx-background-size: 100 100; " >Full cowl</Button>
+        <Button  visible="false" fx:id="leMuro" minHeight="100" minWidth="100" onMouseClicked="#leMur" style="-fx-background-size: 100 100; " >Le mur</Button>
         <Button  fx:id="retourSortBoutton" minHeight="100" minWidth="100" onMouseClicked="#pageCombat" style="-fx-background-size: 100 100; " >Retour</Button>
     </Group>
 
