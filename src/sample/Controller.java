@@ -641,7 +641,11 @@ public class Controller implements Initializable{
 
     public void attaqueEnnemi(){
         if(ennemi.getListeDesSorts().isEmpty()){
-            ennemi.morsure(personnage);
+            try {
+                ennemi.morsure(personnage);
+            } catch (PersonnageMortException e) {
+                affichageMort.setVisible(true);
+            }
         }
         else{
             attaqueProMana();
@@ -661,16 +665,21 @@ public class Controller implements Initializable{
         }
 
         if(sort.getCoutMana()<=ennemi.getPointsDeMana()) {
-            ennemi.utiliseSort(personnage, sort);
+            try {
+                ennemi.utiliseSort(personnage, sort);
+            } catch (EnnemiMortException e) {
+                affichageMort.setVisible(true);
+            }
         }
         else{
-            ennemi.morsure(personnage);
+            try {
+                ennemi.morsure(personnage);
+            } catch (PersonnageMortException e) {
+                affichageMort.setVisible(true);
+            }
         }
     }
 
-
-    public void tourEnnemi(){
-        ennemi.reprendreMana(1);
     public void tourEnnemi() {
         if(ennemi.getPointsDeVie()>0){
             attaqueEnnemi();
