@@ -8,9 +8,9 @@ public class Epee extends Arme{
         this.setDurabilite(10);
     }
 
-    public Epee(int degat,int durabilite){
+    public Epee(int degat,int blocage,int durabilite){
         this.setDegat(degat);
-        this.setBlocage(0);
+        this.setBlocage(blocage);
         this.setDurabilite(durabilite);
     }
 

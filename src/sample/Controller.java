@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
@@ -221,6 +222,24 @@ public class Controller implements Initializable{
     @FXML
     private Group menuArme;
 
+    @FXML
+    private ComboBox listeArme;
+
+    @FXML
+    private ComboBox listeArme2;
+
+    @FXML
+    private Button acheterArc;
+
+    @FXML
+    private Group menuArme2;
+
+    @FXML
+    private Label arme1;
+
+    @FXML
+    private Label arme2;
+
     GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     int width = gd.getDisplayMode().getWidth();
     int height = gd.getDisplayMode().getHeight();
@@ -233,8 +252,10 @@ public class Controller implements Initializable{
     private Sort soin = new Sort(-8,new Effet(),4);
     private Sort grosseBoulleEnnergie=new Sort(8,new Effet(),8);
 
-    private Epee epee= new Epee(5,10);
+    private Epee epee= new Epee(5,0,10);
     private Arc arc =new Arc();
+
+
 
 
     @Override
@@ -350,6 +371,11 @@ public class Controller implements Initializable{
 
     public void pageDescriptionPerso(){
 
+        if(personnage.getTypeArme1()!=null&& personnage.getTypeArme1().getDurabilite()==0){
+            personnage.getListeDesArmes().remove(personnage.getTypeArme1());
+            personnage.setTypeArme1(null);
+        }
+
         if(entrerNomPerso.isVisible()){
             personnage.setNom(entrerNomPerso.getText());
         }
@@ -365,6 +391,7 @@ public class Controller implements Initializable{
         allerSauvegarder.setVisible(true);
         sauvegarde.setVisible(true);
         menuArme.setVisible(false);
+        menuArme2.setVisible(false);
         descriptionAffichageEnnemi.setVisible(false);
         affichageMort.setVisible(false);
         affichageVictoire.setVisible(false);
@@ -437,6 +464,8 @@ public class Controller implements Initializable{
             }
         }
         ennemi.recuperer();
+
+
         pageCombat();
     }
 
@@ -718,7 +747,7 @@ public class Controller implements Initializable{
         allerSauvegarder.setVisible(false);
         piecePersonnage.setText(personnage.getNbPiece()+" pieces");
         bouttonAffichagePerso.setVisible(false);
-        int decalageMagasin=0;
+        int decalageMagasin=200;
         allerMagasin.setVisible(false);
         magasinListeObjet.setVisible(true);
         acherterBoulleEnergie.setVisible(false);
@@ -728,33 +757,12 @@ public class Controller implements Initializable{
 
 
 
+        // magasin
+        int nbElementShop=0;
+        int cptLimit=0;
 
+        choixAleatoireMagasin();
 
-        if(!personnage.getListeDesSorts().contains(grosseBoulleEnnergie)){
-            acherterGrosseBoulleEnergie.setVisible(true);
-            acherterGrosseBoulleEnergie.setTranslateX(decalageMagasin);
-            decalageMagasin+=200;
-        }
-
-        if(!personnage.getListeDesSorts().contains(boulleEnnergie)){
-            acherterBoulleEnergie.setVisible(true);
-            acherterBoulleEnergie.setTranslateX(decalageMagasin);
-            decalageMagasin+=200;
-        }
-
-        if(!personnage.getListeDesSorts().contains(soin)){
-            acheterSoin.setVisible(true);
-            acheterSoin.setTranslateX(decalageMagasin);
-            decalageMagasin+=200;
-        }
-
-        if(!personnage.getListeDesArmes().contains(epee)){
-            acheterEpee.setVisible(true);
-            acheterEpee.setTranslateX(decalageMagasin);
-            decalageMagasin+=200;
-        }
-
-        retourBoutique.setTranslateX(decalageMagasin);
 
         if(personnage.getClass()==Guerrier.class){
             affichagePerso.setTranslateX(-400);
@@ -820,6 +828,14 @@ public class Controller implements Initializable{
 
     }
 
+
+    public void acheterArc(){
+        if(personnage.getNbPiece()>=30){
+            personnage.perdrePiece(30);
+            personnage.gagnereArme(arc);
+        }
+        pageMagasin();
+    }
 
     public void sauvegarder(){
 
@@ -912,12 +928,10 @@ public class Controller implements Initializable{
                     int i=0;
 
                     while (line != null) {
-                        System.out.println(line);
                         if(i==0){
                             String[] ligne = line.split(",");
 
                             personnage=new Mage();
-                            System.out.println("classe");
 
 
                             if(Integer.parseInt(ligne[0])==1){
@@ -956,7 +970,7 @@ public class Controller implements Initializable{
                                     personnage.recuperer();
                                 }
                                 if(Integer.parseInt(ligne[1])==2){
-                                    arme=new Epee(Integer.parseInt(ligne[2]),Integer.parseInt(ligne[5]));
+                                    arme=new Epee(Integer.parseInt(ligne[2]),Integer.parseInt(ligne[3]),Integer.parseInt(ligne[5]));
                                     personnage.recupererArme(arme);
                                 }
                                 if(Integer.parseInt(ligne[1])==3){
@@ -1001,6 +1015,114 @@ public class Controller implements Initializable{
         allerListeArme.setVisible(false);
         bouttonAffichagePerso.setVisible(false);
         menuArme.setVisible(true);
+
+        menuArme2.setVisible(true);
+        listeArme.setTranslateX(200);
+        menuArme2.setTranslateX(600);
+        arme1.setTranslateX(200);
+        arme1.setTranslateY(-20);
+        arme2.setTranslateY(-20);
+
+
+
+        for(int i=0;i<listeArme.getItems().size();i++){
+            listeArme.getItems().remove(i);
+        }
+
+        for(int cptArmeListeArme=0;cptArmeListeArme<personnage.getListeDesArmes().size();cptArmeListeArme+=1) {
+            listeArme.getItems().add(cptArmeListeArme+","+personnage.getListeDesArmes().get(cptArmeListeArme));
+        }
+
+        for(int i=0;i<listeArme2.getItems().size();i++){
+            listeArme2.getItems().remove(i);
+        }
+
+        for(int cptArmeListeArme2=0;cptArmeListeArme2<personnage.getListeDesArmes().size();cptArmeListeArme2+=1) {
+            if(personnage.getListeDesArmes().get(cptArmeListeArme2).getClass()==Bouclier.class){
+                listeArme.getItems().add(cptArmeListeArme2+","+personnage.getListeDesArmes().get(cptArmeListeArme2));
+            }
+        }
+
+
+
+    }
+
+    public void equiperArme(){
+        if(listeArme.getValue()!=null) {
+
+
+            String string[] = listeArme.getValue().toString().split(",");
+
+            personnage.setTypeArme1(personnage.getListeDesArmes().get(Integer.parseInt(string[0])));
+        }
+
+    }
+
+
+    public void equiperArme2(){
+        if(listeArme.getValue()!=null) {
+            String string[] = listeArme.getValue().toString().split(",");
+            personnage.setTypeArme2(personnage.getListeDesArmes().get(Integer.parseInt(string[0])));
+        }
+
+    }
+
+
+    public void choixAleatoireMagasin(){
+        int nbElementShop=0;
+        int cptLimit=0;
+        int decalageMagasin=0;
+        acherterGrosseBoulleEnergie.setVisible(false);
+        acherterBoulleEnergie.setVisible(false);
+        acheterSoin.setVisible(false);
+        acheterEpee.setVisible(false);
+        acheterArc.setVisible(false);
+
+
+
+        while(nbElementShop<3 && cptLimit<1000) {
+            cptLimit+=1;
+            int choixObjetAleatoire=1 + (int)(Math.random() * ((5 - 1) + 1));;
+
+            if (!personnage.getListeDesSorts().contains(grosseBoulleEnnergie)&& choixObjetAleatoire==1) {
+                acherterGrosseBoulleEnergie.setVisible(true);
+                acherterGrosseBoulleEnergie.setTranslateX(decalageMagasin);
+                nbElementShop += 1;
+                decalageMagasin += 200;
+            }
+
+            if (!personnage.getListeDesSorts().contains(boulleEnnergie)&& choixObjetAleatoire==2) {
+                acherterBoulleEnergie.setVisible(true);
+                acherterBoulleEnergie.setTranslateX(decalageMagasin);
+                nbElementShop += 1;
+                decalageMagasin += 200;
+            }
+
+            if (!personnage.getListeDesSorts().contains(soin) && choixObjetAleatoire==3) {
+                acheterSoin.setVisible(true);
+                acheterSoin.setTranslateX(decalageMagasin);
+                nbElementShop += 1;
+                decalageMagasin += 200;
+            }
+
+            if (!personnage.getListeDesArmes().contains(epee) && choixObjetAleatoire==4) {
+                acheterEpee.setVisible(true);
+                acheterEpee.setTranslateX(decalageMagasin);
+                nbElementShop += 1;
+                decalageMagasin += 200;
+            }
+
+            if (!personnage.getListeDesArmes().contains(arc) && choixObjetAleatoire==5) {
+                acheterArc.setVisible(true);
+                acheterArc.setTranslateX(decalageMagasin);
+                nbElementShop += 1;
+                decalageMagasin += 200;
+            }
+
+
+        }
+        retourBoutique.setTranslateX(decalageMagasin);
+
     }
 
 

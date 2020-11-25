@@ -177,10 +177,20 @@ public abstract class Personnage {
     }
 
     public void perdreVie(int nbPointAttaque){
-        this.pointsDeVie-=nbPointAttaque;
-        if(this.pointsDeVie>this.pointsDeVieMax){
-            this.pointsDeVie=this.pointsDeVieMax;
+        System.out.println(typeArme1);
+        System.out.println(nbPointAttaque+"/"+getBlocage());
+        if(nbPointAttaque<0){
+            this.pointsDeVie-=nbPointAttaque;
+            if(this.pointsDeVie>this.pointsDeVieMax){
+                this.pointsDeVie=this.pointsDeVieMax;
+            }
         }
+        else{
+            if(getBlocage()<=nbPointAttaque){
+                this.pointsDeVie-=(nbPointAttaque-getBlocage());
+            }
+        }
+
     }
 
     public void reprendreVie(int nbPvSoin){
@@ -333,5 +343,20 @@ public abstract class Personnage {
 
     public void perdrePiece(int nbPiece){
         this.nbPiece-=nbPiece;
+    }
+
+    public void setTypeArme2(Arme arme){this.typeArme2=typeArme2;}
+
+    public Arme getTypeArme2(){return this.typeArme2;}
+
+    public int getBlocage(){
+        int blocagePerso=0;
+        if(getTypeArme1()!=null){
+            blocagePerso+=getTypeArme1().getBlocage();
+        }
+        if(getTypeArme2()!=null){
+            blocagePerso+=getTypeArme2().getBlocage();
+        }
+        return blocagePerso;
     }
 }

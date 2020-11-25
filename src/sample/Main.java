@@ -27,7 +27,6 @@ public class Main extends Application {
 }
 
 //TODO  mettre des images dans les boutons de choix des personnages
-// remplacer if par exception quand une personne meurt
 // la classe partie ?
 // mettre les translate du controller directement dans le fxml
 // faire l'animation des attaques
@@ -36,4 +35,3 @@ public class Main extends Application {
 // mettre des objets dans la boutique
 // créer de nouveaux sort
 // randomiser attaque ennemi
-// sauvegarder durabilite
