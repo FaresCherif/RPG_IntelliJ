@@ -18,6 +18,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import java.nio.charset.StandardCharsets;
 import javafx.scene.text.Text;
+import javafx.application.Platform;
+
 
 import java.io.File;
 
@@ -240,6 +242,12 @@ public class Controller implements Initializable{
     @FXML
     private Label arme2;
 
+    @FXML
+    public TextArea console;
+
+    @FXML
+    private Group grConsole;
+
     GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     int width = gd.getDisplayMode().getWidth();
     int height = gd.getDisplayMode().getHeight();
@@ -256,11 +264,10 @@ public class Controller implements Initializable{
     private Arc arc =new Arc();
 
 
-
-
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 
+        console.setEditable(false);
         arc.setDegat(4);
         arc.setDurabilite(10);
         arc.setNbFlecheMax(20);
@@ -282,6 +289,7 @@ public class Controller implements Initializable{
         bouttonCharger.setTranslateY(500);
 
         chargerPagePrincipale.setTranslateX(-width/2+250);
+
     }
 
     public void allerPageCreerPersonnage(ActionEvent actionEvent) {
@@ -435,6 +443,7 @@ public class Controller implements Initializable{
     }
 
     public void fondCombat(){
+        console.appendText("Le combat commence, allez vous survivre ? Rien de moins sûr\n");
         allerListeArme.setVisible(false);
         BackgroundImage myBI= new BackgroundImage(new Image("https://static.wikia.nocookie.net/finalfantasy/images/c/c8/Battleback_coliseum.png/revision/latest?cb=20141030003602",width,height,false,true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
@@ -470,6 +479,9 @@ public class Controller implements Initializable{
     }
 
     public void pageCombat(){
+        grConsole.setVisible(true);
+        grConsole.setTranslateX(width/2-250);
+        grConsole.setTranslateY(height/2-150);
         allerSauvegarder.setVisible(false);
         allerMagasin.setVisible(false);
         psserTourCombat.setVisible(true);
@@ -619,6 +631,7 @@ public class Controller implements Initializable{
     public void coupEpee() {
         try {
             personnage.coupEpee(ennemi);
+            console.appendText("Vous prenner votre épée et infligez un violent l'ennemi\n");
         } catch (EnnemiMortException e) {
             affichageVictoire.setVisible(true);
             e.printStackTrace();
@@ -629,6 +642,7 @@ public class Controller implements Initializable{
     public void tirerFleche() {
         if(personnage.getTypeArme1().getNbFleche()>0){
             try {
+                console.appendText("Vous tirer une puissante fleche dans le corps de l'ennemi\n");
                 personnage.tirerFleche(ennemi);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);
@@ -640,6 +654,7 @@ public class Controller implements Initializable{
     }
 
     public void faireFleche() {
+        console.appendText("Vous fabriquez des flêches\n");
         personnage.typeArme1.recupererFleche(5);
         tourEnnemi();
     }
@@ -647,6 +662,7 @@ public class Controller implements Initializable{
     public void boulleEnergie() {
         if(personnage.getPointsDeMana()>=boulleEnnergie.getCoutMana()) {
             try {
+                console.appendText("Vous concentrez votre mana dans une boulle que vous envoyez sur l'ennemi\n");
                 personnage.utiliseSort(ennemi, boulleEnnergie);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);
@@ -659,6 +675,7 @@ public class Controller implements Initializable{
     public void sortSoin() {
         if(personnage.getPointsDeMana()>=soin.getCoutMana()) {
             try {
+                console.appendText("Vous concentrez votre mana pour soigner vos blessure\n");
                 personnage.utiliseSort(personnage, soin);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);
@@ -671,6 +688,7 @@ public class Controller implements Initializable{
     public void attaqueEnnemi(){
         if(ennemi.getListeDesSorts().isEmpty()){
             try {
+                console.appendText("L'ennemie bondit vers vous, les crocs à l'avant\n");
                 ennemi.morsure(personnage);
             } catch (PersonnageMortException e) {
                 affichageMort.setVisible(true);
@@ -695,6 +713,7 @@ public class Controller implements Initializable{
 
         if(sort.getCoutMana()<=ennemi.getPointsDeMana()) {
             try {
+                console.appendText("L'ennemie invoque l'ennergie des ether pour vous attaquer\n");
                 ennemi.utiliseSort(personnage, sort);
             } catch (EnnemiMortException e) {
                 affichageMort.setVisible(true);
@@ -731,6 +750,7 @@ public class Controller implements Initializable{
 
 
     public void passerTour() {
+        console.appendText("Vous rester immobile, le regard perdu dans la futilité de votre existance.Une stratégie sans faille\n");
         tourEnnemi();
     }
 
@@ -801,6 +821,7 @@ public class Controller implements Initializable{
     public void grosseBoulleEnergie() {
         if(personnage.getPointsDeMana()>=grosseBoulleEnnergie.getCoutMana()) {
             try {
+                console.appendText("Vous inviquez une enorme quantité d'energie dans une attaque qui va être dur à encaisser pour l'adversaire\n");
                 personnage.utiliseSort(ennemi, grosseBoulleEnnergie);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);

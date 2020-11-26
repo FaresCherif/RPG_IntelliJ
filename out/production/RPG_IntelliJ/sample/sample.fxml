@@ -176,5 +176,9 @@
         </ComboBox>
     </Group>
 
+    <Group fx:id="grConsole" visible="false">
+        <TextArea fx:id="console" minWidth="400" minHeight="200"/>
+    </Group>
+
 
 </GridPane>

@@ -1,11 +1,17 @@
 package sample;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
+
 import java.util.ArrayList;
 
 /**
  * Classe définissant un Personnage de RPG
  */
 public abstract class Personnage {
+
+    @FXML
+    public TextArea console;
 
     public Arme typeArme1;
     public Arme typeArme2;
