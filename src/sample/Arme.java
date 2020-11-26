@@ -48,4 +48,8 @@ public abstract class Arme {
     public void setEffet(Effet effet) {
         this.effet = effet;
     }
+
+    public boolean estBouclier(){
+        return false;
+    }
 }

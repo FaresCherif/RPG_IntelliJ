@@ -295,7 +295,8 @@ public abstract class Personnage {
         if (sort.getCoutMana() > this.getPointsDeMana()) {
             System.out.println("Vous n'avez pas assez de mana");
         } else {
-
+            System.out.println(personnageVise.getBlocage());
+            System.out.println(sort.getDegat());
             if(personnageVise.getBlocage()<=sort.getDegat() && personnageVise.getInvulnerable()<=0) {
 
                 if(sort.getEffet()!=null) {
@@ -410,7 +411,8 @@ public abstract class Personnage {
         this.nbPiece-=nbPiece;
     }
 
-    public void setTypeArme2(Arme arme){this.typeArme2=typeArme2;}
+    public void setTypeArme2(Arme arme){
+        this.typeArme2=arme;}
 
     public Arme getTypeArme2(){return this.typeArme2;}
 

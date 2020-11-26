@@ -4,7 +4,7 @@ public class Bouclier extends Arme {
 
     public Bouclier(){
         this.setDegat(0);
-        this.setBlocage(10);
+        this.setBlocage(2);
         this.setDurabilite(10);
         this.setEffet(new Effet());
     }
@@ -16,5 +16,14 @@ public class Bouclier extends Arme {
         this.setEffet(new Effet());
     }
 
+    public String toString() {
+        String arc="";
+        arc+="Bouclier : "+getDegat()+" degat / "+getBlocage()+" blocage / ";
+        return arc;
+    }
 
+    @Override
+    public boolean estBouclier() {
+        return true;
+    }
 }
