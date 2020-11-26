@@ -244,12 +244,11 @@ public class Controller implements Initializable{
     private Label arme2;
 
     @FXML
-<<<<<<< HEAD
     public TextArea console;
 
     @FXML
     private Group grConsole;
-=======
+
     private Button theWorldo;
 
     @FXML
@@ -272,7 +271,6 @@ public class Controller implements Initializable{
 
     @FXML
     private Button acheterBouclier;
->>>>>>> effet
 
     GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     int width = gd.getDisplayMode().getWidth();
@@ -293,8 +291,6 @@ public class Controller implements Initializable{
     private Effet timeStop=new Effet(1,0,2);
     private Sort theWorld=new Sort(0,timeStop,5);
 
-<<<<<<< HEAD
-=======
     private Effet boostForce=new Effet(4,0,3);
     private Sort fullCowl = new Sort(0,boostForce,4);
 
@@ -304,7 +300,6 @@ public class Controller implements Initializable{
     private Ennemi ennemi1,ennemi2,ennemi3,ennemi4,ennemi5;
 
 
->>>>>>> effet
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -422,6 +417,7 @@ public class Controller implements Initializable{
     }
 
     public void pageDescriptionPerso(){
+        grConsole.setVisible(false);
         choixHistoire.setVisible(false);
         if(personnage.getTypeArme1()!=null&& personnage.getTypeArme1().getDurabilite()==0){
             personnage.getListeDesArmes().remove(personnage.getTypeArme1());
@@ -499,11 +495,8 @@ public class Controller implements Initializable{
     }
 
     public void fondCombat(){
-<<<<<<< HEAD
         console.appendText("Le combat commence, allez vous survivre ? Rien de moins sûr\n");
-=======
         allerChoixHistoire.setVisible(false);
->>>>>>> effet
         allerListeArme.setVisible(false);
         BackgroundImage myBI= new BackgroundImage(new Image("https://static.wikia.nocookie.net/finalfantasy/images/c/c8/Battleback_coliseum.png/revision/latest?cb=20141030003602",width,height,false,true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
@@ -630,6 +623,7 @@ public class Controller implements Initializable{
                 retourDescriptionMort.setTranslateX(400);
                 retourDescriptionMort.setTranslateY(-200);
                 descriptionMort.setTranslateY(-150);
+                console.appendText("L'ennemi vous a infligé le dégat de trop, vous tombez à terre sans vie \n");
             }
         }
         else{
@@ -647,6 +641,7 @@ public class Controller implements Initializable{
             retourDescriptionVictoire.setTranslateX(400);
             retourDescriptionVictoire.setTranslateY(-200);
             descriptionVictoire.setTranslateY(-150);
+            console.appendText("Votre dernière attaque à été tout ce que a sufiie  pour faire plier votre adversaire \n");
 
             if(personnage.getTypeArme1()!=null){
                 personnage.getTypeArme1().perdreDurabilite();
@@ -756,9 +751,9 @@ public class Controller implements Initializable{
     }
 
     public void coupEpee() {
+        console.appendText("Vous prenner votre épée et infligez un violent l'ennemi\n");
         try {
             personnage.coupEpee(ennemi);
-            console.appendText("Vous prenner votre épée et infligez un violent l'ennemi\n");
         } catch (EnnemiMortException e) {
             affichageVictoire.setVisible(true);
         }
@@ -767,8 +762,8 @@ public class Controller implements Initializable{
 
     public void tirerFleche() {
         if(personnage.getTypeArme1().getNbFleche()>0){
+            console.appendText("Vous tirer une puissante fleche dans le corps de l'ennemi\n");
             try {
-                console.appendText("Vous tirer une puissante fleche dans le corps de l'ennemi\n");
                 personnage.tirerFleche(ennemi);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);
@@ -786,8 +781,8 @@ public class Controller implements Initializable{
 
     public void boulleEnergie() {
         if(personnage.getPointsDeMana()>=boulleEnnergie.getCoutMana()) {
+            console.appendText("Vous concentrez votre mana dans une boulle que vous envoyez sur l'ennemi\n");
             try {
-                console.appendText("Vous concentrez votre mana dans une boulle que vous envoyez sur l'ennemi\n");
                 personnage.utiliseSort(ennemi, boulleEnnergie);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);
@@ -798,8 +793,8 @@ public class Controller implements Initializable{
 
     public void sortSoin() {
         if(personnage.getPointsDeMana()>=soin.getCoutMana()) {
+            console.appendText("Vous concentrez votre mana pour soigner vos blessure\n");
             try {
-                console.appendText("Vous concentrez votre mana pour soigner vos blessure\n");
                 personnage.utiliseSort(personnage, soin);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);
@@ -844,8 +839,8 @@ public class Controller implements Initializable{
 
     public void attaqueEnnemi(){
         if(ennemi.getListeDesSorts().isEmpty()){
+            console.appendText("L'ennemie bondit vers vous, les crocs à l'avant\n");
             try {
-                console.appendText("L'ennemie bondit vers vous, les crocs à l'avant\n");
                 ennemi.morsure(personnage);
             } catch (PersonnageMortException e) {
                 affichageMort.setVisible(true);
@@ -869,8 +864,8 @@ public class Controller implements Initializable{
         }
 
         if(sort.getCoutMana()<=ennemi.getPointsDeMana()) {
+            console.appendText("L'ennemie invoque l'ennergie des ether pour vous attaquer\n");
             try {
-                console.appendText("L'ennemie invoque l'ennergie des ether pour vous attaquer\n");
                 ennemi.utiliseSort(personnage, sort);
 
             } catch (EnnemiMortException e) {
@@ -995,8 +990,8 @@ public class Controller implements Initializable{
 
     public void grosseBoulleEnergie() {
         if(personnage.getPointsDeMana()>=grosseBoulleEnnergie.getCoutMana()) {
+            console.appendText("Vous inviquez une enorme quantité d'energie dans une attaque qui va être dur à encaisser pour l'adversaire\n");
             try {
-                console.appendText("Vous inviquez une enorme quantité d'energie dans une attaque qui va être dur à encaisser pour l'adversaire\n");
                 personnage.utiliseSort(ennemi, grosseBoulleEnnergie);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);

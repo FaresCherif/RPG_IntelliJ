@@ -180,12 +180,10 @@
         </ComboBox>
     </Group>
 
-<<<<<<< HEAD
     <Group fx:id="grConsole" visible="false">
         <TextArea fx:id="console" minWidth="400" minHeight="200"/>
     </Group>
 
-=======
     <Group fx:id="allerChoixHistoire" visible="false">
         <Button fx:id="bouttonChoixHistoire" minHeight="100" minWidth="100" onMouseClicked="#pageListeHistoire" style="-fx-background-size: 100 100; " >Choisir une histoire</Button>
     </Group>
@@ -196,6 +194,5 @@
         <Button fx:id="choixAvenetureChasseur" translateX="400" minHeight="100" minWidth="100" onMouseClicked="#choisirHistoireChasseur" style="-fx-background-size: 100 100; " >Choisir l'histoire du chasseur</Button>
         <Button minHeight="100" translateX="600" minWidth="100" onMouseClicked="#pageDescriptionPerso" style="-fx-background-size: 100 100; " >Retour</Button>
     </Group>
->>>>>>> effet
 
 </GridPane>
