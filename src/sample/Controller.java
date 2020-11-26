@@ -299,6 +299,8 @@ public class Controller implements Initializable{
 
     private Ennemi ennemi1,ennemi2,ennemi3,ennemi4,ennemi5;
 
+    private int numeroChoixHistoire;
+
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -529,23 +531,23 @@ public class Controller implements Initializable{
         }
 
         else{
-            if(ennemi1!=null){
+            if(personnage.getNiveau()==1){
                 ennemi=ennemi1;
             }
             else{
-                if(ennemi2!=null){
+                if(personnage.getNiveau()==2){
                     ennemi=ennemi2;
                 }
                 else{
-                    if(ennemi3!=null){
+                    if(personnage.getNiveau()==3){
                         ennemi=ennemi3;
                     }
                     else{
-                        if(ennemi4!=null){
+                        if(personnage.getNiveau()==4){
                             ennemi=ennemi4;
                         }
                         else{
-                            if(ennemi5!=null){
+                            if(personnage.getNiveau()==5){
                                 ennemi=ennemi5;
                             }
                         }
@@ -805,6 +807,7 @@ public class Controller implements Initializable{
 
     public void sortTheWorld(){
         if(personnage.getPointsDeMana()>=theWorld.getCoutMana()) {
+            console.appendText("Vous utiliser votre mana pour arreter le flux du temps pendant un tour\n");
             try {
                 personnage.utiliseSort(ennemi, theWorld);
             } catch (EnnemiMortException e) {
@@ -816,6 +819,7 @@ public class Controller implements Initializable{
 
     public void fullCowl(){
         if(personnage.getPointsDeMana()>=fullCowl.getCoutMana()) {
+            console.appendText("Vous utiliser votre mana pour booster vos dégat à l'arme blance pendant quelques tours \n");
             try {
                 personnage.utiliseSort(personnage, fullCowl);
             } catch (EnnemiMortException e) {
@@ -827,6 +831,8 @@ public class Controller implements Initializable{
 
     public void leMur(){
         if(personnage.getPointsDeMana()>=leMur.getCoutMana()) {
+            console.appendText("Vous invoquez un mur de pierre pour bloquer la prochaine attaque adverse \n");
+
             try {
                 personnage.utiliseSort(personnage, leMur);
             } catch (EnnemiMortException e) {
@@ -1062,6 +1068,8 @@ public class Controller implements Initializable{
             ffw.write(Integer.toString(personnage.getNiveau()));
             ffw.write(",");
             ffw.write(Integer.toString(personnage.getNbPiece()));
+            ffw.write(",");
+            ffw.write(Integer.toString(numeroChoixHistoire));
             ffw.write("\n"); // forcer le passage à la ligne
 
             for(int cptArmeSauvegarde=0;cptArmeSauvegarde<personnage.getListeDesArmes().size();cptArmeSauvegarde+=1){
@@ -1089,6 +1097,23 @@ public class Controller implements Initializable{
 
             for(int cptSortSauvegarde=0;cptSortSauvegarde<personnage.getListeDesSorts().size();cptSortSauvegarde+=1){
                 ffw.write("2,");
+                if(personnage.getListeDesSorts().get(cptSortSauvegarde).getEffet()!=null){
+                    ffw.write(Integer.toString(personnage.getListeDesSorts().get(cptSortSauvegarde).getEffet().getType()));
+                    ffw.write(",");
+                    ffw.write(Integer.toString(personnage.getListeDesSorts().get(cptSortSauvegarde).getEffet().getDegat()));
+                    ffw.write(",");
+                    ffw.write(Integer.toString(personnage.getListeDesSorts().get(cptSortSauvegarde).getEffet().getDuree()));
+                    ffw.write(",");
+                }
+                else{
+                    ffw.write(0);
+                    ffw.write(",");
+                    ffw.write(0);
+                    ffw.write(",");
+                    ffw.write(0);
+                    ffw.write(",");
+                }
+
                 ffw.write(Integer.toString(personnage.getListeDesSorts().get(cptSortSauvegarde).getDegat()));
                 ffw.write(",");
                 ffw.write(Integer.toString(personnage.getListeDesSorts().get(cptSortSauvegarde).getCoutMana()));
@@ -1145,6 +1170,53 @@ public class Controller implements Initializable{
                             personnage.setPointsDeManaMax(Integer.parseInt(ligne[5]));
                             personnage.setNiveau(Integer.parseInt(ligne[6]));
                             personnage.setNbPiece(Integer.parseInt(ligne[7]));
+
+                            if(Integer.parseInt(ligne[8])!=0) {
+
+                                if (Integer.parseInt(ligne[8]) == 1) {
+                                    setEnnemiMana();
+                                }
+                                if (Integer.parseInt(ligne[8]) == 2) {
+                                    setEnnemiPv();
+                                }
+                                if (Integer.parseInt(ligne[8]) == 3) {
+                                    setEnnemiNeutre();
+                                }
+
+
+                                if(Integer.parseInt(ligne[8])!=0) {
+                                    if (Integer.parseInt(ligne[8]) == 1) {
+                                        setEnnemiMana();
+                                    }
+                                    if (Integer.parseInt(ligne[8]) == 2) {
+                                        setEnnemiPv();
+                                    }
+                                    if (Integer.parseInt(ligne[8]) == 3) {
+                                        setEnnemiNeutre();
+                                    }
+
+                                    if (personnage.getNiveau() <= 5) {
+                                        if (personnage.getNiveau() >= 1) {
+                                            ennemi = ennemi1;
+                                            if (personnage.getNiveau() >= 2) {
+                                                ennemi = ennemi2;
+                                                if (personnage.getNiveau() >= 3) {
+                                                    ennemi = ennemi3;
+                                                    if (personnage.getNiveau() >= 4) {
+                                                        ennemi = ennemi4;
+                                                        if (personnage.getNiveau() >= 5) {
+                                                            ennemi = ennemi5;
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                }
+
+                            }
+
                         }
                         else{
                             String[] ligne = line.split(",");
@@ -1169,18 +1241,30 @@ public class Controller implements Initializable{
 
                             }
                             if(Integer.parseInt(ligne[0])==2){
-                                Sort sort=new Sort(Integer.parseInt(ligne[1]),new Effet(),Integer.parseInt(ligne[2]));
+                                Sort sort=new Sort(Integer.parseInt(ligne[4]),new Effet(Integer.parseInt(ligne[1]),Integer.parseInt(ligne[2]),Integer.parseInt(ligne[3])),Integer.parseInt(ligne[5]));
 
-                                if(sort.getDegat()==boulleEnnergie.getDegat()&&sort.getCoutMana()==boulleEnnergie.getCoutMana()){
+                                if(sort.comparerSort(boulleEnnergie)){
                                     personnage.apprendreSort(boulleEnnergie);
                                 }
 
-                                if(sort.getDegat()==soin.getDegat()&&sort.getCoutMana()==soin.getCoutMana()){
+                                if(sort.comparerSort(soin)){
                                     personnage.apprendreSort(soin);
                                 }
 
-                                if(sort.getDegat()==grosseBoulleEnnergie.getDegat()&&sort.getCoutMana()==grosseBoulleEnnergie.getCoutMana()){
+                                if(sort.comparerSort(grosseBoulleEnnergie)){
                                     personnage.apprendreSort(grosseBoulleEnnergie);
+                                }
+
+                                if(sort.comparerSort(fullCowl)){
+                                    personnage.apprendreSort(fullCowl);
+                                }
+
+                                if(sort.comparerSort(leMur)){
+                                    personnage.apprendreSort(leMur);
+                                }
+
+                                if(sort.comparerSort(theWorld)){
+                                    personnage.apprendreSort(theWorld);
                                 }
                             }
                         }
@@ -1363,16 +1447,19 @@ public class Controller implements Initializable{
 
     public void choisirHistoireMage(){
         setEnnemiMana();
+        numeroChoixHistoire=1;
         pageDescriptionPerso();
     }
 
     public void choisirHistoireGuerrier(){
         setEnnemiPv();
+        numeroChoixHistoire=2;
         pageDescriptionPerso();
     }
 
     public void choisirHistoireChasseur(){
         setEnnemiNeutre();
+        numeroChoixHistoire=3;
         pageDescriptionPerso();
     }
 
