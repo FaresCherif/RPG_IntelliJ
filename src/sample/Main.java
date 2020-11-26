@@ -31,7 +31,5 @@ public class Main extends Application {
 // mettre les translate du controller directement dans le fxml
 // faire l'animation des attaques
 // refactorer le code
-// gérer le blocage et mettre des effets
 // mettre des objets dans la boutique
-// créer de nouveaux sort
 // randomiser attaque ennemi

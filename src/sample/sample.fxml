@@ -114,6 +114,9 @@
         <Button  visible="false" fx:id="boulleEnergie" minHeight="100" minWidth="100" onMouseClicked="#boulleEnergie" style="-fx-background-size: 100 100; " >Boulle d'énergie</Button>
         <Button  visible="false" fx:id="grosseBoulleEnergie" minHeight="100" minWidth="100" onMouseClicked="#grosseBoulleEnergie" style="-fx-background-size: 100 100; " >Grosse boulle d'énergie</Button>
         <Button  visible="false" fx:id="sortSoint" minHeight="100" minWidth="100" onMouseClicked="#sortSoin" style="-fx-background-size: 100 100; " >Soin</Button>
+        <Button  visible="false" fx:id="theWorldo" minHeight="100" minWidth="100" onMouseClicked="#sortTheWorld" style="-fx-background-size: 100 100; " >The World</Button>
+        <Button  visible="false" fx:id="fulCowlo" minHeight="100" minWidth="100" onMouseClicked="#fullCowl" style="-fx-background-size: 100 100; " >Full cowl</Button>
+        <Button  visible="false" fx:id="leMuro" minHeight="100" minWidth="100" onMouseClicked="#leMur" style="-fx-background-size: 100 100; " >Le mur</Button>
         <Button  fx:id="retourSortBoutton" minHeight="100" minWidth="100" onMouseClicked="#pageCombat" style="-fx-background-size: 100 100; " >Retour</Button>
     </Group>
 
@@ -146,6 +149,7 @@
         <Button fx:id="acheterSoin" visible="false" minHeight="100" minWidth="100" onMouseClicked="#acheterSoin" style="-fx-background-size: 100 100; " >Soin</Button>
         <Button fx:id="acheterEpee" visible="false" minHeight="100" minWidth="100" onMouseClicked="#acheterEpee" style="-fx-background-size: 100 100; " >Epee</Button>
         <Button fx:id="acheterArc" visible="false" minHeight="100" minWidth="100" onMouseClicked="#acheterArc" style="-fx-background-size: 100 100; " >Arc</Button>
+        <Button fx:id="acheterBouclier" visible="false" minHeight="100" minWidth="100" onMouseClicked="#acheterBouclier" style="-fx-background-size: 100 100; " >Bouclier</Button>
         <Button  fx:id="retourBoutique"  minHeight="100" minWidth="100" onMouseClicked="#pageDescriptionPerso" >Retour</Button>
     </Group>
 
@@ -176,9 +180,22 @@
         </ComboBox>
     </Group>
 
+<<<<<<< HEAD
     <Group fx:id="grConsole" visible="false">
         <TextArea fx:id="console" minWidth="400" minHeight="200"/>
     </Group>
 
+=======
+    <Group fx:id="allerChoixHistoire" visible="false">
+        <Button fx:id="bouttonChoixHistoire" minHeight="100" minWidth="100" onMouseClicked="#pageListeHistoire" style="-fx-background-size: 100 100; " >Choisir une histoire</Button>
+    </Group>
+
+    <Group fx:id="choixHistoire" visible="false">
+        <Button fx:id="choixAvenetureMage" minHeight="100" minWidth="100" onMouseClicked="#choisirHistoireMage" style="-fx-background-size: 100 100; " >Choisir l'histoire mage</Button>
+        <Button fx:id="choixAvenetureGuerrier" translateX="200" minHeight="100" minWidth="100" onMouseClicked="#choisirHistoireGuerrier" style="-fx-background-size: 100 100; " >Choisir l'histoire du guerrier</Button>
+        <Button fx:id="choixAvenetureChasseur" translateX="400" minHeight="100" minWidth="100" onMouseClicked="#choisirHistoireChasseur" style="-fx-background-size: 100 100; " >Choisir l'histoire du chasseur</Button>
+        <Button minHeight="100" translateX="600" minWidth="100" onMouseClicked="#pageDescriptionPerso" style="-fx-background-size: 100 100; " >Retour</Button>
+    </Group>
+>>>>>>> effet
 
 </GridPane>

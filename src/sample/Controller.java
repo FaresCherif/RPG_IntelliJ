@@ -2,6 +2,7 @@ package sample;
 import java.awt.*;
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
@@ -243,10 +244,35 @@ public class Controller implements Initializable{
     private Label arme2;
 
     @FXML
+<<<<<<< HEAD
     public TextArea console;
 
     @FXML
     private Group grConsole;
+=======
+    private Button theWorldo;
+
+    @FXML
+    private Button fulCowlo;
+
+    @FXML
+    private Button leMuro;
+
+    @FXML
+    private Group allerChoixHistoire;
+
+    @FXML
+    private Group choixHistoire;
+
+    @FXML
+    private Button choixAvenetureMage;
+
+    @FXML
+    private Button choisirHistoireGuerrier;
+
+    @FXML
+    private Button acheterBouclier;
+>>>>>>> effet
 
     GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     int width = gd.getDisplayMode().getWidth();
@@ -260,10 +286,25 @@ public class Controller implements Initializable{
     private Sort soin = new Sort(-8,new Effet(),4);
     private Sort grosseBoulleEnnergie=new Sort(8,new Effet(),8);
 
-    private Epee epee= new Epee(5,0,10);
+    private Epee epee= new Epee();
     private Arc arc =new Arc();
+    private Bouclier bouclier=new Bouclier();
+
+    private Effet timeStop=new Effet(1,0,2);
+    private Sort theWorld=new Sort(0,timeStop,5);
+
+<<<<<<< HEAD
+=======
+    private Effet boostForce=new Effet(4,0,3);
+    private Sort fullCowl = new Sort(0,boostForce,4);
+
+    private Effet invulnerabilite=new Effet(2,0,1);
+    public Sort leMur=new Sort(0,invulnerabilite,2);
+
+    private Ennemi ennemi1,ennemi2,ennemi3,ennemi4,ennemi5;
 
 
+>>>>>>> effet
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -360,6 +401,7 @@ public class Controller implements Initializable{
         imageViewPersonnage.setImage(nouvelleImage);
         affichagePerso.setTranslateX(-500);
         personnage.recupererArme(epee);
+        personnage.apprendreSort(fullCowl);
     }
 
     public void creerChasseur(){
@@ -374,11 +416,13 @@ public class Controller implements Initializable{
         imageViewPersonnage.setImage(nouvelleImage);
         affichagePerso.setTranslateX(-400);
         personnage.recupererArme(arc);
+        personnage.apprendreSort(theWorld);
+        personnage.apprendreSort(leMur);
 
     }
 
     public void pageDescriptionPerso(){
-
+        choixHistoire.setVisible(false);
         if(personnage.getTypeArme1()!=null&& personnage.getTypeArme1().getDurabilite()==0){
             personnage.getListeDesArmes().remove(personnage.getTypeArme1());
             personnage.setTypeArme1(null);
@@ -391,7 +435,13 @@ public class Controller implements Initializable{
         chargerPagePrincipale.setVisible(false);
 
 
+        if(ennemi5==null && personnage.getNiveau()==1) {
+            allerChoixHistoire.setVisible(true);
+        }
 
+
+        allerChoixHistoire.setTranslateY(300);
+        allerChoixHistoire.setTranslateX(50);
         allerSauvegarder.setTranslateX(-300);
         allerSauvegarder.setTranslateY(-300);
         allerSauvegarder.setVisible(true);
@@ -408,7 +458,10 @@ public class Controller implements Initializable{
 
         nomCreationPerso.setVisible(false);
         affichagePerso.setVisible(true);
+
         descriptionAffichagePerso.setVisible(true);
+
+
         allerMagasin.setVisible(true);
         allerMagasin.setTranslateX(600);
 
@@ -424,7 +477,10 @@ public class Controller implements Initializable{
         niveauDescriptionPersonage.setText(" Niveau : "+Integer.toString(personnage.getNiveau()));
         niveauDescriptionPersonage.setTranslateY(40);
 
-        bouttonAffichagePerso.setVisible(true);
+        if(ennemi5!=null || ennemi!=null && ennemi.getNiveau()>1 || personnage.getNiveau()>5) {
+            bouttonAffichagePerso.setVisible(true);
+        }
+
         bouttonAffichagePerso.setTranslateX(-300);
         bouttonAffichagePerso.setTranslateY(300);
 
@@ -443,7 +499,11 @@ public class Controller implements Initializable{
     }
 
     public void fondCombat(){
+<<<<<<< HEAD
         console.appendText("Le combat commence, allez vous survivre ? Rien de moins sûr\n");
+=======
+        allerChoixHistoire.setVisible(false);
+>>>>>>> effet
         allerListeArme.setVisible(false);
         BackgroundImage myBI= new BackgroundImage(new Image("https://static.wikia.nocookie.net/finalfantasy/images/c/c8/Battleback_coliseum.png/revision/latest?cb=20141030003602",width,height,false,true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
@@ -451,25 +511,53 @@ public class Controller implements Initializable{
 
         gridPane.setBackground(new Background(myBI));
 
-        if(personnage.getNiveau()==1){
-            ennemi=new Ennemi();
-            Epee epeeMechant=new Epee();
-            ennemi.recupererArme(epeeMechant);
+        if(ennemi5==null) {
+
+            if (personnage.getNiveau() == 1) {
+                ennemi = new Ennemi();
+                Epee epeeMechant = new Epee();
+                ennemi.recupererArme(epeeMechant);
+            } else {
+                if (ennemi == null) {
+                    ennemi = new Ennemi();
+                }
+                if (ennemi.getNiveau() < personnage.getNiveau()) {
+                    ennemi.setPointsDeVieMax(personnage.getNiveau() * 5);
+                    ennemi.setPointsDeManaMax(personnage.getNiveau() * 5);
+                    ennemi.setNiveau(personnage.getNiveau());
+                }
+                if (!ennemi.getListeDesSorts().contains(boulleEnnergie) && ennemi.getNiveau() >= 3) {
+                    ennemi.apprendreSort(boulleEnnergie);
+                }
+                if (!ennemi.getListeDesSorts().contains(grosseBoulleEnnergie) && ennemi.getNiveau() >= 4) {
+                    ennemi.apprendreSort(grosseBoulleEnnergie);
+                }
+            }
         }
+
         else{
-            if(ennemi==null){
-                ennemi=new Ennemi();
+            if(ennemi1!=null){
+                ennemi=ennemi1;
             }
-            if(ennemi.getNiveau()<personnage.getNiveau()){
-                ennemi.setPointsDeVieMax(personnage.getNiveau()*5);
-                ennemi.setPointsDeManaMax(personnage.getNiveau()*5);
-                ennemi.setNiveau(personnage.getNiveau());
-            }
-            if(!ennemi.getListeDesSorts().contains(boulleEnnergie)&& ennemi.getNiveau()>=3){
-                ennemi.apprendreSort(boulleEnnergie);
-            }
-            if(!ennemi.getListeDesSorts().contains(grosseBoulleEnnergie)&& ennemi.getNiveau()>=4){
-                ennemi.apprendreSort(grosseBoulleEnnergie);
+            else{
+                if(ennemi2!=null){
+                    ennemi=ennemi2;
+                }
+                else{
+                    if(ennemi3!=null){
+                        ennemi=ennemi3;
+                    }
+                    else{
+                        if(ennemi4!=null){
+                            ennemi=ennemi4;
+                        }
+                        else{
+                            if(ennemi5!=null){
+                                ennemi=ennemi5;
+                            }
+                        }
+                    }
+                }
             }
         }
         ennemi.recuperer();
@@ -563,6 +651,27 @@ public class Controller implements Initializable{
             if(personnage.getTypeArme1()!=null){
                 personnage.getTypeArme1().perdreDurabilite();
             }
+            if(ennemi5!=null) {
+                if (ennemi1 == ennemi) {
+                    ennemi1 = null;
+                } else {
+                    if (ennemi2 == ennemi) {
+                        ennemi2=null;
+                    } else {
+                        if (ennemi3 == ennemi) {
+                            ennemi3 = null;
+                        } else {
+                            if (ennemi4 == ennemi) {
+                                ennemi4 = null;
+                            } else {
+                                if (ennemi5 == ennemi) {
+                                    ennemi5 = null;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
 
@@ -623,6 +732,24 @@ public class Controller implements Initializable{
             grosseBoulleEnergie.setVisible(true);
         }
 
+        if(personnage.getListeDesSorts().contains(theWorld)){
+            theWorldo.setTranslateX(decalageSort);
+            decalageSort+=200;
+            theWorldo.setVisible(true);
+        }
+
+        if(personnage.getListeDesSorts().contains(fullCowl)){
+            fulCowlo.setTranslateX(decalageSort);
+            decalageSort+=200;
+            fulCowlo.setVisible(true);
+        }
+
+        if(personnage.getListeDesSorts().contains(leMur)){
+            leMuro.setTranslateX(decalageSort);
+            decalageSort+=200;
+            leMuro.setVisible(true);
+        }
+
 
         retourSortBoutton.setTranslateX(decalageSort);
 
@@ -634,7 +761,6 @@ public class Controller implements Initializable{
             console.appendText("Vous prenner votre épée et infligez un violent l'ennemi\n");
         } catch (EnnemiMortException e) {
             affichageVictoire.setVisible(true);
-            e.printStackTrace();
         }
         tourEnnemi();
     }
@@ -646,7 +772,6 @@ public class Controller implements Initializable{
                 personnage.tirerFleche(ennemi);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);
-                e.printStackTrace();
             }
             tourEnnemi();
         }
@@ -666,7 +791,6 @@ public class Controller implements Initializable{
                 personnage.utiliseSort(ennemi, boulleEnnergie);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);
-                e.printStackTrace();
             }
             tourEnnemi();
         }
@@ -679,11 +803,44 @@ public class Controller implements Initializable{
                 personnage.utiliseSort(personnage, soin);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);
-                e.printStackTrace();
             }
             tourEnnemi();
         }
     }
+
+    public void sortTheWorld(){
+        if(personnage.getPointsDeMana()>=theWorld.getCoutMana()) {
+            try {
+                personnage.utiliseSort(ennemi, theWorld);
+            } catch (EnnemiMortException e) {
+                affichageVictoire.setVisible(true);
+            }
+            tourEnnemi();
+        }
+    }
+
+    public void fullCowl(){
+        if(personnage.getPointsDeMana()>=fullCowl.getCoutMana()) {
+            try {
+                personnage.utiliseSort(personnage, fullCowl);
+            } catch (EnnemiMortException e) {
+                affichageVictoire.setVisible(true);
+            }
+            tourEnnemi();
+        }
+    }
+
+    public void leMur(){
+        if(personnage.getPointsDeMana()>=leMur.getCoutMana()) {
+            try {
+                personnage.utiliseSort(personnage, leMur);
+            } catch (EnnemiMortException e) {
+                affichageVictoire.setVisible(true);
+            }
+            tourEnnemi();
+        }
+    }
+
 
     public void attaqueEnnemi(){
         if(ennemi.getListeDesSorts().isEmpty()){
@@ -715,6 +872,7 @@ public class Controller implements Initializable{
             try {
                 console.appendText("L'ennemie invoque l'ennergie des ether pour vous attaquer\n");
                 ennemi.utiliseSort(personnage, sort);
+
             } catch (EnnemiMortException e) {
                 affichageMort.setVisible(true);
             }
@@ -730,12 +888,16 @@ public class Controller implements Initializable{
 
     public void tourEnnemi() {
         if(ennemi.getPointsDeVie()>0){
-            attaqueEnnemi();
-            try {
-                ennemi.morsure(personnage);
-            } catch (PersonnageMortException e) {
-                affichageMort.setVisible(true);
-                e.printStackTrace();
+            if(ennemi.getListeEffet().getFreeze()<=0) {
+                attaqueEnnemi();
+                try {
+                    ennemi.morsure(personnage);
+                } catch (PersonnageMortException e) {
+                    affichageMort.setVisible(true);
+                }
+            }
+            else{
+                ennemi.getListeEffet().setFreeze(ennemi.getListeEffet().getFreeze()-1);
             }
         }
 
@@ -744,6 +906,10 @@ public class Controller implements Initializable{
         }
         else{
             personnage.reprendreMana(1);
+        }
+
+        if(personnage.getInvulnerable()>=1) {
+            personnage.setInvulnerabilite(personnage.getInvulnerable() - 1);
         }
         pageCombat();
     }
@@ -763,6 +929,7 @@ public class Controller implements Initializable{
     }
 
     public void pageMagasin(){
+        allerChoixHistoire.setVisible(true);
         allerListeArme.setVisible(false);
         allerSauvegarder.setVisible(false);
         piecePersonnage.setText(personnage.getNbPiece()+" pieces");
@@ -818,6 +985,14 @@ public class Controller implements Initializable{
         pageMagasin();
     }
 
+    public void acheterBouclier(){
+        if(personnage.getNbPiece()>=40){
+            personnage.perdrePiece(40);
+            personnage.gagnereArme(bouclier);
+        }
+        pageMagasin();
+    }
+
     public void grosseBoulleEnergie() {
         if(personnage.getPointsDeMana()>=grosseBoulleEnnergie.getCoutMana()) {
             try {
@@ -825,7 +1000,6 @@ public class Controller implements Initializable{
                 personnage.utiliseSort(ennemi, grosseBoulleEnnergie);
             } catch (EnnemiMortException e) {
                 affichageVictoire.setVisible(true);
-                e.printStackTrace();
             }
             tourEnnemi();
         }
@@ -913,7 +1087,6 @@ public class Controller implements Initializable{
                 ffw.write(",");
                 ffw.write(Integer.toString(personnage.getListeDesArmes().get(cptArmeSauvegarde).getNbFleche()));
                 ffw.write(",");
-                System.out.println(personnage.getListeDesArmes().get(cptArmeSauvegarde).getDurabilite());
                 ffw.write(Integer.toString(personnage.getListeDesArmes().get(cptArmeSauvegarde).getDurabilite()));
                 ffw.write(",");
                 ffw.write("\n");
@@ -991,7 +1164,7 @@ public class Controller implements Initializable{
                                     personnage.recuperer();
                                 }
                                 if(Integer.parseInt(ligne[1])==2){
-                                    arme=new Epee(Integer.parseInt(ligne[2]),Integer.parseInt(ligne[3]),Integer.parseInt(ligne[5]));
+                                    arme=new Epee(Integer.parseInt(ligne[2]),Integer.parseInt(ligne[3]),Integer.parseInt(ligne[5]),new Effet());
                                     personnage.recupererArme(arme);
                                 }
                                 if(Integer.parseInt(ligne[1])==3){
@@ -1030,6 +1203,7 @@ public class Controller implements Initializable{
     }
 
     public void listerArme(){
+        allerChoixHistoire.setVisible(false);
         allerMagasin.setVisible(false);
         sauvegarde.setVisible(false);
         bouttonCombat.setVisible(false);
@@ -1051,7 +1225,10 @@ public class Controller implements Initializable{
         }
 
         for(int cptArmeListeArme=0;cptArmeListeArme<personnage.getListeDesArmes().size();cptArmeListeArme+=1) {
-            listeArme.getItems().add(cptArmeListeArme+","+personnage.getListeDesArmes().get(cptArmeListeArme));
+
+            if(personnage.getListeDesArmes().get(cptArmeListeArme).estBouclier()==false) {
+                listeArme.getItems().add(cptArmeListeArme + "," + personnage.getListeDesArmes().get(cptArmeListeArme));
+            }
         }
 
         for(int i=0;i<listeArme2.getItems().size();i++){
@@ -1059,8 +1236,8 @@ public class Controller implements Initializable{
         }
 
         for(int cptArmeListeArme2=0;cptArmeListeArme2<personnage.getListeDesArmes().size();cptArmeListeArme2+=1) {
-            if(personnage.getListeDesArmes().get(cptArmeListeArme2).getClass()==Bouclier.class){
-                listeArme.getItems().add(cptArmeListeArme2+","+personnage.getListeDesArmes().get(cptArmeListeArme2));
+            if(personnage.getListeDesArmes().get(cptArmeListeArme2).estBouclier()==true){
+                listeArme2.getItems().add(cptArmeListeArme2+","+personnage.getListeDesArmes().get(cptArmeListeArme2));
             }
         }
 
@@ -1073,7 +1250,6 @@ public class Controller implements Initializable{
 
 
             String string[] = listeArme.getValue().toString().split(",");
-
             personnage.setTypeArme1(personnage.getListeDesArmes().get(Integer.parseInt(string[0])));
         }
 
@@ -1081,8 +1257,9 @@ public class Controller implements Initializable{
 
 
     public void equiperArme2(){
-        if(listeArme.getValue()!=null) {
-            String string[] = listeArme.getValue().toString().split(",");
+        if(listeArme2.getValue()!=null) {
+            String string[] = listeArme2.getValue().toString().split(",");
+
             personnage.setTypeArme2(personnage.getListeDesArmes().get(Integer.parseInt(string[0])));
         }
 
@@ -1093,17 +1270,19 @@ public class Controller implements Initializable{
         int nbElementShop=0;
         int cptLimit=0;
         int decalageMagasin=0;
+        allerChoixHistoire.setVisible(false);
         acherterGrosseBoulleEnergie.setVisible(false);
         acherterBoulleEnergie.setVisible(false);
         acheterSoin.setVisible(false);
         acheterEpee.setVisible(false);
         acheterArc.setVisible(false);
+        acheterBouclier.setVisible(false);
 
 
 
         while(nbElementShop<3 && cptLimit<1000) {
             cptLimit+=1;
-            int choixObjetAleatoire=1 + (int)(Math.random() * ((5 - 1) + 1));;
+            int choixObjetAleatoire=1 + (int)(Math.random() * ((6 - 1) + 1));;
 
             if (!personnage.getListeDesSorts().contains(grosseBoulleEnnergie)&& choixObjetAleatoire==1) {
                 acherterGrosseBoulleEnergie.setVisible(true);
@@ -1140,10 +1319,66 @@ public class Controller implements Initializable{
                 decalageMagasin += 200;
             }
 
+            if(!personnage.getListeDesArmes().contains(acheterBouclier)&&choixObjetAleatoire==6){
+                acheterBouclier.setVisible(true);
+                acheterBouclier.setTranslateX(decalageMagasin);
+                nbElementShop += 1;
+                decalageMagasin += 200;
+            }
+
 
         }
         retourBoutique.setTranslateX(decalageMagasin);
 
+    }
+
+    public void setEnnemiMana(){
+        ennemi1=new Ennemi(15,15,30,30,1,new ArrayList<Arme>(), new ArrayList<Sort>(),"ennemi1",0,new ListeEffet());
+        ennemi2=new Ennemi(25,25,50,50,2,new ArrayList<Arme>(), new ArrayList<Sort>(),"ennemi2",0,new ListeEffet());
+        ennemi3=new Ennemi(30,30,75,75,3,new ArrayList<Arme>(), new ArrayList<Sort>(),"ennemi2",0,new ListeEffet());
+        ennemi4=new Ennemi(50,50,100,100,4,new ArrayList<Arme>(), new ArrayList<Sort>(),"ennemi2",0,new ListeEffet());
+        ennemi5=new Ennemi(75,75,150,150,5,new ArrayList<Arme>(), new ArrayList<Sort>(),"ennemi2",0,new ListeEffet());
+    }
+
+    public void setEnnemiPv(){
+        ennemi1=new Ennemi(30,30,10,10,1,new ArrayList<Arme>(), new ArrayList<Sort>(),"ennemi1",0,new ListeEffet());
+        ennemi2=new Ennemi(50,50,20,20,2,new ArrayList<Arme>(), new ArrayList<Sort>(),"ennemi2",0,new ListeEffet());
+        ennemi3=new Ennemi(80,80,30,30,3,new ArrayList<Arme>(), new ArrayList<Sort>(),"ennemi2",0,new ListeEffet());
+        ennemi4=new Ennemi(120,120,50,50,4,new ArrayList<Arme>(), new ArrayList<Sort>(),"ennemi2",0,new ListeEffet());
+        ennemi5=new Ennemi(200,200,100,100,5,new ArrayList<Arme>(), new ArrayList<Sort>(),"ennemi2",0,new ListeEffet());
+    }
+
+    public void setEnnemiNeutre(){
+        ennemi1=new Ennemi(30,30,30,30,1,new ArrayList<Arme>(), new ArrayList<Sort>(),"ennemi1",0,new ListeEffet());
+        ennemi2=new Ennemi(50,50,40,40,2,new ArrayList<Arme>(), new ArrayList<Sort>(),"ennemi2",0,new ListeEffet());
+        ennemi3=new Ennemi(70,70,80,80,3,new ArrayList<Arme>(), new ArrayList<Sort>(),"ennemi2",0,new ListeEffet());
+        ennemi4=new Ennemi(100,100,100,100,4,new ArrayList<Arme>(), new ArrayList<Sort>(),"ennemi2",0,new ListeEffet());
+        ennemi5=new Ennemi(180,180,180,180,5,new ArrayList<Arme>(), new ArrayList<Sort>(),"ennemi2",0,new ListeEffet());
+    }
+
+    public void pageListeHistoire(){
+        allerSauvegarder.setVisible(false);
+        allerListeArme.setVisible(false);
+        allerMagasin.setVisible(false);
+        allerChoixHistoire.setVisible(false);
+        bouttonAffichagePerso.setVisible(false);
+        choixHistoire.setVisible(true);
+
+    }
+
+    public void choisirHistoireMage(){
+        setEnnemiMana();
+        pageDescriptionPerso();
+    }
+
+    public void choisirHistoireGuerrier(){
+        setEnnemiPv();
+        pageDescriptionPerso();
+    }
+
+    public void choisirHistoireChasseur(){
+        setEnnemiNeutre();
+        pageDescriptionPerso();
     }
 
 
