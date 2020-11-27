@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.scene.control.TextArea;
+
 import java.util.ArrayList;
 
 public class Ennemi extends Personnage {
@@ -13,10 +15,10 @@ public class Ennemi extends Personnage {
         super(7, 7,5,5,1, new ArrayList<Arme>(), new ArrayList<Sort>(),"",0,new ListeEffet());
     }
 
-    public void morsure(Personnage personnage) throws PersonnageMortException {
+    public void morsure(Personnage personnage, TextArea console) throws PersonnageMortException {
         int nbPointAttaque;
         nbPointAttaque=2;
-        personnage.perdreVie(nbPointAttaque);
+        personnage.perdreVie(nbPointAttaque,console);
 
         if(personnage.getPointsDeVie() <= 0) {
             throw new PersonnageMortException(PersonnageMortException.message);

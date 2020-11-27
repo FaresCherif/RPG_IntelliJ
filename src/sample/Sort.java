@@ -8,7 +8,7 @@ public class Sort {
 
     public Sort(){
         this.degat=5;
-        this.effet=null;
+        this.effet=new Effet();
         this.coutMana=5;
     }
 
@@ -44,5 +44,33 @@ public class Sort {
 
     public void setCoutMana(int coutMana){
         this.coutMana=coutMana;
+    }
+
+    @Override
+    public String toString(){
+        String text="Sort "+getDegat()+" degat, "+getCoutMana()+" mana "+getEffet().getType()+" type "+getEffet().getDegat()+" degat "+getEffet().getDuree()+" duree ";
+        return text;
+    }
+
+    public boolean comparerType(Sort sort) {
+        if (sort.getEffet() != null && this.getEffet() != null) {
+            return (sort.getEffet().getType() == this.getEffet().getType() && sort.getEffet().getDegat() == this.getEffet().getDegat() && sort.getEffet().getDuree() == this.getEffet().getDuree());
+        }
+        else {
+            if (sort.getEffet() != null && this.getEffet() == null) {
+                return (sort.getEffet().getType() == 0 && sort.getEffet().getDegat() == 0 && sort.getEffet().getDuree() == 0);
+            } else {
+                if (sort.getEffet() == null && this.getEffet() != null) {
+                    return (0 == this.getEffet().getType() && 0 == this.getEffet().getDegat() && 0 == this.getEffet().getDuree());
+                }
+                else{
+                    return true;
+                }
+            }
+        }
+    }
+
+    public boolean comparerSort(Sort sort){
+        return(sort.getCoutMana()==this.getCoutMana()&&sort.getDegat()==this.getDegat()&& sort.comparerType(this));
     }
 }
