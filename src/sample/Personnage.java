@@ -2,16 +2,17 @@ package sample;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 /**
  * Classe définissant un Personnage de RPG
  */
+
 public abstract class Personnage {
 
-    @FXML
-    public TextArea console;
+
 
     public Arme typeArme1;
     public Arme typeArme2;
@@ -184,9 +185,11 @@ public abstract class Personnage {
                 '}';
     }
 
-    public void perdreVie(int nbPointAttaque){
+    public void perdreVie(int nbPointAttaque, TextArea console){
+
         if(nbPointAttaque<0){
             this.pointsDeVie-=nbPointAttaque;
+            console.appendText(nbPointAttaque+" pv récupéré\n");
             if(this.pointsDeVie>this.pointsDeVieMax){
                 this.pointsDeVie=this.pointsDeVieMax;
             }
@@ -195,6 +198,16 @@ public abstract class Personnage {
             if(getBlocage()<=nbPointAttaque){
                 if(getInvulnerable()<=0) {
                     this.pointsDeVie -= (nbPointAttaque - getBlocage());
+                    console.appendText(nbPointAttaque - getBlocage()+" dégat ");
+                    if(this.getClass()==Ennemi.class){
+                        console.appendText("à l'ennemi\n");
+                    }
+                    else{
+                        console.appendText("au héros\n");
+                    }
+                }
+                else{
+                    console.appendText(nbPointAttaque+" 0 dégat\n");
                 }
             }
         }
@@ -241,7 +254,7 @@ public abstract class Personnage {
      * Le Guerrier inflige des dégât à son adversaire avec son épée
      */
 
-    public void coupEpee(Personnage adversaire) throws EnnemiMortException {
+    public void coupEpee(Personnage adversaire,TextArea console) throws EnnemiMortException {
         if(typeArme1==null && typeArme1.getClass()!=Epee.class){
             System.out.println("Vous n'avez pas d'épée équipée");
         }
@@ -258,7 +271,7 @@ public abstract class Personnage {
             }
 
 
-            adversaire.perdreVie(nbPointAttaque);
+            adversaire.perdreVie(nbPointAttaque,console);
 
             //TODO prendre en compte blocage adverse
 
@@ -268,7 +281,7 @@ public abstract class Personnage {
         }
     };
 
-    public void tirerFleche(Personnage adversaire) throws EnnemiMortException {
+    public void tirerFleche(Personnage adversaire,TextArea console) throws EnnemiMortException {
         if(typeArme1==null && typeArme1.getClass()!=Arc.class){
             System.out.println("Vous n'avez pas d'arc équipée");
         }
@@ -278,7 +291,7 @@ public abstract class Personnage {
             if(Math.random()*100<5){
                 nbPointAttaque+=nbPointAttaque;
             }
-            adversaire.perdreVie(nbPointAttaque);
+            adversaire.perdreVie(nbPointAttaque,console);
             this.typeArme1.tirerFleche();
             //TODO prendre en compte blocage adverse
 
@@ -297,7 +310,7 @@ public abstract class Personnage {
         }
     }
 
-    public void utiliseSort(Personnage personnageVise, Sort sort) throws EnnemiMortException {
+    public void utiliseSort(Personnage personnageVise, Sort sort,TextArea console) throws EnnemiMortException {
         if (sort.getCoutMana() > this.getPointsDeMana()) {
             System.out.println("Vous n'avez pas assez de mana");
         } else {
@@ -327,7 +340,7 @@ public abstract class Personnage {
             if(Math.random()*100<5){
                 degat+=degat;
             }
-            personnageVise.perdreVie(degat);
+            personnageVise.perdreVie(degat,console);
 
             this.perdreMana(sort.getCoutMana());
             //TODO prendre en compte l'effet

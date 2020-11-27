@@ -26,28 +26,25 @@
         <Button  fx:id="bouttonCharger" minHeight="300" minWidth="500" onAction="#charger" >Charger un personnage</Button>
     </Group>
 
-    <Group fx:id="bouttonCreationPerso">
-
+    <Group fx:id="bouttonCreationPerso" translateX="100">
         <Button  fx:id="bouttonMage" minHeight="100" minWidth="100" onMouseEntered="#hooverBouttonChoixPersonnageMage" onMouseClicked="#creerMage" style="-fx-background-size: 100 100; " >Creer mage</Button>
-        <Button  fx:id="bouttonGuerrier"  minHeight="100" minWidth="100" onMouseEntered="#hooverBouttonChoixPersonnageGuerrier" onMouseClicked="#creerGuerrier" style="-fx-background-size: 100 100;">Creer guerrier</Button>
-        <Button  fx:id="bouttonChasseur"  minHeight="100" minWidth="100" onMouseEntered="#hooverBouttonChoixPersonnageChasseur" onMouseClicked="#creerChasseur" style="-fx-background-size: 100 100; ">Creer chasseur</Button>
-
-
+        <Button  translateX="200" fx:id="bouttonGuerrier"  minHeight="100" minWidth="100" onMouseEntered="#hooverBouttonChoixPersonnageGuerrier" onMouseClicked="#creerGuerrier" style="-fx-background-size: 100 100;">Creer guerrier</Button>
+        <Button  translateX="400" fx:id="bouttonChasseur"  minHeight="100" minWidth="100" onMouseEntered="#hooverBouttonChoixPersonnageChasseur" onMouseClicked="#creerChasseur" style="-fx-background-size: 100 100; ">Creer chasseur</Button>
     </Group>
 
-    <Group fx:id="descriptionCreationPerso" >
+    <Group fx:id="descriptionCreationPerso" translateY="200" translateX="100" >
         <Label minWidth="500" style="-fx-background-color:white" visible="false" fx:id="descriptionChasseur">Le chasseur</Label>
         <Label minWidth="500" style="-fx-background-color:white" visible="false" fx:id="descriptionMage"></Label>
         <Label minWidth="500" style="-fx-background-color:white" visible="false" fx:id="descriptionGuerrier">Le guerrier</Label>
     </Group>
 
 
-    <Group fx:id="nomCreationPerso" visible="false" >
+    <Group fx:id="nomCreationPerso" visible="false" translateX="100">
         <TextArea fx:id="entrerNomPerso" maxWidth="300" maxHeight="20"></TextArea>
-        <Button  fx:id="validerNom"  minHeight="36" minWidth="100" onMouseClicked="#pageDescriptionPerso" >Valider</Button>
+        <Button  fx:id="validerNom" translateX="300" minHeight="36" minWidth="100" onMouseClicked="#pageDescriptionPerso" >Valider</Button>
     </Group>
 
-    <Group fx:id="affichagePerso" visible="false" >
+    <Group fx:id="affichagePerso" visible="false" translateX="-300">
         <children>
             <ImageView fx:id="imageViewPersonnage" layoutX="29.0" layoutY="44.0" fitHeight="224.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" >
                 <image>
@@ -57,24 +54,24 @@
         </children>
     </Group>
 
-    <Group fx:id="descriptionAffichagePerso" visible="false" >
+    <Group fx:id="descriptionAffichagePerso" visible="false" layoutY="-350" translateX="-300" translateY="-150">
         <Label style="-fx-background-color:white" fx:id="pointVieDescriptionPersonage"></Label>
-        <Label style="-fx-background-color:white" fx:id="pointManaDescriptionPersonage"></Label>
-        <Label style="-fx-background-color:white" fx:id="niveauDescriptionPersonage"></Label>
+        <Label style="-fx-background-color:white" fx:id="pointManaDescriptionPersonage" translateY="20"></Label>
+        <Label style="-fx-background-color:white" fx:id="niveauDescriptionPersonage" translateY="40"></Label>
     </Group>
 
-    <Group fx:id="descriptionArmeEquipee" visible="false">
+    <Group fx:id="descriptionArmeEquipee" visible="false" translateY="150" translateX="-250">
         <Label style="-fx-background-color:white" fx:id="armePersonage"></Label>
-        <Label style="-fx-background-color:white" fx:id="piecePersonnage"></Label>
+        <Label style="-fx-background-color:white" fx:id="piecePersonnage" translateY="20"></Label>
     </Group>
 
 
 
-    <Group fx:id="bouttonAffichagePerso" visible="false">
+    <Group fx:id="bouttonAffichagePerso" visible="false" translateX="-300" translateY="300">
         <Button  fx:id="allerCombat"  minHeight="50" minWidth="100" onMouseClicked="#fondCombat" >Aller au prochain combat</Button>
     </Group>
 
-    <Group fx:id="affichageEnnemi" visible="false" >
+    <Group fx:id="affichageEnnemi" visible="false" translateX="650">
         <children>
             <ImageView fx:id="imageViewEnnemi" layoutX="29.0" layoutY="44.0" fitHeight="224.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" >
                 <image>
@@ -84,33 +81,33 @@
         </children>
     </Group>
 
-    <Group fx:id="descriptionAffichageEnnemi" visible="false" >
+    <Group fx:id="descriptionAffichageEnnemi" visible="false" translateY="-150" translateX="650">
         <Label style="-fx-background-color:white" fx:id="pointVieDescriptionEnnemi"></Label>
-        <Label style="-fx-background-color:white" fx:id="pointManaDescriptionEnnemi"></Label>
-        <Label style="-fx-background-color:white" fx:id="niveauDescriptionEnnemi"></Label>
+        <Label style="-fx-background-color:white" fx:id="pointManaDescriptionEnnemi" translateY="20" ></Label>
+        <Label style="-fx-background-color:white" fx:id="niveauDescriptionEnnemi" translateY="40"></Label>
     </Group>
 
-    <Group fx:id="bouttonCombat" visible="false">
+    <Group fx:id="bouttonCombat" visible="false" translateX="-200" translateY="300">
         <Button  fx:id="bouttonAttaquer" minHeight="100" minWidth="100" onMouseClicked="#optionAttaque" style="-fx-background-size: 100 100; " >Attaquer</Button>
-        <Button  fx:id="bouttonSort" minHeight="100" minWidth="100" onMouseClicked="#optionSort" style="-fx-background-size: 100 100; " >Sort</Button>
+        <Button  fx:id="bouttonSort" minHeight="100" minWidth="100" onMouseClicked="#optionSort" style="-fx-background-size: 100 100; " translateX="200">Sort</Button>
     </Group>
 
-    <Group fx:id="bouttonAttaqueEpee" visible="false">
+    <Group fx:id="bouttonAttaqueEpee" visible="false" translateY="300">
         <Button  fx:id="coupEpee" minHeight="100" minWidth="100" onMouseClicked="#coupEpee" style="-fx-background-size: 100 100; " >Coup d'épée</Button>
         <Button  fx:id="retourEpeeAttaqueBoutton" minHeight="100" minWidth="100" onMouseClicked="#pageCombat" style="-fx-background-size: 100 100; " >Retour</Button>
     </Group>
 
-    <Group fx:id="bouttonAttaqueArc" visible="false">
+    <Group fx:id="bouttonAttaqueArc" visible="false" translateY="300">
         <Button  fx:id="tirerFleche" minHeight="100" minWidth="100" onMouseClicked="#tirerFleche" style="-fx-background-size: 100 100; " >Tirer fleche</Button>
         <Button  fx:id="fabriquerFleche" minHeight="100" minWidth="100" onMouseClicked="#faireFleche" style="-fx-background-size: 100 100; " >Fabriquer fleche</Button>
         <Button  fx:id="retourArcAttaqueBoutton" minHeight="100" minWidth="100" onMouseClicked="#pageCombat" style="-fx-background-size: 100 100; " >Retour</Button>
     </Group>
 
-    <Group fx:id="bouttonAttaqueSansArme" visible="false">
+    <Group fx:id="bouttonAttaqueSansArme" visible="false" translateY="300">
         <Button  fx:id="retourSansArmeAttaqueBoutton" minHeight="100" minWidth="100" onMouseClicked="#pageCombat" style="-fx-background-size: 100 100; " >Retour</Button>
     </Group>
 
-    <Group fx:id="listeSortPersonnageCombat" visible="false">
+    <Group fx:id="listeSortPersonnageCombat" visible="false" translateX="-200" translateY="300">
         <Button  visible="false" fx:id="boulleEnergie" minHeight="100" minWidth="100" onMouseClicked="#boulleEnergie" style="-fx-background-size: 100 100; " >Boulle d'énergie</Button>
         <Button  visible="false" fx:id="grosseBoulleEnergie" minHeight="100" minWidth="100" onMouseClicked="#grosseBoulleEnergie" style="-fx-background-size: 100 100; " >Grosse boulle d'énergie</Button>
         <Button  visible="false" fx:id="sortSoint" minHeight="100" minWidth="100" onMouseClicked="#sortSoin" style="-fx-background-size: 100 100; " >Soin</Button>
@@ -121,29 +118,29 @@
     </Group>
 
 
-    <Group fx:id="psserTourCombat" visible="false">
-        <Button fx:id="passerTourCombat" minHeight="100" minWidth="100" onMouseClicked="#passerTour" style="-fx-background-size: 100 100; " >Passer tour</Button>
+    <Group fx:id="psserTourCombat" visible="false" translateY="300" translateX="200">
+        <Button fx:id="passerTourCombat" minHeight="100" minWidth="100" onMouseClicked="#passerTour" style="-fx-background-size: 100 100; " translateX="200" translateY="300">Passer tour</Button>
     </Group>
 
-    <Group fx:id="affichageMort" visible="false">
-        <Label style="-fx-background-color:white" fx:id="descriptionMort">Vous êtes mort</Label>
-        <Button fx:id="retourDescriptionMort" minHeight="100" minWidth="100" onMouseClicked="#retourPageDescriptionPerso" style="-fx-background-size: 100 100; " >Continuer</Button>
+    <Group fx:id="affichageMort" visible="false" translateY="300">
+        <Label style="-fx-background-color:white" fx:id="descriptionMort" translateY="-150">Vous êtes mort</Label>
+        <Button fx:id="retourDescriptionMort" minHeight="100" minWidth="100" onMouseClicked="#retourPageDescriptionPerso" style="-fx-background-size: 100 100; " translateX="400" translateY="-200">Continuer</Button>
     </Group>
 
-    <Group fx:id="affichageVictoire" visible="false">
-        <Label style="-fx-background-color:white" fx:id="descriptionVictoire">Vous avez gagner</Label>
-        <Button fx:id="retourDescriptionVictoire" minHeight="100" minWidth="100" onMouseClicked="#retourPageDescriptionPerso" style="-fx-background-size: 100 100; " >Continuer</Button>
+    <Group fx:id="affichageVictoire" visible="false" translateY="300">
+        <Label style="-fx-background-color:white" fx:id="descriptionVictoire" translateX="400" translateY="-150">Vous avez gagner</Label>
+        <Button fx:id="retourDescriptionVictoire" minHeight="100" minWidth="100" onMouseClicked="#retourPageDescriptionPerso" style="-fx-background-size: 100 100; " translateX="400" translateY="-200">Continuer</Button>
     </Group>
 
-    <Group fx:id="allerMagasin" visible="false">
+    <Group fx:id="allerMagasin" visible="false" translateX="800">
         <Button fx:id="magasin" minHeight="100" minWidth="100" onMouseClicked="#pageMagasin" style="-fx-background-size: 100 100; " >Magasin</Button>
     </Group>
 
-    <Group fx:id="allerSauvegarder" visible="false">
+    <Group fx:id="allerSauvegarder" visible="false" translateX="-300" translateY="-300">
         <Button fx:id="sauvegarde" minHeight="100" minWidth="100" onMouseClicked="#sauvegarder" style="-fx-background-size: 100 100; " >Sauvegarder</Button>
     </Group>
 
-    <Group fx:id="magasinListeObjet" visible="false">
+    <Group fx:id="magasinListeObjet" visible="false" translateX="200">
         <Button fx:id="acherterBoulleEnergie" visible="false" minHeight="100" minWidth="100" onMouseClicked="#acheterBoulleEnergie" style="-fx-background-size: 100 100; " >boulle energie</Button>
         <Button fx:id="acherterGrosseBoulleEnergie" visible="false" minHeight="100" minWidth="100" onMouseClicked="#acheterGrosseBoulleEnergie" style="-fx-background-size: 100 100; " >Grosse boulle energie</Button>
         <Button fx:id="acheterSoin" visible="false" minHeight="100" minWidth="100" onMouseClicked="#acheterSoin" style="-fx-background-size: 100 100; " >Soin</Button>
@@ -153,14 +150,13 @@
         <Button  fx:id="retourBoutique"  minHeight="100" minWidth="100" onMouseClicked="#pageDescriptionPerso" >Retour</Button>
     </Group>
 
-    <Group fx:id="allerListeArme" visible="false">
+    <Group fx:id="allerListeArme" visible="false" translateX="-100" translateY="-300">
         <Button fx:id="bouttonListerArme" minHeight="100" minWidth="100" onMouseClicked="#listerArme" style="-fx-background-size: 100 100; " >Arme</Button>
     </Group>
 
-    <Group fx:id="menuArme" visible="false">
-        <Label style="-fx-background-color:white" fx:id="arme1">Arme principal</Label>
-        <Button fx:id="retourListeArme" minHeight="100" minWidth="100" onMouseClicked="#pageDescriptionPerso" style="-fx-background-size: 100 100; " >Retour</Button>
-        <ComboBox fx:id="listeArme" layoutX="25.0" layoutY="50.0" prefWidth="90.0" onAction="#equiperArme">
+    <Group fx:id="menuArme" visible="false" translateX="200">
+        <Label style="-fx-background-color:white" fx:id="arme1" translateX="220" translateY="-20">Arme principal</Label>
+        <ComboBox fx:id="listeArme" layoutX="25.0" layoutY="50.0" prefWidth="90.0" onAction="#equiperArme" translateX="200">
             <items>
                 <FXCollections fx:factory="observableArrayList">
 
@@ -169,8 +165,12 @@
         </ComboBox>
     </Group>
 
-    <Group fx:id="menuArme2" visible="false">
-        <Label style="-fx-background-color:white" fx:id="arme2">Arme secondaire</Label>
+    <Group fx:id="retourArme" visible="false" translateX="900">
+        <Button fx:id="retourListeArme" minHeight="100" minWidth="100" onMouseClicked="#pageDescriptionPerso" style="-fx-background-size: 100 100; " >Retour</Button>
+    </Group>
+
+    <Group fx:id="menuArme2" visible="false" translateX="600">
+        <Label style="-fx-background-color:white" fx:id="arme2" translateX="20" translateY="-20">Arme secondaire</Label>
         <ComboBox fx:id="listeArme2" layoutX="25.0" layoutY="50.0" prefWidth="90.0" onAction="#equiperArme2">
             <items>
                 <FXCollections fx:factory="observableArrayList">
@@ -184,11 +184,11 @@
         <TextArea fx:id="console" minWidth="400" minHeight="200"/>
     </Group>
 
-    <Group fx:id="allerChoixHistoire" visible="false">
+    <Group fx:id="allerChoixHistoire" visible="false" translateY="300" translateX="50">
         <Button fx:id="bouttonChoixHistoire" minHeight="100" minWidth="100" onMouseClicked="#pageListeHistoire" style="-fx-background-size: 100 100; " >Choisir une histoire</Button>
     </Group>
 
-    <Group fx:id="choixHistoire" visible="false">
+    <Group fx:id="choixHistoire" visible="false" translateX="200">
         <Button fx:id="choixAvenetureMage" minHeight="100" minWidth="100" onMouseClicked="#choisirHistoireMage" style="-fx-background-size: 100 100; " >Choisir l'histoire mage</Button>
         <Button fx:id="choixAvenetureGuerrier" translateX="200" minHeight="100" minWidth="100" onMouseClicked="#choisirHistoireGuerrier" style="-fx-background-size: 100 100; " >Choisir l'histoire du guerrier</Button>
         <Button fx:id="choixAvenetureChasseur" translateX="400" minHeight="100" minWidth="100" onMouseClicked="#choisirHistoireChasseur" style="-fx-background-size: 100 100; " >Choisir l'histoire du chasseur</Button>
