@@ -72,6 +72,9 @@ public class Controller implements Initializable{
     private Group animationEpee;
 
     @FXML
+    private Group animationArc;
+
+    @FXML
     private ImageView imageViewPersonnage;
 
     @FXML
@@ -636,6 +639,7 @@ public class Controller implements Initializable{
 
     public void tirerFleche() {
         if(personnage.getTypeArme1().getNbFleche()>0){
+            arc.animationArme(animationArc);
             try {
                 personnage.tirerFleche(ennemi);
             } catch (EnnemiMortException e) {
