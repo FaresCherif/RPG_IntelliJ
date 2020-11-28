@@ -1192,15 +1192,26 @@ public class Controller implements Initializable{
                             }
                             if(Integer.parseInt(ligne[0])==2){
                                 personnage=new Chasseur();
-                                Image nouvelleImage= new Image("src/sample/images/chasseur.jpg",100,100,false,false);
+                                FileInputStream fin = null;
+                                try {
+                                    fin = new FileInputStream("src/sample/images/chasseur.jpg");
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                                Image nouvelleImage= new Image(fin,100,100,false,false);
                                 imageViewPersonnage.setImage(nouvelleImage);
                             }
                             if(Integer.parseInt(ligne[0])==3){
                                 personnage=new Guerrier();
-                                Image nouvelleImage= new Image("src/sample/images/guerrier.png",200,100,false,false);
+                                FileInputStream fin = null;
+                                try {
+                                    fin = new FileInputStream("src/sample/images/guerrier.png");
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                                Image nouvelleImage= new Image(fin,200,100,false,false);
                                 imageViewPersonnage.setImage(nouvelleImage);
                             }
-
 
                             personnage.setNom(ligne[1]);
                             personnage.setPointsDeVie(Integer.parseInt(ligne[2]));
