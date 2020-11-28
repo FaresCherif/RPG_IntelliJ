@@ -73,6 +73,12 @@ public class Controller implements Initializable{
     private Group affichagePerso;
 
     @FXML
+    private Group animationEpee;
+
+    @FXML
+    private Group animationArc;
+
+    @FXML
     private ImageView imageViewPersonnage;
 
     @FXML
@@ -335,7 +341,14 @@ public class Controller implements Initializable{
         pagePrincipale.setTranslateX(-width/2+350);
         pagePrincipale.setTranslateY(-height/2+150);
 
-        BackgroundImage myBI= new BackgroundImage(new Image("https://cameronscookware.com/wp-content/uploads/2019/12/fantasy-world-background-best-of-fantasy-world-backgrounds-4k-download-2019-of-fantasy-world-background.jpg",width,height,false,true),
+        Image img = null;
+        try {
+            img = new Image(new FileInputStream("src/sample/images/paysage.jpg"),width,height,false,true);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        BackgroundImage myBI= new BackgroundImage(img,
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         gridPane.setBackground(new Background(myBI));
@@ -391,7 +404,15 @@ public class Controller implements Initializable{
         nomCreationPerso.setVisible(true);
 
         personnage=new Mage();
-        Image nouvelleImage = new Image("https://listimg.pinclipart.com/picdir/s/559-5599557_rpg-character-png-2d-clipart.png",100,200,false,false);
+        validerNom.setTranslateX(300);
+
+        FileInputStream fin = null;
+        try {
+            fin = new FileInputStream("src/sample/images/mage.jpg");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Image nouvelleImage = new Image(fin,100,200,false,false);
 
         imageViewPersonnage.setImage(nouvelleImage);
         personnage.apprendreSort(boulleEnnergie);
@@ -404,7 +425,14 @@ public class Controller implements Initializable{
         descriptionGuerrier.setVisible(false);
         nomCreationPerso.setVisible(true);
         personnage=new Guerrier();
-        Image nouvelleImage= new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWNdOOAfEZGi0pM4wh3W9C93M9z1gkadS_vg&usqp=CAU",200,100,false,false);
+        validerNom.setTranslateX(300);
+        FileInputStream fin = null;
+        try {
+            fin = new FileInputStream("src/sample/images/guerrier.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Image nouvelleImage= new Image(fin,200,100,false,false);
         imageViewPersonnage.setImage(nouvelleImage);
         personnage.recupererArme(epee);
         personnage.apprendreSort(fullCowl);
@@ -416,7 +444,15 @@ public class Controller implements Initializable{
         nomCreationPerso.setVisible(true);
 
         personnage=new Chasseur();
-        Image nouvelleImage= new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfhvRyJp2XzvYeVTaMTgCENERCy1wVFTSdCg&usqp=CAU",100,100,false,false);
+
+        validerNom.setTranslateX(300);
+        FileInputStream fin = null;
+        try {
+            fin = new FileInputStream("src/sample/images/chasseur.jpg");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Image nouvelleImage= new Image(fin,100,100,false,false);
         imageViewPersonnage.setImage(nouvelleImage);
         personnage.recupererArme(arc);
         personnage.apprendreSort(theWorld);
@@ -506,7 +542,15 @@ public class Controller implements Initializable{
         console.appendText("Le combat commence, allez vous survivre ? Rien de moins sûr\n");
         allerChoixHistoire.setVisible(false);
         allerListeArme.setVisible(false);
-        BackgroundImage myBI= new BackgroundImage(new Image("https://static.wikia.nocookie.net/finalfantasy/images/c/c8/Battleback_coliseum.png/revision/latest?cb=20141030003602",width,height,false,true),
+
+        Image img = null;
+        try {
+            img = new Image(new FileInputStream("src/sample/images/arene.jpg"),width,height,true,true);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        BackgroundImage myBI= new BackgroundImage(img,
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
 
@@ -746,6 +790,7 @@ public class Controller implements Initializable{
         console.appendText("Vous prenner votre épée et infligez un violent l'ennemi infligeant ");
 
 
+        epee.animationArme(animationEpee);
         try {
             personnage.coupEpee(ennemi,console);
         } catch (EnnemiMortException e) {
@@ -756,6 +801,7 @@ public class Controller implements Initializable{
 
     public void tirerFleche() {
         if(personnage.getTypeArme1().getNbFleche()>0){
+            arc.animationArme(animationArc);
             console.appendText("Vous tirer une puissante fleche dans le corps de l'ennemi ");
             try {
                 personnage.tirerFleche(ennemi,console);
@@ -924,7 +970,14 @@ public class Controller implements Initializable{
     }
 
     public void retourPageDescriptionPerso(){
-        BackgroundImage myBI= new BackgroundImage(new Image("https://cameronscookware.com/wp-content/uploads/2019/12/fantasy-world-background-best-of-fantasy-world-backgrounds-4k-download-2019-of-fantasy-world-background.jpg",width,height,false,true),
+        Image img = null;
+        try {
+            img = new Image(new FileInputStream("src/sample/images/paysage.jpg"),width,height,false,true);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        BackgroundImage myBI= new BackgroundImage(img,
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         gridPane.setBackground(new Background(myBI));
@@ -1139,12 +1192,12 @@ public class Controller implements Initializable{
                             }
                             if(Integer.parseInt(ligne[0])==2){
                                 personnage=new Chasseur();
-                                Image nouvelleImage= new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfhvRyJp2XzvYeVTaMTgCENERCy1wVFTSdCg&usqp=CAU",100,100,false,false);
+                                Image nouvelleImage= new Image("src/sample/images/chasseur.jpg",100,100,false,false);
                                 imageViewPersonnage.setImage(nouvelleImage);
                             }
                             if(Integer.parseInt(ligne[0])==3){
                                 personnage=new Guerrier();
-                                Image nouvelleImage= new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWNdOOAfEZGi0pM4wh3W9C93M9z1gkadS_vg&usqp=CAU",200,100,false,false);
+                                Image nouvelleImage= new Image("src/sample/images/guerrier.png",200,100,false,false);
                                 imageViewPersonnage.setImage(nouvelleImage);
                             }
 

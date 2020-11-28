@@ -48,7 +48,47 @@
         <children>
             <ImageView fx:id="imageViewPersonnage" layoutX="29.0" layoutY="44.0" fitHeight="224.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" >
                 <image>
-                    <Image fx:id="imagePerso" url="https://listimg.pinclipart.com/picdir/s/559-5599557_rpg-character-png-2d-clipart.png" />
+                    <Image fx:id="imagePerso" url="@images/mage.jpg" />
+                </image>
+            </ImageView>
+        </children>
+    </Group>
+
+    <Group fx:id="animationEpee" visible="false" >
+        <children>
+            <ImageView fx:id="imageViewEpee" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" rotate="270">
+                <image>
+                    <Image fx:id="imageEpee" url="@images/epee.png" />
+                </image>
+            </ImageView>
+        </children>
+    </Group>
+
+    <Group fx:id="animationBouclier" visible="false" >
+        <children>
+            <ImageView fx:id="imageViewBouclier" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image fx:id="imageBouclier" url="@images/bouclier.png" />
+                </image>
+            </ImageView>
+        </children>
+    </Group>
+
+    <Group fx:id="animationArc" visible="false" >
+        <children>
+            <ImageView fx:id="imageViewFleche" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" rotate="90">
+                <image>
+                    <Image fx:id="imageFleche" url="@images/fleche.png" />
+                </image>
+            </ImageView>
+        </children>
+    </Group>
+
+    <Group fx:id="animationBouleEnergie" visible="false" >
+        <children>
+            <ImageView fx:id="imageViewBouleEnergie" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image fx:id="imageBouleEnergie" url="@images/bouleEnergie.jpg" />
                 </image>
             </ImageView>
         </children>
@@ -79,7 +119,7 @@
         <children>
             <ImageView fx:id="imageViewEnnemi" layoutX="29.0" layoutY="44.0" fitHeight="224.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" >
                 <image>
-                    <Image fx:id="imageEnnemi" url="https://img.pngio.com/2d-computer-graphics-video-game-character-concept-art-2d-game-art-game-png-600_500.jpg" />
+                    <Image fx:id="imageEnnemi" url="@images/ennemi.jpg" />
                 </image>
             </ImageView>
         </children>
