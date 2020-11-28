@@ -58,6 +58,10 @@
         <Label style="-fx-background-color:white" fx:id="pointVieDescriptionPersonage"></Label>
         <Label style="-fx-background-color:white" fx:id="pointManaDescriptionPersonage" translateY="20"></Label>
         <Label style="-fx-background-color:white" fx:id="niveauDescriptionPersonage" translateY="40"></Label>
+        <ProgressBar translateY="70" minWidth="200" fx:id="barrePersoPv" progress="1F"></ProgressBar>
+        <ProgressBar translateY="70" translateX="200" minWidth="200" fx:id="barrePersoMana" progress="1F"></ProgressBar>
+
+
     </Group>
 
     <Group fx:id="descriptionArmeEquipee" visible="false" translateY="150" translateX="-250">
@@ -85,6 +89,8 @@
         <Label style="-fx-background-color:white" fx:id="pointVieDescriptionEnnemi"></Label>
         <Label style="-fx-background-color:white" fx:id="pointManaDescriptionEnnemi" translateY="20" ></Label>
         <Label style="-fx-background-color:white" fx:id="niveauDescriptionEnnemi" translateY="40"></Label>
+        <ProgressBar translateY="70" minWidth="200" fx:id="barreEnnemiPv" progress="1F"></ProgressBar>
+        <ProgressBar translateY="70" translateX="200" minWidth="200" fx:id="barreEnnemiMana" progress="1F"></ProgressBar>
     </Group>
 
     <Group fx:id="bouttonCombat" visible="false" translateX="-200" translateY="300">

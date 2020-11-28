@@ -8,8 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
@@ -279,6 +279,18 @@ public class Controller implements Initializable{
     @FXML
     private Group retourArme;
 
+    @FXML
+    private ProgressBar barrePersoPv;
+
+    @FXML
+    private ProgressBar barrePersoMana;
+
+    @FXML
+    private ProgressBar barreEnnemiPv;
+
+    @FXML
+    private ProgressBar barreEnnemiMana;
+
     GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     int width = gd.getDisplayMode().getWidth();
     int height = gd.getDisplayMode().getHeight();
@@ -413,6 +425,17 @@ public class Controller implements Initializable{
     }
 
     public void pageDescriptionPerso(){
+        barrePersoPv.setStyle("-fx-accent: red;");
+        barrePersoPv.setProgress(1F);
+        barrePersoMana.setStyle("-fx-accent: blue;");
+        barrePersoMana.setProgress(1F);
+
+        barreEnnemiPv.setStyle("-fx-accent: red;");
+        barreEnnemiPv.setProgress(1F);
+        barreEnnemiMana.setStyle("-fx-accent: blue;");
+        barreEnnemiMana.setProgress(1F);
+
+
         retourArme.setVisible(false);
         grConsole.setVisible(false);
         choixHistoire.setVisible(false);
@@ -545,6 +568,12 @@ public class Controller implements Initializable{
     }
 
     public void pageCombat(){
+        Double vieMax=Double.valueOf(personnage.getPointsDeVieMax());
+        Double vie=Double.valueOf(personnage.getPointsDeVie());
+        Double manaMax=Double.valueOf(personnage.getPointsDeManaMax());
+        Double mana=Double.valueOf(personnage.getPointsDeMana());
+        barrePersoPv.setProgress(vie/vieMax);
+        barrePersoMana.setProgress(mana/manaMax);
         grConsole.setVisible(true);
         grConsole.setTranslateX(width/2-150);
         grConsole.setTranslateY(height/2-150);
@@ -852,6 +881,12 @@ public class Controller implements Initializable{
     }
 
     public void tourEnnemi() {
+        Double vieEnnemiMax=Double.valueOf(ennemi.getPointsDeVieMax());
+        Double vieEnnemi=Double.valueOf(ennemi.getPointsDeVie());
+        Double manaEnnemiMax=Double.valueOf(ennemi.getPointsDeManaMax());
+        Double manaEnnemi=Double.valueOf(ennemi.getPointsDeMana());
+        barreEnnemiPv.setProgress(vieEnnemi/vieEnnemiMax);
+
         if(ennemi.getPointsDeVie()>0){
             if(ennemi.getListeEffet().getFreeze()<=0) {
                 attaqueEnnemi();
@@ -878,6 +913,7 @@ public class Controller implements Initializable{
         if(personnage.getInvulnerable()>=1) {
             personnage.setInvulnerabilite(personnage.getInvulnerable() - 1);
         }
+        barreEnnemiMana.setProgress(manaEnnemi/manaEnnemiMax);
         pageCombat();
     }
 
