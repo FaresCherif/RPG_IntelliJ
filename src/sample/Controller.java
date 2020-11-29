@@ -34,13 +34,13 @@ public class Controller implements Initializable{
     private Button bouttonCreer;
 
     @FXML
-    private Button bouttonMage;
+    private ImageView bouttonMage;
 
     @FXML
-    private Button bouttonGuerrier;
+    private ImageView bouttonGuerrier;
 
     @FXML
-    private Button bouttonChasseur;
+    private ImageView bouttonChasseur;
 
     @FXML
     private Group bouttonCreationPerso;
@@ -214,7 +214,7 @@ public class Controller implements Initializable{
     private Group allerSauvegarder;
 
     @FXML
-    private Button sauvegarde;
+    private Image sauvegarde;
 
     @FXML
     private Button bouttonCharger;
@@ -297,6 +297,12 @@ public class Controller implements Initializable{
     @FXML
     private ProgressBar barreEnnemiMana;
 
+    @FXML
+    private Group labelClasse;
+
+    @FXML
+    private Group labelNom;
+
     GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     int width = gd.getDisplayMode().getWidth();
     int height = gd.getDisplayMode().getHeight();
@@ -361,6 +367,7 @@ public class Controller implements Initializable{
     }
 
     public void allerPageCreerPersonnage(ActionEvent actionEvent) {
+        labelClasse.setVisible(true);
         chargerPagePrincipale.setVisible(false);
         pagePrincipale.setVisible(false);
         bouttonCreationPerso.setVisible(true);
@@ -399,6 +406,8 @@ public class Controller implements Initializable{
     }
 
     public void creerMage(){
+        labelNom.setVisible(true);
+        labelClasse.setVisible(false);
         bouttonCreationPerso.setVisible(false);
         descriptionMage.setVisible(false);
         nomCreationPerso.setVisible(true);
@@ -408,7 +417,7 @@ public class Controller implements Initializable{
 
         FileInputStream fin = null;
         try {
-            fin = new FileInputStream("src/sample/images/mage.jpg");
+            fin = new FileInputStream("src/sample/images/mage.png");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -421,6 +430,8 @@ public class Controller implements Initializable{
     }
 
     public void creerGuerrier(){
+        labelNom.setVisible(true);
+        labelClasse.setVisible(false);
         bouttonCreationPerso.setVisible(false);
         descriptionGuerrier.setVisible(false);
         nomCreationPerso.setVisible(true);
@@ -439,6 +450,8 @@ public class Controller implements Initializable{
     }
 
     public void creerChasseur(){
+        labelNom.setVisible(true);
+        labelClasse.setVisible(false);
         bouttonCreationPerso.setVisible(false);
         descriptionChasseur.setVisible(false);
         nomCreationPerso.setVisible(true);
@@ -448,7 +461,7 @@ public class Controller implements Initializable{
         validerNom.setTranslateX(300);
         FileInputStream fin = null;
         try {
-            fin = new FileInputStream("src/sample/images/chasseur.jpg");
+            fin = new FileInputStream("src/sample/images/chasseur.png");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -461,6 +474,7 @@ public class Controller implements Initializable{
     }
 
     public void pageDescriptionPerso(){
+        labelNom.setVisible(false);
         barrePersoPv.setStyle("-fx-accent: red;");
         barrePersoPv.setProgress(1F);
         barrePersoMana.setStyle("-fx-accent: blue;");
@@ -495,7 +509,6 @@ public class Controller implements Initializable{
         allerSauvegarder.setVisible(true);
         magasinListeObjet.setVisible(false);
         allerSauvegarder.setVisible(true);
-        sauvegarde.setVisible(true);
         menuArme.setVisible(false);
         menuArme2.setVisible(false);
         descriptionAffichageEnnemi.setVisible(false);
@@ -545,7 +558,7 @@ public class Controller implements Initializable{
 
         Image img = null;
         try {
-            img = new Image(new FileInputStream("src/sample/images/arene.jpg"),width,height,true,true);
+            img = new Image(new FileInputStream("src/sample/images/foret.png"),width,height,false,false);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -1194,7 +1207,7 @@ public class Controller implements Initializable{
                                 personnage=new Chasseur();
                                 FileInputStream fin = null;
                                 try {
-                                    fin = new FileInputStream("src/sample/images/chasseur.jpg");
+                                    fin = new FileInputStream("src/sample/images/chasseur.png");
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();
                                 }
@@ -1335,7 +1348,7 @@ public class Controller implements Initializable{
         retourArme.setVisible(true);
         allerChoixHistoire.setVisible(false);
         allerMagasin.setVisible(false);
-        sauvegarde.setVisible(false);
+        allerSauvegarder.setVisible(false);
         bouttonCombat.setVisible(false);
         allerListeArme.setVisible(false);
         bouttonAffichagePerso.setVisible(false);
