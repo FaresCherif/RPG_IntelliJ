@@ -179,6 +179,10 @@
         <Button  fx:id="retourSansArmeAttaqueBoutton" minHeight="100" minWidth="100" onMouseClicked="#pageCombat" style="-fx-background-size: 100 100; " >Retour</Button>
     </Group>
 
+    <Group fx:id="groupLoot" visible="false" translateY="300" translateX="200">
+        <Button  fx:id="loot" minHeight="100" minWidth="100" onMouseClicked="#loot" style="-fx-background-size: 100 100; " >Fouiller le corps</Button>
+    </Group>
+
     <Group fx:id="listeSortPersonnageCombat" visible="false" translateX="-200" translateY="300">
         <Button  visible="false" fx:id="boulleEnergie" minHeight="100" minWidth="100" onMouseClicked="#boulleEnergie" style="-fx-background-size: 100 100; " >Boulle d'énergie</Button>
         <Button  visible="false" fx:id="grosseBoulleEnergie" minHeight="100" minWidth="100" onMouseClicked="#grosseBoulleEnergie" style="-fx-background-size: 100 100; " >Grosse boulle d'énergie</Button>

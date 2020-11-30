@@ -303,6 +303,9 @@ public class Controller implements Initializable{
     @FXML
     private Group labelNom;
 
+    @FXML
+    private Group groupLoot;
+
     GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     int width = gd.getDisplayMode().getWidth();
     int height = gd.getDisplayMode().getHeight();
@@ -316,7 +319,18 @@ public class Controller implements Initializable{
     private Sort grosseBoulleEnnergie=new Sort(8,new Effet(),8);
 
     private Epee epee= new Epee();
-    private Arc arc =new Arc();
+    private Epee epeeMoyenne= new Epee(7,0,15,new Effet());
+    private Epee epeeBien= new Epee(10,0,20,new Effet());
+    private Epee epeeRare= new Epee(15,0,30,new Effet());
+    private Epee epeeExcellent= new Epee(30,0,50,new Effet());
+
+    private Arc arc= new Arc();
+    private Arc arcMoyenne= new Arc(7,0,20,20,15,new Effet());
+    private Arc arcBien= new Arc(10,0,30,30,20,new Effet());
+    private Arc arcRare= new Arc(15,0,50,50,30,new Effet());
+    private Arc arcExcellent= new Arc(30,0,70,70,50,new Effet());
+
+
     private Bouclier bouclier=new Bouclier();
 
     private Effet timeStop=new Effet(1,0,2);
@@ -625,6 +639,7 @@ public class Controller implements Initializable{
     }
 
     public void pageCombat(){
+        groupLoot.setVisible(false);
         Double vieMax=Double.valueOf(personnage.getPointsDeVieMax());
         Double vie=Double.valueOf(personnage.getPointsDeVie());
         Double manaMax=Double.valueOf(personnage.getPointsDeManaMax());
@@ -696,6 +711,10 @@ public class Controller implements Initializable{
             affichageVictoire.setVisible(true);
 
             console.appendText("Votre dernière attaque à été tout ce que a sufiie  pour faire plier votre adversaire \n");
+            groupLoot.setVisible(true);
+
+
+
 
             if(personnage.getTypeArme1()!=null){
                 personnage.getTypeArme1().perdreDurabilite();
@@ -719,6 +738,54 @@ public class Controller implements Initializable{
                             }
                         }
                     }
+                }
+            }
+        }
+        if(ennemi==ennemi5 && numeroChoixHistoire==3) {
+            FileInputStream fin = null;
+            try {
+                fin = new FileInputStream("src/sample/images/ennemiBossChasseur.png");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Image nouvelleImage = new Image(fin, 100, 100, false, false);
+
+            imageViewEnnemi.setImage(nouvelleImage);
+        }
+        else{
+            if(ennemi==ennemi5 && numeroChoixHistoire==2) {
+                FileInputStream fin = null;
+                try {
+                    fin = new FileInputStream("src/sample/images/ennemiBossGuerrier.png");
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Image nouvelleImage = new Image(fin, 100, 100, false, false);
+
+                imageViewEnnemi.setImage(nouvelleImage);
+            }
+            else{
+                if(ennemi==ennemi5 && numeroChoixHistoire==1) {
+                    FileInputStream fin = null;
+                    try {
+                        fin = new FileInputStream("src/sample/images/ennemiBossMage.png");
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    Image nouvelleImage = new Image(fin, 100, 100, false, false);
+
+                    imageViewEnnemi.setImage(nouvelleImage);
+                }
+                else{
+                    FileInputStream fin = null;
+                    try {
+                        fin = new FileInputStream("src/sample/images/ennemi.png");
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    Image nouvelleImage = new Image(fin, 100, 100, false, false);
+
+                    imageViewEnnemi.setImage(nouvelleImage);
                 }
             }
         }
@@ -1250,12 +1317,15 @@ public class Controller implements Initializable{
                                 if(Integer.parseInt(ligne[8])!=0) {
                                     if (Integer.parseInt(ligne[8]) == 1) {
                                         setEnnemiMana();
+                                        numeroChoixHistoire=1;
                                     }
                                     if (Integer.parseInt(ligne[8]) == 2) {
                                         setEnnemiPv();
+                                        numeroChoixHistoire=2;
                                     }
                                     if (Integer.parseInt(ligne[8]) == 3) {
                                         setEnnemiNeutre();
+                                        numeroChoixHistoire=3;
                                     }
 
                                     if (personnage.getNiveau() <= 5) {
@@ -1290,15 +1360,18 @@ public class Controller implements Initializable{
                                     arme.setDegat(Integer.parseInt((ligne[2])));
                                     arme.setBlocage(Integer.parseInt(ligne[3]));
                                     ((Arc) arme).setNbFlecheMax(Integer.parseInt(ligne[4]));
+                                    arme.setDurabilite(Integer.parseInt(ligne[4]));
                                     personnage.recupererArme(arme);
                                     personnage.recuperer();
                                 }
                                 if(Integer.parseInt(ligne[1])==2){
                                     arme=new Epee(Integer.parseInt(ligne[2]),Integer.parseInt(ligne[3]),Integer.parseInt(ligne[5]),new Effet());
+                                    arme.setDurabilite(Integer.parseInt(ligne[4]));
                                     personnage.recupererArme(arme);
                                 }
                                 if(Integer.parseInt(ligne[1])==3){
                                     arme=new Bouclier();
+                                    arme.setDurabilite(Integer.parseInt(ligne[4]));
                                     personnage.recupererArme(arme);
                                 }
 
@@ -1521,5 +1594,60 @@ public class Controller implements Initializable{
         pageDescriptionPerso();
     }
 
+    public void loot(){
+        groupLoot.setVisible(false);
+        int choixTypeRecompense=1 + (int)(Math.random() * ((2 - 1) + 1));
+        int choixRécompenseAleatoire=1 + (int)(Math.random() * ((1000 - 1) + 1));
 
+        if(choixTypeRecompense==1) {
+            if (choixRécompenseAleatoire < 505) {
+                personnage.recupererArme(epee);
+                console.appendText("Vous trouvez une épée en bois sur le corps de l'ennemi");
+            } else {
+                if (choixRécompenseAleatoire < 800) {
+                    console.appendText("Vous trouvez une épée en pierre sur le corps de l'ennemi");
+                    personnage.recupererArme(epeeMoyenne);
+                } else {
+                    if (choixRécompenseAleatoire < 900) {
+                        console.appendText("Vous trouvez une épée en acier sur le corps de l'ennemi");
+                        personnage.recupererArme(epeeBien);
+                    } else {
+                        if (choixRécompenseAleatoire <= 999) {
+                            console.appendText("Vous trouvez une épée en diamant sur le corps de l'ennemi");
+                            personnage.recupererArme(epeeRare);
+                        } else {
+                            console.appendText("Vous trouvez une épée en adamentium sur le corps de l'ennemi");
+                            personnage.recupererArme(epeeExcellent);
+                        }
+                    }
+                }
+
+            }
+        }
+        if(choixTypeRecompense==2){
+            if (choixRécompenseAleatoire < 505) {
+                console.appendText("Vous trouvez un arc en bois sur le corps de l'ennemi");
+                personnage.recupererArme(arc);
+            } else {
+                if (choixRécompenseAleatoire < 800) {
+                    console.appendText("Vous trouvez un arc en pierre sur le corps de l'ennemi");
+                    personnage.recupererArme(arcMoyenne);
+                } else {
+                    if (choixRécompenseAleatoire < 900) {
+                        console.appendText("Vous trouvez un arc en metal sur le corps de l'ennemi");
+                        personnage.recupererArme(arcBien);
+                    } else {
+                        if (choixRécompenseAleatoire <= 999) {
+                            console.appendText("Vous trouvez un arc en or sur le corps de l'ennemi");
+                            personnage.recupererArme(arcRare);
+                        } else {
+                            console.appendText("Vous trouvez un arc en diamant sur le corps de l'ennemi");
+                            personnage.recupererArme(arcExcellent);
+                        }
+                    }
+                }
+
+            }
+        }
+    }
 }

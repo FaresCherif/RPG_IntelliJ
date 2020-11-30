@@ -19,6 +19,8 @@ public abstract class Personnage {
     private String nom;
     private ListeEffet listeEffet;
 
+
+
     /**
      * Nombre de points de vie du Personnage
      */
