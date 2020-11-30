@@ -9,7 +9,7 @@ public interface Animation {
 
     public void animationArme(Group affichageArme);
 
-    public void animationBlocage();
+    public void animationBlocage(Group affichageBouclier);
 
     public void animationSort();
 

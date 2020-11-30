@@ -1,6 +1,12 @@
 package sample;
 
-public class Bouclier extends Arme {
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.scene.Group;
+import javafx.util.Duration;
+
+public class Bouclier extends Arme implements Animation {
 
     public Bouclier(){
         this.setDegat(0);
@@ -25,5 +31,57 @@ public class Bouclier extends Arme {
     @Override
     public boolean estBouclier() {
         return true;
+    }
+
+    @Override
+    public void animationArme(Group affichageArme) {
+
+    }
+
+    @Override
+    public void animationBlocage(Group affichageBouclier) {
+        affichageBouclier.setTranslateX(-100);
+        affichageBouclier.setVisible(true);
+        Timeline tx = new Timeline(
+                new KeyFrame(Duration.millis(0), new KeyValue(affichageBouclier.scaleXProperty(), 0)),
+                new KeyFrame(Duration.millis(100), new KeyValue(affichageBouclier.scaleXProperty(), 2))
+        );
+        Timeline ty = new Timeline(
+                new KeyFrame(Duration.millis(0), new KeyValue(affichageBouclier.scaleYProperty(), 0)),
+                new KeyFrame(Duration.millis(100), new KeyValue(affichageBouclier.scaleYProperty(), 2))
+        );
+
+        final Thread t1 = new Thread(){
+            @Override
+            public void run(){
+                tx.setCycleCount(3);
+                tx.play();
+                ty.setCycleCount(3);
+                ty.play();
+            }
+        };
+        t1.start();
+        final Thread t2 = new Thread(){
+            @Override
+            public void run(){
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                affichageBouclier.setVisible(false);
+            }
+        };
+        t2.start();
+    }
+
+    @Override
+    public void animationSort() {
+
+    }
+
+    @Override
+    public void animationGrosSort() {
+
     }
 }

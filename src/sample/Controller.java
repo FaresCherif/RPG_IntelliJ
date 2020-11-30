@@ -79,6 +79,9 @@ public class Controller implements Initializable{
     private Group animationArc;
 
     @FXML
+    private Group animationBouclier;
+
+    @FXML
     private ImageView imageViewPersonnage;
 
     @FXML
@@ -788,8 +791,6 @@ public class Controller implements Initializable{
 
     public void coupEpee() {
         console.appendText("Vous prenner votre épée et infligez un violent l'ennemi infligeant ");
-
-
         epee.animationArme(animationEpee);
         try {
             personnage.coupEpee(ennemi,console);

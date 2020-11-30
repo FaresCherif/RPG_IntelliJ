@@ -112,7 +112,7 @@ public class Arc extends Arme implements Animation {
     }
 
     @Override
-    public void animationBlocage() {
+    public void animationBlocage(Group affichageBouclier) {
 
     }
 
