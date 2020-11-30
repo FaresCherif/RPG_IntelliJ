@@ -316,8 +316,6 @@ public abstract class Personnage {
         if (sort.getCoutMana() > this.getPointsDeMana()) {
             System.out.println("Vous n'avez pas assez de mana");
         } else {
-            System.out.println(personnageVise.getBlocage());
-            System.out.println(sort.getDegat());
             if(personnageVise.getBlocage()<=sort.getDegat() && personnageVise.getInvulnerable()<=0) {
 
                 if(sort.getEffet()!=null) {

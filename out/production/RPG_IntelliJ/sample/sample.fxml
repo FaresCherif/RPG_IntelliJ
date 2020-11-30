@@ -283,4 +283,14 @@
         <Button minHeight="100" translateX="600" minWidth="100" onMouseClicked="#pageDescriptionPerso" style="-fx-background-size: 100 100; " >Retour</Button>
     </Group>
 
+    <Group fx:id="allerQuetes" visible="false" translateX="800">
+        <Button fx:id="bouttonListerQuetes" minHeight="100" minWidth="100" onMouseClicked="#listerQuete" style="-fx-background-size: 100 100; " >Quetes</Button>
+    </Group>
+
+    <Group fx:id="listeQuete" visible="false" translateX="400" translateY="-300">
+        <Label style="-fx-background-color:white" fx:id="queteFinirAventure" >Aventure</Label>
+        <Label style="-fx-background-color:white" fx:id="argent" translateY="20" >Argent</Label>
+        <Button minHeight="100" translateX="600" minWidth="100" onMouseClicked="#pageDescriptionPerso" style="-fx-background-size: 100 100; " >Retour</Button>
+    </Group>
+
 </GridPane>

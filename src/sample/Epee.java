@@ -29,7 +29,7 @@ public class Epee extends Arme implements Animation {
     @Override
     public String toString() {
         String arc="";
-        arc+="Epêe : "+getDegat()+" degat / "+getBlocage()+" blocage / ";
+        arc+="Epêe : "+getDegat()+" degat / "+getBlocage()+" blocage / "+getDurabilite()+ " durabilité /";
         return arc;
     }
 
