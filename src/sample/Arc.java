@@ -11,22 +11,23 @@ public class Arc extends Arme implements Animation {
     private int nbFleche;
     private int nbFlecheMax;
 
-    public void Arc(int degat, int blocage,int nbFleche,int nbFlecheMax,int durabilite,Effet effet){
-        this.setDegat(degat);
-        this.setBlocage(blocage);
-        this.nbFleche=nbFleche;
-        this.nbFlecheMax=nbFlecheMax;
-        this.setDurabilite(durabilite);
-        this.setEffet(effet);
-    }
 
-    public void Arc(){
+    public Arc(){
         this.setDegat(2);
         this.setBlocage(0);
         this.nbFleche=20;
         this.nbFlecheMax=20;
         this.setDurabilite(10);
         this.setEffet(new Effet());
+    }
+
+    public Arc(int degat, int blocage,int nbFleche,int nbFlecheMax,int durabilite,Effet effet){
+        this.setDegat(degat);
+        this.setBlocage(blocage);
+        this.nbFleche=nbFleche;
+        this.nbFlecheMax=nbFlecheMax;
+        this.setDurabilite(durabilite);
+        this.setEffet(effet);
     }
 
 

@@ -26,10 +26,36 @@
         <Button  fx:id="bouttonCharger" minHeight="300" minWidth="500" onAction="#charger" >Charger un personnage</Button>
     </Group>
 
+    <Group fx:id="labelClasse" visible="false" translateY="-300" translateX="350">
+        <Label minWidth="500" textFill="white" scaleY="3">Choix de classe</Label>
+    </Group>
+
+    <Group fx:id="labelNom" visible="false" translateY="-300" translateX="350">
+        <Label minWidth="500" textFill="white" scaleY="3">Entrez votre nom</Label>
+    </Group>
+
     <Group fx:id="bouttonCreationPerso" translateX="100">
-        <Button  fx:id="bouttonMage" minHeight="100" minWidth="100" onMouseEntered="#hooverBouttonChoixPersonnageMage" onMouseClicked="#creerMage" style="-fx-background-size: 100 100; " >Creer mage</Button>
-        <Button  translateX="200" fx:id="bouttonGuerrier"  minHeight="100" minWidth="100" onMouseEntered="#hooverBouttonChoixPersonnageGuerrier" onMouseClicked="#creerGuerrier" style="-fx-background-size: 100 100;">Creer guerrier</Button>
-        <Button  translateX="400" fx:id="bouttonChasseur"  minHeight="100" minWidth="100" onMouseEntered="#hooverBouttonChoixPersonnageChasseur" onMouseClicked="#creerChasseur" style="-fx-background-size: 100 100; ">Creer chasseur</Button>
+        <children>
+            <ImageView fx:id="bouttonMage" layoutX="-50.0" layoutY="50.0" onMouseEntered="#hooverBouttonChoixPersonnageMage" onMouseClicked="#creerMage" fitHeight="200.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" translateY="-50">
+                <image>
+                    <Image url="@images/choixMage.jpg" />
+                </image>
+            </ImageView>
+        </children>
+        <children>
+            <ImageView fx:id="bouttonGuerrier" layoutX="150.0" layoutY="50.0" onMouseEntered="#hooverBouttonChoixPersonnageGuerrier" onMouseClicked="#creerGuerrier" fitHeight="200.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" translateY="-50">
+                <image>
+                    <Image url="@images/choixGuerrier.jpg" requestedWidth="175" requestedHeight="200"/>
+                </image>
+            </ImageView>
+        </children>
+        <children>
+            <ImageView fx:id="bouttonChasseur" layoutX="350.0" layoutY="50.0" onMouseEntered="#hooverBouttonChoixPersonnageChasseur" onMouseClicked="#creerChasseur" fitHeight="200.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" translateY="-50">
+                <image>
+                    <Image url="@images/choixChasseur.jpg" requestedWidth="175" requestedHeight="200"/>
+                </image>
+            </ImageView>
+        </children>
     </Group>
 
     <Group fx:id="descriptionCreationPerso" translateY="200" translateX="100" >
@@ -48,7 +74,7 @@
         <children>
             <ImageView fx:id="imageViewPersonnage" layoutX="29.0" layoutY="44.0" fitHeight="224.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" >
                 <image>
-                    <Image fx:id="imagePerso" url="@images/mage.jpg" />
+                    <Image fx:id="imagePerso" url="@images/mage.png" />
                 </image>
             </ImageView>
         </children>
@@ -119,7 +145,7 @@
         <children>
             <ImageView fx:id="imageViewEnnemi" layoutX="29.0" layoutY="44.0" fitHeight="224.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" >
                 <image>
-                    <Image fx:id="imageEnnemi" url="@images/ennemi.jpg" />
+                    <Image fx:id="imageEnnemi" url="@images/ennemi.png" />
                 </image>
             </ImageView>
         </children>
@@ -153,6 +179,10 @@
         <Button  fx:id="retourSansArmeAttaqueBoutton" minHeight="100" minWidth="100" onMouseClicked="#pageCombat" style="-fx-background-size: 100 100; " >Retour</Button>
     </Group>
 
+    <Group fx:id="groupLoot" visible="false" translateY="300" translateX="200">
+        <Button  fx:id="loot" minHeight="100" minWidth="100" onMouseClicked="#loot" style="-fx-background-size: 100 100; " >Fouiller le corps</Button>
+    </Group>
+
     <Group fx:id="listeSortPersonnageCombat" visible="false" translateX="-200" translateY="300">
         <Button  visible="false" fx:id="boulleEnergie" minHeight="100" minWidth="100" onMouseClicked="#boulleEnergie" style="-fx-background-size: 100 100; " >Boulle d'énergie</Button>
         <Button  visible="false" fx:id="grosseBoulleEnergie" minHeight="100" minWidth="100" onMouseClicked="#grosseBoulleEnergie" style="-fx-background-size: 100 100; " >Grosse boulle d'énergie</Button>
@@ -178,12 +208,24 @@
         <Button fx:id="retourDescriptionVictoire" minHeight="100" minWidth="100" onMouseClicked="#retourPageDescriptionPerso" style="-fx-background-size: 100 100; " translateX="400" translateY="-200">Continuer</Button>
     </Group>
 
-    <Group fx:id="allerMagasin" visible="false" translateX="800">
-        <Button fx:id="magasin" minHeight="100" minWidth="100" onMouseClicked="#pageMagasin" style="-fx-background-size: 100 100; " >Magasin</Button>
+    <Group fx:id="allerMagasin" visible="false" translateX="800" translateY="-200">
+        <children>
+            <ImageView fx:id="imageViewMagasin" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#pageMagasin">
+                <image>
+                    <Image fx:id="magasin" url="@images/shop.png" requestedHeight="200" requestedWidth="200"/>
+                </image>
+            </ImageView>
+        </children>
     </Group>
 
     <Group fx:id="allerSauvegarder" visible="false" translateX="-300" translateY="-300">
-        <Button fx:id="sauvegarde" minHeight="100" minWidth="100" onMouseClicked="#sauvegarder" style="-fx-background-size: 100 100; " >Sauvegarder</Button>
+        <children>
+            <ImageView fx:id="imageViewSauvegarde" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#sauvegarder">
+                <image>
+                    <Image fx:id="sauvegarde" url="@images/save.png" requestedHeight="200" requestedWidth="200"/>
+                </image>
+            </ImageView>
+        </children>
     </Group>
 
     <Group fx:id="magasinListeObjet" visible="false" translateX="200">
@@ -238,6 +280,16 @@
         <Button fx:id="choixAvenetureMage" minHeight="100" minWidth="100" onMouseClicked="#choisirHistoireMage" style="-fx-background-size: 100 100; " >Choisir l'histoire mage</Button>
         <Button fx:id="choixAvenetureGuerrier" translateX="200" minHeight="100" minWidth="100" onMouseClicked="#choisirHistoireGuerrier" style="-fx-background-size: 100 100; " >Choisir l'histoire du guerrier</Button>
         <Button fx:id="choixAvenetureChasseur" translateX="400" minHeight="100" minWidth="100" onMouseClicked="#choisirHistoireChasseur" style="-fx-background-size: 100 100; " >Choisir l'histoire du chasseur</Button>
+        <Button minHeight="100" translateX="600" minWidth="100" onMouseClicked="#pageDescriptionPerso" style="-fx-background-size: 100 100; " >Retour</Button>
+    </Group>
+
+    <Group fx:id="allerQuetes" visible="false" translateX="800">
+        <Button fx:id="bouttonListerQuetes" minHeight="100" minWidth="100" onMouseClicked="#listerQuete" style="-fx-background-size: 100 100; " >Quetes</Button>
+    </Group>
+
+    <Group fx:id="listeQuete" visible="false" translateX="400" translateY="-300">
+        <Label style="-fx-background-color:white" fx:id="queteFinirAventure" >Aventure</Label>
+        <Label style="-fx-background-color:white" fx:id="argent" translateY="20" >Argent</Label>
         <Button minHeight="100" translateX="600" minWidth="100" onMouseClicked="#pageDescriptionPerso" style="-fx-background-size: 100 100; " >Retour</Button>
     </Group>
 

@@ -17,7 +17,7 @@ public class Ennemi extends Personnage {
 
     public void morsure(Personnage personnage, TextArea console) throws PersonnageMortException {
         int nbPointAttaque;
-        nbPointAttaque=2;
+        nbPointAttaque=3*getNiveau();
         personnage.perdreVie(nbPointAttaque,console);
 
         if(personnage.getPointsDeVie() <= 0) {

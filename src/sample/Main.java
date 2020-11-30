@@ -26,10 +26,6 @@ public class Main extends Application {
     }
 }
 
-//TODO  mettre des images dans les boutons de choix des personnages
-// la classe partie ?
-// mettre les translate du controller directement dans le fxml
-// faire l'animation des attaques
+// TODO la classe partie ?
 // refactorer le code
-// mettre des objets dans la boutique
 // randomiser attaque ennemi

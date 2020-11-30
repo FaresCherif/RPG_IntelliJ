@@ -34,13 +34,13 @@ public class Controller implements Initializable{
     private Button bouttonCreer;
 
     @FXML
-    private Button bouttonMage;
+    private ImageView bouttonMage;
 
     @FXML
-    private Button bouttonGuerrier;
+    private ImageView bouttonGuerrier;
 
     @FXML
-    private Button bouttonChasseur;
+    private ImageView bouttonChasseur;
 
     @FXML
     private Group bouttonCreationPerso;
@@ -214,7 +214,7 @@ public class Controller implements Initializable{
     private Group allerSauvegarder;
 
     @FXML
-    private Button sauvegarde;
+    private Image sauvegarde;
 
     @FXML
     private Button bouttonCharger;
@@ -297,6 +297,27 @@ public class Controller implements Initializable{
     @FXML
     private ProgressBar barreEnnemiMana;
 
+    @FXML
+    private Group labelClasse;
+
+    @FXML
+    private Group labelNom;
+
+    @FXML
+    private Group groupLoot;
+
+    @FXML
+    private Group allerQuetes;
+
+    @FXML
+    private Group listeQuete;
+
+    @FXML
+    private Label queteFinirAventure;
+
+    @FXML
+    private Label argent;
+
     GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     int width = gd.getDisplayMode().getWidth();
     int height = gd.getDisplayMode().getHeight();
@@ -310,7 +331,18 @@ public class Controller implements Initializable{
     private Sort grosseBoulleEnnergie=new Sort(8,new Effet(),8);
 
     private Epee epee= new Epee();
-    private Arc arc =new Arc();
+    private Epee epeeMoyenne= new Epee(7,0,15,new Effet());
+    private Epee epeeBien= new Epee(10,0,20,new Effet());
+    private Epee epeeRare= new Epee(15,0,30,new Effet());
+    private Epee epeeExcellent= new Epee(30,0,50,new Effet());
+
+    private Arc arc= new Arc();
+    private Arc arcMoyenne= new Arc(7,0,20,20,15,new Effet());
+    private Arc arcBien= new Arc(10,0,30,30,20,new Effet());
+    private Arc arcRare= new Arc(15,0,50,50,30,new Effet());
+    private Arc arcExcellent= new Arc(30,0,70,70,50,new Effet());
+
+
     private Bouclier bouclier=new Bouclier();
 
     private Effet timeStop=new Effet(1,0,2);
@@ -325,6 +357,8 @@ public class Controller implements Initializable{
     private Ennemi ennemi1,ennemi2,ennemi3,ennemi4,ennemi5;
 
     private int numeroChoixHistoire;
+
+    private int milleQuete;
 
 
     @Override
@@ -361,6 +395,7 @@ public class Controller implements Initializable{
     }
 
     public void allerPageCreerPersonnage(ActionEvent actionEvent) {
+        labelClasse.setVisible(true);
         chargerPagePrincipale.setVisible(false);
         pagePrincipale.setVisible(false);
         bouttonCreationPerso.setVisible(true);
@@ -399,6 +434,8 @@ public class Controller implements Initializable{
     }
 
     public void creerMage(){
+        labelNom.setVisible(true);
+        labelClasse.setVisible(false);
         bouttonCreationPerso.setVisible(false);
         descriptionMage.setVisible(false);
         nomCreationPerso.setVisible(true);
@@ -408,7 +445,7 @@ public class Controller implements Initializable{
 
         FileInputStream fin = null;
         try {
-            fin = new FileInputStream("src/sample/images/mage.jpg");
+            fin = new FileInputStream("src/sample/images/mage.png");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -418,9 +455,12 @@ public class Controller implements Initializable{
         personnage.apprendreSort(boulleEnnergie);
         personnage.apprendreSort(soin);
 
+
     }
 
     public void creerGuerrier(){
+        labelNom.setVisible(true);
+        labelClasse.setVisible(false);
         bouttonCreationPerso.setVisible(false);
         descriptionGuerrier.setVisible(false);
         nomCreationPerso.setVisible(true);
@@ -436,9 +476,12 @@ public class Controller implements Initializable{
         imageViewPersonnage.setImage(nouvelleImage);
         personnage.recupererArme(epee);
         personnage.apprendreSort(fullCowl);
+
     }
 
     public void creerChasseur(){
+        labelNom.setVisible(true);
+        labelClasse.setVisible(false);
         bouttonCreationPerso.setVisible(false);
         descriptionChasseur.setVisible(false);
         nomCreationPerso.setVisible(true);
@@ -448,7 +491,7 @@ public class Controller implements Initializable{
         validerNom.setTranslateX(300);
         FileInputStream fin = null;
         try {
-            fin = new FileInputStream("src/sample/images/chasseur.jpg");
+            fin = new FileInputStream("src/sample/images/chasseur.png");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -461,6 +504,9 @@ public class Controller implements Initializable{
     }
 
     public void pageDescriptionPerso(){
+        listeQuete.setVisible(false);
+        allerQuetes.setVisible(true);
+        labelNom.setVisible(false);
         barrePersoPv.setStyle("-fx-accent: red;");
         barrePersoPv.setProgress(1F);
         barrePersoMana.setStyle("-fx-accent: blue;");
@@ -471,6 +517,9 @@ public class Controller implements Initializable{
         barreEnnemiMana.setStyle("-fx-accent: blue;");
         barreEnnemiMana.setProgress(1F);
 
+        if(personnage.getNbPiece()>=100){
+            milleQuete=1;
+        }
 
         retourArme.setVisible(false);
         grConsole.setVisible(false);
@@ -495,7 +544,6 @@ public class Controller implements Initializable{
         allerSauvegarder.setVisible(true);
         magasinListeObjet.setVisible(false);
         allerSauvegarder.setVisible(true);
-        sauvegarde.setVisible(true);
         menuArme.setVisible(false);
         menuArme2.setVisible(false);
         descriptionAffichageEnnemi.setVisible(false);
@@ -536,16 +584,28 @@ public class Controller implements Initializable{
         piecePersonnage.setText(personnage.getNbPiece()+" pieces");
 
 
+        if(ennemi5==null){
+            FileInputStream fin = null;
+            try {
+                fin = new FileInputStream("src/sample/images/ennemi.png");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Image nouvelleImage = new Image(fin, 100, 100, false, false);
+
+            imageViewEnnemi.setImage(nouvelleImage);
+        }
     }
 
     public void fondCombat(){
+        allerQuetes.setVisible(false);
         console.appendText("Le combat commence, allez vous survivre ? Rien de moins sûr\n");
         allerChoixHistoire.setVisible(false);
         allerListeArme.setVisible(false);
 
         Image img = null;
         try {
-            img = new Image(new FileInputStream("src/sample/images/arene.jpg"),width,height,true,true);
+            img = new Image(new FileInputStream("src/sample/images/foret.png"),width,height,false,false);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -612,6 +672,7 @@ public class Controller implements Initializable{
     }
 
     public void pageCombat(){
+        groupLoot.setVisible(false);
         Double vieMax=Double.valueOf(personnage.getPointsDeVieMax());
         Double vie=Double.valueOf(personnage.getPointsDeVie());
         Double manaMax=Double.valueOf(personnage.getPointsDeManaMax());
@@ -671,6 +732,7 @@ public class Controller implements Initializable{
             }
         }
         else{
+
             personnage.gagnerPiece(ennemi.getNiveau()*10);
             piecePersonnage.setText(personnage.getNbPiece()+" pieces");
             personnage.gagnerNiveau();
@@ -683,6 +745,14 @@ public class Controller implements Initializable{
             affichageVictoire.setVisible(true);
 
             console.appendText("Votre dernière attaque à été tout ce que a sufiie  pour faire plier votre adversaire \n");
+            groupLoot.setVisible(true);
+
+            if(ennemi.getNiveau()==5){
+                console.appendText("Vous avez fini l'aventure principale, félicitation le monde est sauvé \n");
+            }
+
+
+
 
             if(personnage.getTypeArme1()!=null){
                 personnage.getTypeArme1().perdreDurabilite();
@@ -706,6 +776,46 @@ public class Controller implements Initializable{
                             }
                         }
                     }
+                }
+            }
+        }
+        if(ennemi==ennemi5 && numeroChoixHistoire==3) {
+            FileInputStream fin = null;
+            try {
+                fin = new FileInputStream("src/sample/images/ennemiBossChasseur.png");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Image nouvelleImage = new Image(fin, 100, 100, false, false);
+
+            imageViewEnnemi.setImage(nouvelleImage);
+        }
+        else{
+            if(ennemi==ennemi5 && numeroChoixHistoire==2) {
+                FileInputStream fin = null;
+                try {
+                    fin = new FileInputStream("src/sample/images/ennemiBossGuerrier.png");
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Image nouvelleImage = new Image(fin, 100, 100, false, false);
+
+                imageViewEnnemi.setImage(nouvelleImage);
+            }
+            else{
+                if(ennemi==ennemi5 && numeroChoixHistoire==1) {
+                    FileInputStream fin = null;
+                    try {
+                        fin = new FileInputStream("src/sample/images/ennemiBossMage.png");
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    Image nouvelleImage = new Image(fin, 100, 100, false, false);
+
+                    imageViewEnnemi.setImage(nouvelleImage);
+                }
+                else{
+
                 }
             }
         }
@@ -985,7 +1095,8 @@ public class Controller implements Initializable{
     }
 
     public void pageMagasin(){
-        allerChoixHistoire.setVisible(true);
+        allerQuetes.setVisible(false);
+        allerChoixHistoire.setVisible(false);
         allerListeArme.setVisible(false);
         allerSauvegarder.setVisible(false);
         piecePersonnage.setText(personnage.getNbPiece()+" pieces");
@@ -1003,8 +1114,8 @@ public class Controller implements Initializable{
         int nbElementShop=0;
         int cptLimit=0;
 
-        choixAleatoireMagasin();
 
+        choixAleatoireMagasin();
 
 
 
@@ -1014,6 +1125,7 @@ public class Controller implements Initializable{
         if(personnage.getNbPiece()>=50){
             personnage.perdrePiece(50);
             personnage.apprendreSort(boulleEnnergie);
+            boulleEnergie.setVisible(false);
         }
         pageMagasin();
     }
@@ -1022,6 +1134,7 @@ public class Controller implements Initializable{
         if(personnage.getNbPiece()>=100){
             personnage.perdrePiece(100);
             personnage.apprendreSort(grosseBoulleEnnergie);
+            grosseBoulleEnergie.setVisible(false);
         }
         pageMagasin();
     }
@@ -1030,6 +1143,7 @@ public class Controller implements Initializable{
         if(personnage.getNbPiece()>=40){
             personnage.perdrePiece(40);
             personnage.gagnereArme(bouclier);
+            acheterBouclier.setVisible(false);
         }
         pageMagasin();
     }
@@ -1051,6 +1165,7 @@ public class Controller implements Initializable{
         if(personnage.getNbPiece()>=50){
             personnage.perdrePiece(50);
             personnage.apprendreSort(soin);
+            acheterSoin.setVisible(false);
         }
         pageMagasin();
     }
@@ -1059,6 +1174,7 @@ public class Controller implements Initializable{
         if(personnage.getNbPiece()>=30){
             personnage.perdrePiece(30);
             personnage.gagnereArme(epee);
+            acheterEpee.setVisible(false);
         }
         pageMagasin();
 
@@ -1069,6 +1185,7 @@ public class Controller implements Initializable{
         if(personnage.getNbPiece()>=30){
             personnage.perdrePiece(30);
             personnage.gagnereArme(arc);
+            acheterArc.setVisible(false);
         }
         pageMagasin();
     }
@@ -1110,6 +1227,8 @@ public class Controller implements Initializable{
             ffw.write(Integer.toString(personnage.getNbPiece()));
             ffw.write(",");
             ffw.write(Integer.toString(numeroChoixHistoire));
+            ffw.write(",");
+            ffw.write(Integer.toString(milleQuete));
             ffw.write("\n"); // forcer le passage à la ligne
 
             for(int cptArmeSauvegarde=0;cptArmeSauvegarde<personnage.getListeDesArmes().size();cptArmeSauvegarde+=1){
@@ -1192,15 +1311,26 @@ public class Controller implements Initializable{
                             }
                             if(Integer.parseInt(ligne[0])==2){
                                 personnage=new Chasseur();
-                                Image nouvelleImage= new Image("src/sample/images/chasseur.jpg",100,100,false,false);
+                                FileInputStream fin = null;
+                                try {
+                                    fin = new FileInputStream("src/sample/images/chasseur.png");
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                                Image nouvelleImage= new Image(fin,100,100,false,false);
                                 imageViewPersonnage.setImage(nouvelleImage);
                             }
                             if(Integer.parseInt(ligne[0])==3){
                                 personnage=new Guerrier();
-                                Image nouvelleImage= new Image("src/sample/images/guerrier.png",200,100,false,false);
+                                FileInputStream fin = null;
+                                try {
+                                    fin = new FileInputStream("src/sample/images/guerrier.png");
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                                Image nouvelleImage= new Image(fin,200,100,false,false);
                                 imageViewPersonnage.setImage(nouvelleImage);
                             }
-
 
                             personnage.setNom(ligne[1]);
                             personnage.setPointsDeVie(Integer.parseInt(ligne[2]));
@@ -1226,12 +1356,15 @@ public class Controller implements Initializable{
                                 if(Integer.parseInt(ligne[8])!=0) {
                                     if (Integer.parseInt(ligne[8]) == 1) {
                                         setEnnemiMana();
+                                        numeroChoixHistoire=1;
                                     }
                                     if (Integer.parseInt(ligne[8]) == 2) {
                                         setEnnemiPv();
+                                        numeroChoixHistoire=2;
                                     }
                                     if (Integer.parseInt(ligne[8]) == 3) {
                                         setEnnemiNeutre();
+                                        numeroChoixHistoire=3;
                                     }
 
                                     if (personnage.getNiveau() <= 5) {
@@ -1256,6 +1389,8 @@ public class Controller implements Initializable{
 
                             }
 
+                            milleQuete=Integer.parseInt(ligne[9]);
+
                         }
                         else{
                             String[] ligne = line.split(",");
@@ -1266,6 +1401,7 @@ public class Controller implements Initializable{
                                     arme.setDegat(Integer.parseInt((ligne[2])));
                                     arme.setBlocage(Integer.parseInt(ligne[3]));
                                     ((Arc) arme).setNbFlecheMax(Integer.parseInt(ligne[4]));
+                                    arme.setDurabilite(Integer.parseInt(ligne[5]));
                                     personnage.recupererArme(arme);
                                     personnage.recuperer();
                                 }
@@ -1275,6 +1411,7 @@ public class Controller implements Initializable{
                                 }
                                 if(Integer.parseInt(ligne[1])==3){
                                     arme=new Bouclier();
+                                    arme.setDurabilite(Integer.parseInt(ligne[5]));
                                     personnage.recupererArme(arme);
                                 }
 
@@ -1321,10 +1458,11 @@ public class Controller implements Initializable{
     }
 
     public void listerArme(){
+        allerQuetes.setVisible(false);
         retourArme.setVisible(true);
         allerChoixHistoire.setVisible(false);
         allerMagasin.setVisible(false);
-        sauvegarde.setVisible(false);
+        allerSauvegarder.setVisible(false);
         bouttonCombat.setVisible(false);
         allerListeArme.setVisible(false);
         bouttonAffichagePerso.setVisible(false);
@@ -1341,6 +1479,7 @@ public class Controller implements Initializable{
 
             if(personnage.getListeDesArmes().get(cptArmeListeArme).estBouclier()==false) {
                 listeArme.getItems().add(cptArmeListeArme + "," + personnage.getListeDesArmes().get(cptArmeListeArme));
+                System.out.println(personnage.getListeDesArmes().get(cptArmeListeArme));
             }
         }
 
@@ -1390,10 +1529,11 @@ public class Controller implements Initializable{
         acheterEpee.setVisible(false);
         acheterArc.setVisible(false);
         acheterBouclier.setVisible(false);
+        allerQuetes.setVisible(false);
 
 
 
-        while(nbElementShop<3 && cptLimit<1000) {
+        while(nbElementShop<3 && cptLimit<100000) {
             cptLimit+=1;
             int choixObjetAleatoire=1 + (int)(Math.random() * ((6 - 1) + 1));;
 
@@ -1476,6 +1616,7 @@ public class Controller implements Initializable{
         allerChoixHistoire.setVisible(false);
         bouttonAffichagePerso.setVisible(false);
         choixHistoire.setVisible(true);
+        allerQuetes.setVisible(false);
 
     }
 
@@ -1497,5 +1638,90 @@ public class Controller implements Initializable{
         pageDescriptionPerso();
     }
 
+    public void loot(){
+        groupLoot.setVisible(false);
+        int choixTypeRecompense=1 + (int)(Math.random() * ((2 - 1) + 1));
+        int choixRécompenseAleatoire=1 + (int)(Math.random() * ((1000 - 1) + 1));
 
+        if(choixTypeRecompense==1) {
+            if (choixRécompenseAleatoire < 505) {
+                personnage.recupererArme(epee);
+                console.appendText("Vous trouvez une épée en bois sur le corps de l'ennemi");
+            } else {
+                if (choixRécompenseAleatoire < 800) {
+                    console.appendText("Vous trouvez une épée en pierre sur le corps de l'ennemi");
+                    personnage.recupererArme(epeeMoyenne);
+                } else {
+                    if (choixRécompenseAleatoire < 900) {
+                        console.appendText("Vous trouvez une épée en acier sur le corps de l'ennemi");
+                        personnage.recupererArme(epeeBien);
+                    } else {
+                        if (choixRécompenseAleatoire <= 999) {
+                            console.appendText("Vous trouvez une épée en diamant sur le corps de l'ennemi");
+                            personnage.recupererArme(epeeRare);
+                        } else {
+                            console.appendText("Vous trouvez une épée en adamentium sur le corps de l'ennemi");
+                            personnage.recupererArme(epeeExcellent);
+                        }
+                    }
+                }
+
+            }
+        }
+        if(choixTypeRecompense==2){
+            if (choixRécompenseAleatoire < 505) {
+                console.appendText("Vous trouvez un arc en bois sur le corps de l'ennemi");
+                personnage.recupererArme(arc);
+            } else {
+                if (choixRécompenseAleatoire < 800) {
+                    console.appendText("Vous trouvez un arc en pierre sur le corps de l'ennemi");
+                    personnage.recupererArme(arcMoyenne);
+                } else {
+                    if (choixRécompenseAleatoire < 900) {
+                        console.appendText("Vous trouvez un arc en metal sur le corps de l'ennemi");
+                        personnage.recupererArme(arcBien);
+                    } else {
+                        if (choixRécompenseAleatoire <= 999) {
+                            console.appendText("Vous trouvez un arc en or sur le corps de l'ennemi");
+                            personnage.recupererArme(arcRare);
+                        } else {
+                            console.appendText("Vous trouvez un arc en diamant sur le corps de l'ennemi");
+                            personnage.recupererArme(arcExcellent);
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    public void listerQuete(){
+        allerSauvegarder.setVisible(false);
+        allerListeArme.setVisible(false);
+        allerMagasin.setVisible(false);
+        allerChoixHistoire.setVisible(false);
+        bouttonAffichagePerso.setVisible(false);
+        choixHistoire.setVisible(false);
+        listeQuete.setVisible(true);
+        allerQuetes.setVisible(false);
+        if(ennemi==null){
+            queteFinirAventure.setText("Quete aventure : 0/5");
+
+        }
+        else{
+            if(ennemi.getNiveau()<5) {
+                queteFinirAventure.setText("Quete aventure : "+Integer.toString(ennemi.getNiveau()) + "/5");
+            }
+            else{
+                queteFinirAventure.setText("Quete aventure : accomplie");
+            }
+        }
+
+        if(milleQuete!=1){
+            argent.setText("Quete picsou : " +Integer.toString(personnage.getNbPiece())+"/100");
+        }
+        else{
+            argent.setText("Quete picsou : accomplie");
+        }
+    }
 }
