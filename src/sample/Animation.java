@@ -11,7 +11,7 @@ public interface Animation {
 
     public void animationBlocage(Group affichageBouclier);
 
-    public void animationSort();
+    public void animationSort(Group animationSort);
 
     public void animationGrosSort();
 }

@@ -117,7 +117,7 @@ public class Arc extends Arme implements Animation {
     }
 
     @Override
-    public void animationSort() {
+    public void animationSort(Group animationSort) {
 
     }
 

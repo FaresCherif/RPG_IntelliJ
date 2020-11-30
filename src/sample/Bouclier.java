@@ -76,7 +76,7 @@ public class Bouclier extends Arme implements Animation {
     }
 
     @Override
-    public void animationSort() {
+    public void animationSort(Group animationSort) {
 
     }
 
