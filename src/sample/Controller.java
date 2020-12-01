@@ -318,6 +318,12 @@ public class Controller implements Initializable{
     @FXML
     private Label argent;
 
+    @FXML
+    private Label armurier;
+
+    @FXML
+    private Button acheterTheWorld;
+
     GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     int width = gd.getDisplayMode().getWidth();
     int height = gd.getDisplayMode().getHeight();
@@ -498,7 +504,6 @@ public class Controller implements Initializable{
         Image nouvelleImage= new Image(fin,100,100,false,false);
         imageViewPersonnage.setImage(nouvelleImage);
         personnage.recupererArme(arc);
-        personnage.apprendreSort(theWorld);
         personnage.apprendreSort(leMur);
 
     }
@@ -517,7 +522,7 @@ public class Controller implements Initializable{
         barreEnnemiMana.setStyle("-fx-accent: blue;");
         barreEnnemiMana.setProgress(1F);
 
-        if(personnage.getNbPiece()>=100){
+        if(personnage.getNbPiece()>=1000){
             milleQuete=1;
         }
 
@@ -1130,6 +1135,14 @@ public class Controller implements Initializable{
         pageMagasin();
     }
 
+    public void acheterTheWorld(){
+        if(personnage.getNbPiece()>=200){
+            personnage.perdrePiece(200);
+            personnage.apprendreSort(theWorld);
+            acheterTheWorld.setVisible(false);
+        }
+    }
+
     public void acheterGrosseBoulleEnergie(){
         if(personnage.getNbPiece()>=100){
             personnage.perdrePiece(100);
@@ -1535,7 +1548,7 @@ public class Controller implements Initializable{
 
         while(nbElementShop<3 && cptLimit<100000) {
             cptLimit+=1;
-            int choixObjetAleatoire=1 + (int)(Math.random() * ((6 - 1) + 1));;
+            int choixObjetAleatoire=1 + (int)(Math.random() * ((7 - 1) + 1));;
 
             if (!personnage.getListeDesSorts().contains(grosseBoulleEnnergie)&& choixObjetAleatoire==1) {
                 acherterGrosseBoulleEnergie.setVisible(true);
@@ -1572,9 +1585,16 @@ public class Controller implements Initializable{
                 decalageMagasin += 200;
             }
 
-            if(!personnage.getListeDesArmes().contains(acheterBouclier)&&choixObjetAleatoire==6){
+            if(!personnage.getListeDesArmes().contains(bouclier)&&choixObjetAleatoire==6){
                 acheterBouclier.setVisible(true);
                 acheterBouclier.setTranslateX(decalageMagasin);
+                nbElementShop += 1;
+                decalageMagasin += 200;
+            }
+
+            if(!personnage.getListeDesArmes().contains(theWorld)&&choixObjetAleatoire==7 && personnage.getClass()==Guerrier.class){
+                acheterTheWorld.setVisible(true);
+                acheterTheWorld.setTranslateX(decalageMagasin);
                 nbElementShop += 1;
                 decalageMagasin += 200;
             }
@@ -1710,7 +1730,7 @@ public class Controller implements Initializable{
         }
         else{
             if(ennemi.getNiveau()<5) {
-                queteFinirAventure.setText("Quete aventure : "+Integer.toString(ennemi.getNiveau()) + "/5");
+                queteFinirAventure.setText("Quete aventure : "+Integer.toString(ennemi.getNiveau()) + "/5 stage");
             }
             else{
                 queteFinirAventure.setText("Quete aventure : accomplie");
@@ -1718,10 +1738,17 @@ public class Controller implements Initializable{
         }
 
         if(milleQuete!=1){
-            argent.setText("Quete picsou : " +Integer.toString(personnage.getNbPiece())+"/100");
+            argent.setText("Quete picsou : " +Integer.toString(personnage.getNbPiece())+"/1000 pieces");
         }
         else{
             argent.setText("Quete picsou : accomplie");
+        }
+
+        if(personnage.getListeDesSorts().size()<15){
+            armurier.setText("Quete SAO : "+Integer.toString(personnage.getListeDesArmes().size())+"/15 armes");
+        }
+        else{
+            armurier.setText("Quete SAO : accompis");
         }
     }
 }

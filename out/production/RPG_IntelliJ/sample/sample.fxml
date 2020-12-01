@@ -235,6 +235,7 @@
         <Button fx:id="acheterEpee" visible="false" minHeight="100" minWidth="100" onMouseClicked="#acheterEpee" style="-fx-background-size: 100 100; " >Epee</Button>
         <Button fx:id="acheterArc" visible="false" minHeight="100" minWidth="100" onMouseClicked="#acheterArc" style="-fx-background-size: 100 100; " >Arc</Button>
         <Button fx:id="acheterBouclier" visible="false" minHeight="100" minWidth="100" onMouseClicked="#acheterBouclier" style="-fx-background-size: 100 100; " >Bouclier</Button>
+        <Button fx:id="acheterTheWorld" visible="false" minHeight="100" minWidth="100" onMouseClicked="#acheterTheWorld" style="-fx-background-size: 100 100; " >The World</Button>
         <Button  fx:id="retourBoutique"  minHeight="100" minWidth="100" onMouseClicked="#pageDescriptionPerso" >Retour</Button>
     </Group>
 
@@ -290,6 +291,7 @@
     <Group fx:id="listeQuete" visible="false" translateX="400" translateY="-300">
         <Label style="-fx-background-color:white" fx:id="queteFinirAventure" >Aventure</Label>
         <Label style="-fx-background-color:white" fx:id="argent" translateY="20" >Argent</Label>
+        <Label style="-fx-background-color:white" fx:id="apprentitSort" translateY="40" >Sort</Label>
         <Button minHeight="100" translateX="600" minWidth="100" onMouseClicked="#pageDescriptionPerso" style="-fx-background-size: 100 100; " >Retour</Button>
     </Group>
 
