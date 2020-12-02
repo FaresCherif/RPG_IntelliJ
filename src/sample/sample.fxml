@@ -114,7 +114,57 @@
         <children>
             <ImageView fx:id="imageViewBouleEnergie" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image fx:id="imageBouleEnergie" url="@images/bouleEnergie.jpg" />
+                    <Image fx:id="imageBouleEnergie" url="@images/bouleEnergie.png" />
+                </image>
+            </ImageView>
+        </children>
+    </Group>
+
+    <Group fx:id="animationGrosseBouleEnergie" visible="false" >
+        <children>
+            <ImageView fx:id="imageViewGrosseBouleEnergie" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image fx:id="imageGrosseBouleEnergie" url="@images/grosseBouleEnergie.png" />
+                </image>
+            </ImageView>
+        </children>
+    </Group>
+
+    <Group fx:id="animationSoin" visible="false" >
+        <children>
+            <ImageView fx:id="imageViewSoin" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image fx:id="imageSoin" url="@images/soin.png" />
+                </image>
+            </ImageView>
+        </children>
+    </Group>
+
+    <Group fx:id="animationWorld" visible="false" >
+        <children>
+            <ImageView fx:id="imageViewWorld" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image fx:id="imageWorld" url="@images/world.png" />
+                </image>
+            </ImageView>
+        </children>
+    </Group>
+
+    <Group fx:id="animationFullCowl" visible="false" >
+        <children>
+            <ImageView fx:id="imageViewFullCowl" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image fx:id="imageFullCowl" url="@images/cowl.png" />
+                </image>
+            </ImageView>
+        </children>
+    </Group>
+
+    <Group fx:id="animationMur" visible="false" >
+        <children>
+            <ImageView fx:id="imageViewMur" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image fx:id="imageMur" url="@images/wall.png" />
                 </image>
             </ImageView>
         </children>
