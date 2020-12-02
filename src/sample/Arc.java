@@ -122,7 +122,12 @@ public class Arc extends Arme implements Animation {
     }
 
     @Override
-    public void animationGrosSort() {
+    public void animationDebutEffet(Group animationSort) {
+
+    }
+
+    @Override
+    public void animationFinEffet(Group animationSort) {
 
     }
 }

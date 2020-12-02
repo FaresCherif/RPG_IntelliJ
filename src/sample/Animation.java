@@ -13,5 +13,7 @@ public interface Animation {
 
     public void animationSort(Group animationSort);
 
-    public void animationGrosSort();
+    public void animationDebutEffet(Group animationSort);
+
+    public void animationFinEffet(Group animationSort);
 }
