@@ -113,17 +113,22 @@ public class Arc extends Arme implements Animation {
     }
 
     @Override
-    public void animationBlocage() {
+    public void animationBlocage(Group affichageBouclier) {
 
     }
 
     @Override
-    public void animationSort() {
+    public void animationSort(Group animationSort) {
 
     }
 
     @Override
-    public void animationGrosSort() {
+    public void animationDebutEffet(Group animationSort) {
+
+    }
+
+    @Override
+    public void animationFinEffet(Group animationSort) {
 
     }
 }

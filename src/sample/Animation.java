@@ -9,9 +9,11 @@ public interface Animation {
 
     public void animationArme(Group affichageArme);
 
-    public void animationBlocage();
+    public void animationBlocage(Group affichageBouclier);
 
-    public void animationSort();
+    public void animationSort(Group animationSort);
 
-    public void animationGrosSort();
+    public void animationDebutEffet(Group animationSort);
+
+    public void animationFinEffet(Group animationSort);
 }
