@@ -4,6 +4,10 @@ import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +24,7 @@ import javafx.scene.layout.*;
 import java.nio.charset.StandardCharsets;
 import javafx.scene.text.Text;
 import javafx.application.Platform;
+import javafx.util.Duration;
 
 
 import java.io.File;
@@ -77,6 +82,27 @@ public class Controller implements Initializable{
 
     @FXML
     private Group animationArc;
+
+    @FXML
+    private Group animationBouclier;
+
+    @FXML
+    private Group animationBouleEnergie;
+
+    @FXML
+    private Group animationGrosseBouleEnergie;
+
+    @FXML
+    private Group animationSoin;
+
+    @FXML
+    private Group animationMur;
+
+    @FXML
+    private Group animationWorld;
+
+    @FXML
+    private Group animationFullCowl;
 
     @FXML
     private ImageView imageViewPersonnage;
@@ -898,8 +924,6 @@ public class Controller implements Initializable{
 
     public void coupEpee() {
         console.appendText("Vous prenner votre épée et infligez un violent l'ennemi infligeant ");
-
-
         epee.animationArme(animationEpee);
         try {
             personnage.coupEpee(ennemi,console);
@@ -931,6 +955,7 @@ public class Controller implements Initializable{
 
     public void boulleEnergie() {
         if(personnage.getPointsDeMana()>=boulleEnnergie.getCoutMana()) {
+            animationBoulleEnergie(animationBouleEnergie);
             console.appendText("Vous concentrez votre mana dans une boulle que vous envoyez sur l'ennemi ");
             try {
                 personnage.utiliseSort(ennemi, boulleEnnergie,console);
@@ -941,8 +966,38 @@ public class Controller implements Initializable{
         }
     }
 
+    public void animationBoulleEnergie(Group affichageBoulleEnergie) {
+        affichageBoulleEnergie.setTranslateX(-100);
+        affichageBoulleEnergie.setVisible(true);
+        Timeline tx = new Timeline(
+                new KeyFrame(Duration.millis(0), new KeyValue(affichageBoulleEnergie.translateXProperty(), 0)),
+                new KeyFrame(Duration.millis(300), new KeyValue(affichageBoulleEnergie.translateXProperty(), 550))
+        );
+
+        final Thread t1 = new Thread(){
+            @Override
+            public void run(){
+                tx.play();
+            }
+        };
+        t1.start();
+        final Thread t2 = new Thread(){
+            @Override
+            public void run(){
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                affichageBoulleEnergie.setVisible(false);
+            }
+        };
+        t2.start();
+    }
+
     public void sortSoin() {
         if(personnage.getPointsDeMana()>=soin.getCoutMana()) {
+            animationSoin(animationSoin);
             console.appendText("Vous concentrez votre mana pour soigner vos blessure ");
             try {
                 personnage.utiliseSort(personnage, soin,console);
@@ -953,8 +1008,49 @@ public class Controller implements Initializable{
         }
     }
 
+    public void animationSoin(Group affichageSoin) {
+        affichageSoin.setTranslateX(-100);
+        affichageSoin.setScaleX(2);
+        affichageSoin.setScaleY(2);
+        affichageSoin.setVisible(true);
+
+        Timeline ta = new Timeline(
+                new KeyFrame(Duration.millis(0), new KeyValue(affichageSoin.rotateProperty(), 0)),
+                new KeyFrame(Duration.millis(300), new KeyValue(affichageSoin.rotateProperty(), 90))
+        );
+
+        Timeline tb = new Timeline(
+                new KeyFrame(Duration.millis(0), new KeyValue(affichageSoin.rotateProperty(), 0)),
+                new KeyFrame(Duration.millis(300), new KeyValue(affichageSoin.rotateProperty(), -90))
+        );
+
+        final Thread t1 = new Thread(){
+            @Override
+            public void run(){
+                ta.setCycleCount(3);
+                tb.setCycleCount(3);
+                ta.play();
+                tb.play();
+            }
+        };
+        t1.start();
+        final Thread t2 = new Thread(){
+            @Override
+            public void run(){
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                affichageSoin.setVisible(false);
+            }
+        };
+        t2.start();
+    }
+
     public void sortTheWorld(){
         if(personnage.getPointsDeMana()>=theWorld.getCoutMana()) {
+            animationWorld(animationWorld);
             console.appendText("Vous utiliser votre mana pour arreter le flux du temps pendant un tour ");
             try {
                 personnage.utiliseSort(ennemi, theWorld,console);
@@ -965,8 +1061,36 @@ public class Controller implements Initializable{
         }
     }
 
+    public void animationWorld(Group affichageWorld) {
+        affichageWorld.setTranslateX(-160);
+        affichageWorld.setRotate(90);
+        affichageWorld.setScaleX(5);
+        affichageWorld.setScaleY(5);
+        affichageWorld.setVisible(true);
+
+        Timeline ta = new Timeline(
+                new KeyFrame(Duration.millis(0), new KeyValue(affichageWorld.scaleXProperty(), 3)),
+                new KeyFrame(Duration.millis(300), new KeyValue(affichageWorld.scaleXProperty(), 5))
+        );
+
+        Timeline tb = new Timeline(
+                new KeyFrame(Duration.millis(0), new KeyValue(affichageWorld.scaleYProperty(), 3)),
+                new KeyFrame(Duration.millis(300), new KeyValue(affichageWorld.scaleYProperty(), 5))
+        );
+
+        ta.play();
+        tb.play();
+        ta.setCycleCount(3);
+        tb.setCycleCount(3);
+    }
+
+    public void finAnimationWorld() {
+        animationWorld.setVisible(false);
+    }
+
     public void fullCowl(){
         if(personnage.getPointsDeMana()>=fullCowl.getCoutMana()) {
+            animationFullCowl(animationFullCowl);
             console.appendText("Vous utiliser votre mana pour booster vos dégat à l'arme blance pendant quelques tours ");
             try {
                 personnage.utiliseSort(personnage, fullCowl,console);
@@ -977,8 +1101,33 @@ public class Controller implements Initializable{
         }
     }
 
+    public void animationFullCowl(Group affichageFullCowl) {
+        affichageFullCowl.setTranslateX(-130);
+        affichageFullCowl.setVisible(true);
+
+        Timeline ta = new Timeline(
+                new KeyFrame(Duration.millis(0), new KeyValue(affichageFullCowl.scaleXProperty(), 3)),
+                new KeyFrame(Duration.millis(300), new KeyValue(affichageFullCowl.scaleXProperty(), 5))
+        );
+
+        Timeline tb = new Timeline(
+                new KeyFrame(Duration.millis(0), new KeyValue(affichageFullCowl.scaleYProperty(), 3)),
+                new KeyFrame(Duration.millis(300), new KeyValue(affichageFullCowl.scaleYProperty(), 5))
+        );
+
+        ta.play();
+        tb.play();
+        ta.setCycleCount(3);
+        tb.setCycleCount(3);
+    }
+
+    public void finAnimationFullCowl() {
+        animationFullCowl.setVisible(false);
+    }
+
     public void leMur(){
         if(personnage.getPointsDeMana()>=leMur.getCoutMana()) {
+            animationMur(animationMur);
             console.appendText("Vous invoquez un mur de pierre pour bloquer la prochaine attaque adverse ");
 
             try {
@@ -988,6 +1137,31 @@ public class Controller implements Initializable{
             }
             tourEnnemi();
         }
+    }
+
+    public void animationMur(Group affichageMur) {
+        affichageMur.setTranslateX(-50);
+        affichageMur.setTranslateY(50);
+        affichageMur.setVisible(true);
+
+        Timeline ta = new Timeline(
+                new KeyFrame(Duration.millis(0), new KeyValue(affichageMur.scaleXProperty(), 3)),
+                new KeyFrame(Duration.millis(300), new KeyValue(affichageMur.scaleXProperty(), 5))
+        );
+
+        Timeline tb = new Timeline(
+                new KeyFrame(Duration.millis(0), new KeyValue(affichageMur.scaleYProperty(), 3)),
+                new KeyFrame(Duration.millis(300), new KeyValue(affichageMur.scaleYProperty(), 10))
+        );
+
+        ta.play();
+        tb.play();
+        ta.setCycleCount(3);
+        tb.setCycleCount(3);
+    }
+
+    public void finAnimationMur() {
+        animationMur.setVisible(false);
     }
 
 
@@ -1150,6 +1324,7 @@ public class Controller implements Initializable{
 
     public void grosseBoulleEnergie() {
         if(personnage.getPointsDeMana()>=grosseBoulleEnnergie.getCoutMana()) {
+            animationGrosseBoulleEnergie(animationGrosseBouleEnergie);
             console.appendText("Vous invoquez une enorme quantité d'energie dans une attaque qui va être dur à encaisser pour l'adversaire ");
             try {
                 personnage.utiliseSort(ennemi, grosseBoulleEnnergie,console);
@@ -1160,6 +1335,38 @@ public class Controller implements Initializable{
         }
     }
 
+    public void animationGrosseBoulleEnergie(Group affichageGrosseBoulleEnergie) {
+        affichageGrosseBoulleEnergie.setTranslateX(-100);
+        //On affiche l'épee
+        affichageGrosseBoulleEnergie.setVisible(true);
+        //On défini une timeline, au début de l'animation, l'épee est positionné à 0 en X,
+        //Sur les 100 milisecondes suivantes, l'épee se déplace de 80 en X
+        Timeline tx = new Timeline(
+                new KeyFrame(Duration.millis(0), new KeyValue(affichageGrosseBoulleEnergie.translateXProperty(), 0)),
+                new KeyFrame(Duration.millis(300), new KeyValue(affichageGrosseBoulleEnergie.translateXProperty(), 550))
+        );
+
+        final Thread t1 = new Thread(){
+            @Override
+            public void run(){
+                //L'animation est joué
+                tx.play();
+            }
+        };
+        t1.start();
+        final Thread t2 = new Thread(){
+            @Override
+            public void run(){
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                affichageGrosseBoulleEnergie.setVisible(false);
+            }
+        };
+        t2.start();
+    }
 
     public void acheterSoin(){
         if(personnage.getNbPiece()>=50){
