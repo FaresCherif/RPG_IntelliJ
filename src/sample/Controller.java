@@ -32,6 +32,12 @@ import java.io.File;
 
 public class Controller implements Initializable{
 
+
+    /**
+     * Instanciation dans le Controller des éléments
+     * défini dans le fxml
+     * **/
+
     @FXML
     private GridPane gridPane;
 
@@ -344,33 +350,61 @@ public class Controller implements Initializable{
     @FXML
     private Label argent;
 
+    /**
+     * récupération de la taille de l'écran
+     */
     GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     int width = gd.getDisplayMode().getWidth();
     int height = gd.getDisplayMode().getHeight();
 
+    /**
+     * definition du personnage
+     */
     private Personnage personnage;
+
+    /**
+     * definition de l'ennemi
+     */
     private Ennemi ennemi;
+
+    /**
+     * definition de l'image du perso
+     */
     private Image imagePersonnage;
 
+    /**
+     * definition des sorts sans effets
+     */
     private Sort boulleEnnergie=new Sort();
     private Sort soin = new Sort(-8,new Effet(),4);
     private Sort grosseBoulleEnnergie=new Sort(8,new Effet(),8);
 
+    /**
+     * definition des épées
+     */
     private Epee epee= new Epee();
     private Epee epeeMoyenne= new Epee(7,0,15,new Effet());
     private Epee epeeBien= new Epee(10,0,20,new Effet());
     private Epee epeeRare= new Epee(15,0,30,new Effet());
     private Epee epeeExcellent= new Epee(30,0,50,new Effet());
 
+    /**
+     * definition des arcs
+     */
     private Arc arc= new Arc();
     private Arc arcMoyenne= new Arc(7,0,20,20,15,new Effet());
     private Arc arcBien= new Arc(10,0,30,30,20,new Effet());
     private Arc arcRare= new Arc(15,0,50,50,30,new Effet());
     private Arc arcExcellent= new Arc(30,0,70,70,50,new Effet());
 
-
+    /**
+     * definition du bouclier
+     */
     private Bouclier bouclier=new Bouclier();
 
+    /**
+     * definition des sorts
+     */
     private Effet timeStop=new Effet(1,0,2);
     private Sort theWorld=new Sort(0,timeStop,5);
 
@@ -380,8 +414,15 @@ public class Controller implements Initializable{
     private Effet invulnerabilite=new Effet(2,0,1);
     public Sort leMur=new Sort(0,invulnerabilite,2);
 
+    /**
+     * definition des ennemis de l'histoire
+     */
     private Ennemi ennemi1,ennemi2,ennemi3,ennemi4,ennemi5;
 
+
+    /**
+     * definition des numeros correspondant au status des quetes
+     */
     private int numeroChoixHistoire;
 
     private int milleQuete;
@@ -390,17 +431,29 @@ public class Controller implements Initializable{
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 
+
         console.setEditable(false);
+
+        /**
+         * definir l'arc
+         */
         arc.setDegat(4);
         arc.setDurabilite(10);
         arc.setNbFlecheMax(20);
 
         retourListeArme.setTranslateY(200);
+
+        /**
+         * afficher la page principale et la placer au milieu
+         */
         pagePrincipale.setVisible(true);
         bouttonCreationPerso.setVisible(false);
         pagePrincipale.setTranslateX(-width/2+350);
         pagePrincipale.setTranslateY(-height/2+150);
 
+        /**
+         * afficher l'image du background
+         */
         Image img = null;
         try {
             img = new Image(new FileInputStream("src/sample/images/paysage.jpg"),width,height,false,true);
@@ -413,7 +466,9 @@ public class Controller implements Initializable{
                 BackgroundSize.DEFAULT);
         gridPane.setBackground(new Background(myBI));
 
-
+        /**
+         * mettre le boutton charger à sa place
+         */
         bouttonCharger.setTranslateY(500);
 
         chargerPagePrincipale.setTranslateX(-width/2+350);
@@ -421,19 +476,23 @@ public class Controller implements Initializable{
     }
 
     public void allerPageCreerPersonnage(ActionEvent actionEvent) {
+
         labelClasse.setVisible(true);
         chargerPagePrincipale.setVisible(false);
         pagePrincipale.setVisible(false);
         bouttonCreationPerso.setVisible(true);
 
-
+        /**
+         * mise en place des textes de description au survole des classes
+         */
         descriptionMage.setText("Le mage est un être puissant capable de déchainer les éléments contre ses ennemies\n et de se protéger grace à ses sorts malgrés sa faible résistance physique");
         descriptionGuerrier.setText("Le guerrier est un combatant féroce ne reculant jamais face à un combat.\n Avec ses capacités exceptionnelles presque rien ne peut l'arreter, à part un livre");
         descriptionChasseur.setText("BLA BLA Nature, BLA BLA Archer. Une classe équilibré pour les casu \n PS : Ceci n'est pas la classe préféré d'un des développeurs");
-
-
     }
 
+    /**
+     *affichage du texte au survol
+     */
     public void hooverBouttonChoixPersonnageGuerrier(MouseEvent event) {
         descriptionChasseur.setVisible(false);
         descriptionMage.setVisible(false);
@@ -459,6 +518,9 @@ public class Controller implements Initializable{
         }
     }
 
+    /**
+     * creer les différentes classes
+     */
     public void creerMage(){
         labelNom.setVisible(true);
         labelClasse.setVisible(false);
@@ -469,6 +531,9 @@ public class Controller implements Initializable{
         personnage=new Mage();
         validerNom.setTranslateX(300);
 
+        /**
+         * afficher l'image du mage
+         */
         FileInputStream fin = null;
         try {
             fin = new FileInputStream("src/sample/images/mage.png");
@@ -478,6 +543,11 @@ public class Controller implements Initializable{
         Image nouvelleImage = new Image(fin,100,200,false,false);
 
         imageViewPersonnage.setImage(nouvelleImage);
+
+        /**
+         * apprendre les compétences de base du mage
+         */
+
         personnage.apprendreSort(boulleEnnergie);
         personnage.apprendreSort(soin);
 
@@ -492,6 +562,10 @@ public class Controller implements Initializable{
         nomCreationPerso.setVisible(true);
         personnage=new Guerrier();
         validerNom.setTranslateX(300);
+
+        /**
+         * afficher l'image du guerrier
+         */
         FileInputStream fin = null;
         try {
             fin = new FileInputStream("src/sample/images/guerrier.png");
@@ -500,6 +574,11 @@ public class Controller implements Initializable{
         }
         Image nouvelleImage= new Image(fin,200,100,false,false);
         imageViewPersonnage.setImage(nouvelleImage);
+
+        /**
+         * apprendre les compétences de base du guerrier
+         */
+
         personnage.recupererArme(epee);
         personnage.apprendreSort(fullCowl);
 
@@ -515,6 +594,11 @@ public class Controller implements Initializable{
         personnage=new Chasseur();
 
         validerNom.setTranslateX(300);
+
+        /**
+         * afficher l'image du chasseur
+         */
+
         FileInputStream fin = null;
         try {
             fin = new FileInputStream("src/sample/images/chasseur.png");
@@ -523,6 +607,11 @@ public class Controller implements Initializable{
         }
         Image nouvelleImage= new Image(fin,100,100,false,false);
         imageViewPersonnage.setImage(nouvelleImage);
+
+        /**
+         * apprendre les compétences de base du chasseur
+         */
+
         personnage.recupererArme(arc);
         personnage.apprendreSort(theWorld);
         personnage.apprendreSort(leMur);
@@ -530,6 +619,11 @@ public class Controller implements Initializable{
     }
 
     public void pageDescriptionPerso(){
+
+        /**
+         * mise en place des informations du perso
+         */
+
         listeQuete.setVisible(false);
         allerQuetes.setVisible(true);
         labelNom.setVisible(false);
@@ -543,13 +637,20 @@ public class Controller implements Initializable{
         barreEnnemiMana.setStyle("-fx-accent: blue;");
         barreEnnemiMana.setProgress(1F);
 
-        if(personnage.getNbPiece()>=100){
+        /**
+         * verification du status de la quete
+         */
+        if(personnage.getNbPiece()>=1000){
             milleQuete=1;
         }
 
         retourArme.setVisible(false);
         grConsole.setVisible(false);
         choixHistoire.setVisible(false);
+
+        /**
+         * verification de la durabilité de l'arme
+         */
         if(personnage.getTypeArme1()!=null&& personnage.getTypeArme1().getDurabilite()==0){
             personnage.getListeDesArmes().remove(personnage.getTypeArme1());
             personnage.setTypeArme1(null);
@@ -598,7 +699,9 @@ public class Controller implements Initializable{
             bouttonAffichagePerso.setVisible(true);
         }
 
-
+        /**
+         * affichage de l'arme et des pièces du joueur
+         */
         descriptionArmeEquipee.setVisible(true);
 
         if(personnage.getArme()!=null){
@@ -629,6 +732,9 @@ public class Controller implements Initializable{
         allerChoixHistoire.setVisible(false);
         allerListeArme.setVisible(false);
 
+        /**
+         * changement de l'image du background
+         */
         Image img = null;
         try {
             img = new Image(new FileInputStream("src/sample/images/foret.png"),width,height,false,false);
@@ -642,6 +748,9 @@ public class Controller implements Initializable{
 
         gridPane.setBackground(new Background(myBI));
 
+        /**
+         * instanciation de l'ennemi
+         */
         if(ennemi5==null) {
 
             if (personnage.getNiveau() == 1) {
@@ -699,6 +808,9 @@ public class Controller implements Initializable{
 
     public void pageCombat(){
         groupLoot.setVisible(false);
+        /**
+         * mise à jour des informations du perso à chaque tour
+         */
         Double vieMax=Double.valueOf(personnage.getPointsDeVieMax());
         Double vie=Double.valueOf(personnage.getPointsDeVie());
         Double manaMax=Double.valueOf(personnage.getPointsDeManaMax());
@@ -778,11 +890,16 @@ public class Controller implements Initializable{
             }
 
 
-
-
+            /**
+             * gestion de la durabilité de l'arme
+             */
             if(personnage.getTypeArme1()!=null){
                 personnage.getTypeArme1().perdreDurabilite();
             }
+
+            /**
+             * désallocation de l'instance de l'ennemi
+             */
             if(ennemi5!=null) {
                 if (ennemi1 == ennemi) {
                     ennemi1 = null;
@@ -805,6 +922,10 @@ public class Controller implements Initializable{
                 }
             }
         }
+
+        /**
+         * changmement ennemi en boss de l'histoire
+         */
         if(ennemi==ennemi5 && numeroChoixHistoire==3) {
             FileInputStream fin = null;
             try {
@@ -850,6 +971,10 @@ public class Controller implements Initializable{
     }
 
     public void optionAttaque(){
+
+        /**
+         * affichage des différentes attaque possible selon l'arme équipée
+         */
         int decalageBouttonAttaque=-200;
         psserTourCombat.setVisible(false);
         bouttonCombat.setVisible(false);
@@ -877,6 +1002,9 @@ public class Controller implements Initializable{
     }
 
     public void optionSort(){
+        /**
+         * affichage des sorts appris
+         */
         psserTourCombat.setVisible(false);
         bouttonCombat.setVisible(false);
         listeSortPersonnageCombat.setVisible(true);
@@ -922,6 +1050,9 @@ public class Controller implements Initializable{
 
     }
 
+    /**
+     * définition des attaques et sort
+     */
     public void coupEpee() {
         console.appendText("Vous prenner votre épée et infligez un violent l'ennemi infligeant ");
         epee.animationArme(animationEpee);
@@ -1164,7 +1295,9 @@ public class Controller implements Initializable{
         animationMur.setVisible(false);
     }
 
-
+    /**
+     * gestion de l'attaque ennemi
+     */
     public void attaqueEnnemi(){
         if(ennemi.getListeDesSorts().isEmpty()){
             console.appendText("L'ennemie bondit vers vous, les crocs à l'avant infligeant ");
@@ -1179,7 +1312,9 @@ public class Controller implements Initializable{
         }
     }
 
-
+    /**
+     * gestion des attaques ennemies en priorisant les sorts
+     */
     public void attaqueProMana(){
         Sort sort=ennemi.getListeDesSorts().get(0);
 
@@ -1233,6 +1368,9 @@ public class Controller implements Initializable{
             }
         }
 
+        /**
+         * quantite de mana recuperé à chaque tour
+         */
         if(personnage.getClass()==Mage.class){
             personnage.reprendreMana(3);
         }
@@ -1288,12 +1426,17 @@ public class Controller implements Initializable{
         int nbElementShop=0;
         int cptLimit=0;
 
-
+        /**
+         * charger objet aleatoire (3 au maximum / 0 au minimum)
+         */
         choixAleatoireMagasin();
 
-
-
     }
+
+
+    /**
+     * achat des différents sort et objets
+     */
 
     public void acheterBoulleEnergie(){
         if(personnage.getNbPiece()>=50){
@@ -1397,6 +1540,9 @@ public class Controller implements Initializable{
         pageMagasin();
     }
 
+    /**
+     * organisation du fichier expliqué dans le rapport
+     */
     public void sauvegarder(){
 
         File dir  = new File("sauvegarde/");
@@ -1574,6 +1720,9 @@ public class Controller implements Initializable{
                                         numeroChoixHistoire=3;
                                     }
 
+                                    /**
+                                     * instanciation des ennemi selon le niveau du personnage sauvegardé
+                                     */
                                     if (personnage.getNiveau() <= 5) {
                                         if (personnage.getNiveau() >= 1) {
                                             ennemi = ennemi1;
@@ -1682,6 +1831,9 @@ public class Controller implements Initializable{
             listeArme.getItems().remove(i);
         }
 
+        /**
+         * lister les armes offensives
+         */
         for(int cptArmeListeArme=0;cptArmeListeArme<personnage.getListeDesArmes().size();cptArmeListeArme+=1) {
 
             if(personnage.getListeDesArmes().get(cptArmeListeArme).estBouclier()==false) {
@@ -1694,6 +1846,9 @@ public class Controller implements Initializable{
             listeArme2.getItems().remove(i);
         }
 
+        /**
+         * lister les bouclier
+         */
         for(int cptArmeListeArme2=0;cptArmeListeArme2<personnage.getListeDesArmes().size();cptArmeListeArme2+=1) {
             if(personnage.getListeDesArmes().get(cptArmeListeArme2).estBouclier()==true){
                 listeArme2.getItems().add(cptArmeListeArme2+","+personnage.getListeDesArmes().get(cptArmeListeArme2));
@@ -1792,6 +1947,10 @@ public class Controller implements Initializable{
 
     }
 
+    /**
+     * instanciation des différents ennemis selon l'histoire
+     */
+
     public void setEnnemiMana(){
         ennemi1=new Ennemi(15,15,30,30,1,new ArrayList<Arme>(), new ArrayList<Sort>(),"ennemi1",0,new ListeEffet());
         ennemi2=new Ennemi(25,25,50,50,2,new ArrayList<Arme>(), new ArrayList<Sort>(),"ennemi2",0,new ListeEffet());
@@ -1845,6 +2004,9 @@ public class Controller implements Initializable{
         pageDescriptionPerso();
     }
 
+    /**
+     * loot d'un objet aleatoire sur l'ennemi
+     */
     public void loot(){
         groupLoot.setVisible(false);
         int choixTypeRecompense=1 + (int)(Math.random() * ((2 - 1) + 1));
